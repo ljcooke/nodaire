@@ -66,7 +66,7 @@ describe Nodaire::Tablatal do
       <<~EOF
         NAME    AGE   COLOR#{spaces}
         Erica   12    Opal
-        Alex    23    Turquoise#{spaces}
+        Alex    23    Turquoise\t\t
         Nike    34    赤い
         Ruca    45    Grey#{spaces}
       EOF
@@ -101,7 +101,7 @@ describe Nodaire::Tablatal do
         <<~EOF
           NAME    AGE   COLOR
           Erica   12    Opal
-           Alex    23    Turquoise
+           Alex    23   \tTurquoise
           Nike    34     赤い
            Ruca    45   Grey
         EOF
