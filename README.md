@@ -1,4 +1,4 @@
-# Nodaire
+# Nother
 
 Ruby parsers for text file formats. Work in progress.
 

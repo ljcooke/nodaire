@@ -1,6 +1,6 @@
-require 'nodaire'
+require 'nother'
 
-describe Nodaire::Tablatal do
+describe Nother::Tablatal do
   let(:input) do
     <<~EOF
       NAME    AGE   COLOR
@@ -56,7 +56,7 @@ describe Nodaire::Tablatal do
     let(:input) { 'NAME  AGE  COLOR  NAME' }
 
     it 'raises an error' do
-      expect { result }.to raise_error Nodaire::Tablatal::ParserError
+      expect { result }.to raise_error Nother::Tablatal::ParserError
     end
   end
 
