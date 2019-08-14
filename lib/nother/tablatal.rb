@@ -1,4 +1,5 @@
-# Based on tablatal.js by Devine Lu Linvega (MIT License)
+# Implementation of Tablatal
+# Tablatal is (c) Devine Lu Linvega (MIT License)
 
 module Nother
   class Tablatal
@@ -26,5 +27,6 @@ module Nother
         end
       end
     end
+    private_class_method :make_keys
   end
 end

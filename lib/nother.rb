@@ -1,1 +1,1 @@
-require_relative './nother/tablatal.rb'
+require 'nother/tablatal'
