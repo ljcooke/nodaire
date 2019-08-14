@@ -1,3 +1,5 @@
+# Based on tablatal.js by Devine Lu Linvega (MIT License)
+
 module Nodaire
   class Tablatal
     class ParserError < StandardError; end
