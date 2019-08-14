@@ -113,5 +113,21 @@ describe Nother::Tablatal do
         end
       end
     end
+
+    context 'with entries filling the column width' do
+      let(:input) do
+        <<~EOF
+          NAME AGE   COLOR
+          Erica12    Opal
+          Alex 23    Turquoise
+          Nike 34    赤い
+          Ruca 45    Grey
+        EOF
+      end
+
+      it 'returns the expected output' do
+        expect(result).to eq expected_output
+      end
+    end
   end
 end
