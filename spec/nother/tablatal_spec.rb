@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 require 'nother'
 
 describe Nother::Tablatal do
   let(:input) do
-    <<~EOF
+    <<~TBTL
       NAME    AGE   COLOR
       Erica   12    Opal
       Alex    23    Turquoise
       Nike    34    赤い
       Ruca    45    Grey
-    EOF
+    TBTL
   end
 
   let(:expected_output) do
@@ -64,13 +66,13 @@ describe Nother::Tablatal do
     context 'with trailing spaces' do
       let(:spaces) { ' ' }
       let(:input) do
-        <<~EOF
+        <<~TBTL
           NAME    AGE   COLOR#{spaces}
           Erica   12    Opal
           Alex    23    Turquoise\t\t
           Nike    34    赤い
           Ruca    45    Grey#{spaces}
-        EOF
+        TBTL
       end
 
       it 'returns the expected output' do
@@ -81,13 +83,13 @@ describe Nother::Tablatal do
     context 'with misaligned entries' do
       context 'shifted left' do
         let(:input) do
-          <<~EOF
+          <<~TBTL
             NAME    AGE   COLOR
             Erica   12   Opal
             Alex    23    Turquoise
             Nike    34    赤い
             Ruca    45    Grey
-          EOF
+          TBTL
         end
 
         it 'returns corrupted output' do
@@ -99,13 +101,13 @@ describe Nother::Tablatal do
 
       context 'shifted right (staying within the column width)' do
         let(:input) do
-          <<~EOF
+          <<~TBTL
             NAME    AGE   COLOR
             Erica   12    Opal
              Alex    23   \tTurquoise
             Nike    34     赤い
              Ruca    45   Grey
-          EOF
+          TBTL
         end
 
         it 'returns the expected output' do
@@ -116,13 +118,13 @@ describe Nother::Tablatal do
 
     context 'with entries filling the column width' do
       let(:input) do
-        <<~EOF
+        <<~TBTL
           NAME AGE   COLOR
           Erica12    Opal
           Alex 23    Turquoise
           Nike 34    赤い
           Ruca 45    Grey
-        EOF
+        TBTL
       end
 
       it 'returns the expected output' do

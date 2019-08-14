@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Implementation of Tablatal
 # Tablatal is (c) Devine Lu Linvega (MIT License)
 
@@ -10,7 +12,7 @@ module Nother
       return if lines.empty?
       keys = make_keys lines.shift.scan(/(\S+\s*)/).flatten
       lines.map do |line|
-        next if line.match /^\s*(;.*)?$/
+        next if line.match(/^\s*(;.*)?$/)
         keys.map { |key, range| [key, line[range].strip] }.to_h
       end.compact
     end
@@ -21,7 +23,7 @@ module Nother
         segs.each_with_index do |seg, idx|
           key = seg.strip.downcase.to_sym
           len = seg.size if idx < segs.size - 1
-          raise ParserError, 'Duplicate keys' if keys.any? { |k| k.first == key }
+          raise ParserError, 'Duplicate keys' if keys.any? { |k| k[0] == key }
           keys.push [key, start...(len && start + len)]
           start += len if len
         end
