@@ -3,8 +3,8 @@ module Nodaire
     class ParserError < StandardError; end
 
     def self.parse(string)
-      return if string.nil?
-      lines = string.strip.split("\n")
+      lines = (string || '').strip.split("\n")
+      return if lines.empty?
       keys = make_keys lines.shift.scan(/(\S+\s*)/).flatten
       lines.map do |line|
         next if line.match /^\s*(;.*)?$/

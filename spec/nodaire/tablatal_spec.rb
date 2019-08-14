@@ -36,6 +36,14 @@ describe Nodaire::Tablatal do
     end
   end
 
+  context 'with only whitespace' do
+    let(:input) { '    ' }
+
+    it 'returns nil' do
+      expect(result).to eq nil
+    end
+  end
+
   context 'with one line' do
     let(:input) { 'NAME    AGE   COLOR' }
 
