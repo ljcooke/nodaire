@@ -1,6 +1,6 @@
 inherit_from: .rubocop_todo.yml
 
-Layout/EmptyLineAfterGuardClause:
+Style/ClassAndModuleChildren:
   Enabled: false
 
 Style/TrailingCommaInArrayLiteral:
