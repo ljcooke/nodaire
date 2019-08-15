@@ -3,6 +3,8 @@
 require 'nodaire'
 
 describe Nodaire::Tablatal do
+  let(:instance) { described_class.new(input) }
+
   let(:input) do
     <<~TBTL
       NAME    AGE   COLOR
@@ -13,18 +15,16 @@ describe Nodaire::Tablatal do
     TBTL
   end
 
-  let(:expected_output) do
-    [
-      { name: 'Erica', age: '12', color: 'Opal' },
-      { name: 'Alex',  age: '23', color: 'Turquoise' },
-      { name: 'Nike',  age: '34', color: '赤い' },
-      { name: 'Ruca',  age: '45', color: 'Grey' },
-    ]
-  end
+  describe '#to_a' do
+    let(:result) { instance.to_a }
 
-  describe '.parse' do
-    let(:result) do
-      described_class.parse(input)
+    let(:expected_output) do
+      [
+        { name: 'Erica', age: '12', color: 'Opal' },
+        { name: 'Alex',  age: '23', color: 'Turquoise' },
+        { name: 'Nike',  age: '34', color: '赤い' },
+        { name: 'Ruca',  age: '45', color: 'Grey' },
+      ]
     end
 
     it 'returns the expected output' do
@@ -43,7 +43,7 @@ describe Nodaire::Tablatal do
       let(:input) { '    ' }
 
       it 'returns nil' do
-        expect(result).to eq nil
+        expect(result).to be_nil
       end
     end
 
@@ -144,6 +144,42 @@ describe Nodaire::Tablatal do
       end
 
       it 'returns the expected output' do
+        expect(result).to eq expected_output
+      end
+    end
+  end
+
+  describe '#keys' do
+    let(:result) { instance.keys }
+
+    let(:expected_output) do
+      [:name, :age, :color]
+    end
+
+    it 'returns the expected output' do
+      expect(result).to eq expected_output
+    end
+
+    context 'with no input' do
+      let(:input) { nil }
+
+      it 'returns nil' do
+        expect(result).to be_nil
+      end
+    end
+
+    context 'with only whitespace' do
+      let(:input) { '    ' }
+
+      it 'returns nil' do
+        expect(result).to be_nil
+      end
+    end
+
+    context 'with one line' do
+      let(:input) { 'NAME    AGE   COLOR' }
+
+      it 'returns an empty array' do
         expect(result).to eq expected_output
       end
     end
