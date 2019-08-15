@@ -63,6 +63,22 @@ describe Nodaire::Tablatal do
       end
     end
 
+    context 'with leading whitespace' do
+      let(:input) do
+        <<~TBTL
+           NAME   AGE   COLOR
+          Erica   12    Opal
+          Alex    23    Turquoise
+          Nike    34    赤い
+          Ruca    45    Grey
+        TBTL
+      end
+
+      it 'returns the expected output' do
+        expect(result).to eq expected_output
+      end
+    end
+
     context 'with trailing spaces' do
       let(:spaces) { ' ' }
       let(:input) do
