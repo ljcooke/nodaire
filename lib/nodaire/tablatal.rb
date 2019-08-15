@@ -3,6 +3,8 @@
 # Implementation of Tablatal
 # Tablatal is (c) Devine Lu Linvega (MIT License)
 
+require 'csv'
+
 class Nodaire::Tablatal
   class ParserError < StandardError; end
 
@@ -15,12 +17,22 @@ class Nodaire::Tablatal
     end
   end
 
+  def keys
+    @keys.map(&:first) if @keys
+  end
+
   def to_a
     @data.dup if @data
   end
 
-  def keys
-    @keys.map(&:first) if @keys
+  def to_csv
+    ordered_keys = keys
+    CSV.generate do |csv|
+      csv << ordered_keys.map(&:upcase)
+      to_a.each do |row|
+        csv << ordered_keys.map { |key| row[key] }
+      end
+    end
   end
 
   private

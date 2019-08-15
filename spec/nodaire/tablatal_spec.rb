@@ -9,7 +9,7 @@ describe Nodaire::Tablatal do
     <<~TBTL
       NAME    AGE   COLOR
       Erica   12    Opal
-      Alex    23    Turquoise
+      Alex    23    Cyan, Turquoise
       Nike    34    赤い
       Ruca    45    Grey
     TBTL
@@ -21,7 +21,7 @@ describe Nodaire::Tablatal do
     let(:expected_output) do
       [
         { name: 'Erica', age: '12', color: 'Opal' },
-        { name: 'Alex',  age: '23', color: 'Turquoise' },
+        { name: 'Alex',  age: '23', color: 'Cyan, Turquoise' },
         { name: 'Nike',  age: '34', color: '赤い' },
         { name: 'Ruca',  age: '45', color: 'Grey' },
       ]
@@ -68,7 +68,7 @@ describe Nodaire::Tablatal do
         <<~TBTL
            NAME   AGE   COLOR
           Erica   12    Opal
-          Alex    23    Turquoise
+          Alex    23    Cyan, Turquoise
           Nike    34    赤い
           Ruca    45    Grey
         TBTL
@@ -85,7 +85,7 @@ describe Nodaire::Tablatal do
         <<~TBTL
           NAME    AGE   COLOR#{spaces}
           Erica   12    Opal
-          Alex    23    Turquoise\t\t
+          Alex    23    Cyan, Turquoise\t\t
           Nike    34    赤い
           Ruca    45    Grey#{spaces}
         TBTL
@@ -102,7 +102,7 @@ describe Nodaire::Tablatal do
           <<~TBTL
             NAME    AGE   COLOR
             Erica   12   Opal
-            Alex    23    Turquoise
+            Alex    23    Cyan, Turquoise
             Nike    34    赤い
             Ruca    45    Grey
           TBTL
@@ -120,7 +120,7 @@ describe Nodaire::Tablatal do
           <<~TBTL
             NAME    AGE   COLOR
             Erica   12    Opal
-             Alex    23   \tTurquoise
+             Alex    23   \tCyan, Turquoise
             Nike    34     赤い
              Ruca    45   Grey
           TBTL
@@ -137,7 +137,7 @@ describe Nodaire::Tablatal do
         <<~TBTL
           NAME AGE   COLOR
           Erica12    Opal
-          Alex 23    Turquoise
+          Alex 23    Cyan, Turquoise
           Nike 34    赤い
           Ruca 45    Grey
         TBTL
@@ -182,6 +182,24 @@ describe Nodaire::Tablatal do
       it 'returns an empty array' do
         expect(result).to eq expected_output
       end
+    end
+  end
+
+  describe '#to_csv' do
+    let(:result) { instance.to_csv }
+
+    let(:expected_output) do
+      <<~CSV
+        NAME,AGE,COLOR
+        Erica,12,Opal
+        Alex,23,"Cyan, Turquoise"
+        Nike,34,赤い
+        Ruca,45,Grey
+      CSV
+    end
+
+    it 'returns the expected output' do
+      expect(result).to eq expected_output
     end
   end
 end

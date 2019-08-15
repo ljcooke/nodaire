@@ -10,6 +10,35 @@ Ruby parsers for text file formats. Work in progress.
 
   - [__Tablatal__](https://wiki.xxiivv.com/#tablatal)
 
+## Examples
+
+```ruby
+> input = <<~TBTL
+  NAME    AGE   COLOR
+  Erica   12    Opal
+  Alex    23    Cyan
+  Nike    34    Red
+  Ruca    45    Grey
+  TBTL
+
+> data = Nodaire::Tablatal.new(input)
+
+> data.to_a
+# [
+#   { name: 'Erica', age: '12', color: 'Opal' },
+#   { name: 'Alex',  age: '23', color: 'Cyan' },
+#   { name: 'Nike',  age: '34', color: 'Red' },
+#   { name: 'Ruca',  age: '45', color: 'Grey' },
+# ]
+
+> data.to_csv
+# NAME,AGE,COLOR
+# Erica,12,Opal
+# Alex,23,Cyan
+# Nike,34,Red
+# Ruca,45,Grey
+```
+
 ## Testing
 
 ```
