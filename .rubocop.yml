@@ -3,6 +3,9 @@ inherit_from: .rubocop_todo.yml
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/SafeNavigation:
+  Enabled: false
+
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: consistent_comma
 

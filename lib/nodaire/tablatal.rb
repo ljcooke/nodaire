@@ -11,10 +11,10 @@ class Nodaire::Tablatal
   def initialize(string)
     lines = (string || '').strip.split("\n")
                           .reject { |line| line.match(/^\s*(;.*)?$/) }
-    unless lines.empty?
-      @keys = make_keys(lines.shift.scan(/(\S+\s*)/).flatten)
-      @data = lines.map { |line| make_line(line) }.compact
-    end
+    return if lines.empty?
+
+    @keys = make_keys(lines.shift.scan(/(\S+\s*)/).flatten)
+    @data = lines.map { |line| make_line(line) }.compact
   end
 
   def keys

@@ -153,7 +153,7 @@ describe Nodaire::Tablatal do
     let(:result) { instance.keys }
 
     let(:expected_output) do
-      [:name, :age, :color]
+      %i[name age color]
     end
 
     it 'returns the expected output' do
