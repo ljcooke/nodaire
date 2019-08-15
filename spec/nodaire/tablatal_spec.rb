@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'nother'
+require 'nodaire'
 
-describe Nother::Tablatal do
+describe Nodaire::Tablatal do
   let(:input) do
     <<~TBTL
       NAME    AGE   COLOR
@@ -59,7 +59,7 @@ describe Nother::Tablatal do
       let(:input) { 'NAME  AGE  COLOR  NAME' }
 
       it 'raises an error' do
-        expect { result }.to raise_error Nother::Tablatal::ParserError
+        expect { result }.to raise_error Nodaire::Tablatal::ParserError
       end
     end
 

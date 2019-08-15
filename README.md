@@ -1,4 +1,4 @@
-# ’nother
+# Nodaire
 
 Ruby parsers for text file formats. Work in progress.
 

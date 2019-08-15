@@ -3,7 +3,7 @@
 # Implementation of Tablatal
 # Tablatal is (c) Devine Lu Linvega (MIT License)
 
-module Nother
+module Nodaire
   class Tablatal
     class ParserError < StandardError; end
 
