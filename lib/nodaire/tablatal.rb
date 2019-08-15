@@ -52,6 +52,6 @@ class Nodaire::Tablatal
   end
 
   def make_line(line)
-    @keys.map { |key, range| [key, line[range].strip] }.to_h
+    @keys.map { |key, range| [key, (line[range] || '').strip] }.to_h
   end
 end

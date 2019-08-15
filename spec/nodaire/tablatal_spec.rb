@@ -147,6 +147,31 @@ describe Nodaire::Tablatal do
         expect(result).to eq expected_output
       end
     end
+
+    context 'with incomplete lines' do
+      let(:input) do
+        <<~TBTL
+          NAME    AGE   COLOR
+          Erica   12    Opal
+          Alex    23
+          Nike    34    赤い
+          Ruca
+        TBTL
+      end
+
+      let(:expected_output) do
+        [
+          { name: 'Erica', age: '12', color: 'Opal' },
+          { name: 'Alex',  age: '23', color: '' },
+          { name: 'Nike',  age: '34', color: '赤い' },
+          { name: 'Ruca',  age: '',   color: '' },
+        ]
+      end
+
+      it 'sets the missing values to empty strings' do
+        expect(result).to eq expected_output
+      end
+    end
   end
 
   describe '#keys' do
