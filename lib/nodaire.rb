@@ -3,4 +3,5 @@
 module Nodaire
 end
 
+require 'nodaire/version'
 require 'nodaire/tablatal'
