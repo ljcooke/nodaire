@@ -11,8 +11,8 @@ class Nodaire::Tablatal
   ##
   # Parse a string in Tablatal format and return an array of hashes.
   #
-  def self.parse(string)
-    Parser.new(string).rows
+  def self.parse(string, preserve_keys: false)
+    Parser.new(string, preserve_keys: preserve_keys).rows
   end
 
   ##

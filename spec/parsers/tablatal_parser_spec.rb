@@ -3,7 +3,10 @@
 require 'nodaire/parsers/tablatal_parser'
 
 describe Nodaire::Tablatal::Parser do
-  let(:instance) { described_class.new(input) }
+  let(:preserve_keys) { false }
+  let(:instance) do
+    described_class.new(input, preserve_keys: preserve_keys)
+  end
 
   let(:input) do
     <<~TBTL
@@ -29,6 +32,23 @@ describe Nodaire::Tablatal::Parser do
 
     it 'returns the expected output' do
       expect(result).to eq expected_output
+    end
+
+    context 'with preserve_keys set to true' do
+      let(:preserve_keys) { true }
+
+      let(:expected_output) do
+        [
+          { 'NAME' => 'Erica', 'AGE' => '12', 'COLOR' => 'Opal' },
+          { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => 'Cyan, Turquoise' },
+          { 'NAME' => 'Nike',  'AGE' => '34', 'COLOR' => '赤い' },
+          { 'NAME' => 'Ruca',  'AGE' => '45', 'COLOR' => 'Grey' },
+        ]
+      end
+
+      it 'returns the expected output' do
+        expect(result).to eq expected_output
+      end
     end
 
     context 'with no input' do

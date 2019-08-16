@@ -29,8 +29,16 @@ Ruby parsers for text file formats. Work in progress.
 #   { name: 'Ruca',  age: '45', color: 'Grey' },
 # ]
 
-> Nodaire::Tablatal.to_csv(input)
-# name,age,color
+> Nodaire::Tablatal.parse(input, preserve_keys: true)
+# [
+#   { 'NAME' => 'Erica', 'AGE' => '12', 'COLOR' => 'Opal' },
+#   { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => 'Cyan' },
+#   { 'NAME' => 'Nike',  'AGE' => '34', 'COLOR' => 'Red' },
+#   { 'NAME' => 'Ruca',  'AGE' => '45', 'COLOR' => 'Grey' },
+# ]
+
+> Nodaire::Tablatal.to_csv(input, preserve_keys: true)
+# NAME,AGE,COLOR
 # Erica,12,Opal
 # Alex,23,Cyan
 # Nike,34,Red
