@@ -229,22 +229,4 @@ describe Nodaire::Tablatal::Parser do
       end
     end
   end
-
-  describe '#to_csv' do
-    let(:result) { instance.to_csv }
-
-    let(:expected_output) do
-      <<~CSV
-        name,age,color
-        Erica,12,Opal
-        Alex,23,"Cyan, Turquoise"
-        Nike,34,赤い
-        Ruca,45,Grey
-      CSV
-    end
-
-    it 'returns the expected output' do
-      expect(result).to eq expected_output
-    end
-  end
 end

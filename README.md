@@ -14,6 +14,8 @@ Ruby parsers for text file formats. Work in progress.
 
 ## Examples
 
+__Note__: The API below differs from the v0.1.0 gem that is currently published.
+
 ```ruby
 > input = <<~TBTL
   NAME    AGE   COLOR
@@ -23,7 +25,8 @@ Ruby parsers for text file formats. Work in progress.
   Ruca    45    Grey
   TBTL
 
-> Nodaire::Tablatal.parse(input)
+> tablatal = Nodaire::Tablatal.parse(input)
+> tablatal.rows
 # [
 #   { name: 'Erica', age: '12', color: 'Opal' },
 #   { name: 'Alex',  age: '23', color: 'Cyan' },
@@ -31,7 +34,8 @@ Ruby parsers for text file formats. Work in progress.
 #   { name: 'Ruca',  age: '45', color: 'Grey' },
 # ]
 
-> Nodaire::Tablatal.parse(input, preserve_keys: true)
+> tablatal = Nodaire::Tablatal.parse(input, preserve_keys: true)
+> tablatal.rows
 # [
 #   { 'NAME' => 'Erica', 'AGE' => '12', 'COLOR' => 'Opal' },
 #   { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => 'Cyan' },
@@ -39,7 +43,7 @@ Ruby parsers for text file formats. Work in progress.
 #   { 'NAME' => 'Ruca',  'AGE' => '45', 'COLOR' => 'Grey' },
 # ]
 
-> Nodaire::Tablatal.to_csv(input, preserve_keys: true)
+> tablatal.to_csv
 # NAME,AGE,COLOR
 # Erica,12,Opal
 # Alex,23,Cyan

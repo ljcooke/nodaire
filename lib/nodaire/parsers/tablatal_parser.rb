@@ -7,11 +7,6 @@ require_relative '../errors'
 class Nodaire::Tablatal
   class ParserError < Nodaire::ParserError; end
 
-  ##
-  # Parser for the Tablatal file format.
-  #
-  # Tablatal is (c) Devine Lu Linvega (MIT License).
-  #
   class Parser
     attr_reader :rows
 
@@ -22,16 +17,6 @@ class Nodaire::Tablatal
 
       @keys = make_keys(lines.shift.scan(/(\S+\s*)/).flatten, preserve_keys)
       @rows = lines.map { |line| make_line(line) }.compact
-    end
-
-    def to_csv
-      key_symbols = keys
-      CSV.generate do |csv|
-        csv << key_symbols
-        rows.each do |row|
-          csv << key_symbols.map { |key| row[key] }
-        end
-      end
     end
 
     def keys
