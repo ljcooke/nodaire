@@ -23,7 +23,7 @@ class Nodaire::Tablatal
   end
 
   ##
-  # Parse a string in Tablatal format and return a string in CSV format.
+  # Return a string in CSV format.
   #
   def to_csv
     CSV.generate do |csv|
