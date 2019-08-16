@@ -2,7 +2,7 @@
 
 Ruby parsers for text file formats. Work in progress.
 
-[![Gem Version](https://badge.fury.io/rb/nodaire.svg)](https://badge.fury.io/rb/nodaire)
+[![Gem Version](https://badge.fury.io/rb/nodaire.svg)](https://rubygems.org/gems/nodaire)
 
 ## File formats
 
