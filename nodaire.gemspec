@@ -7,8 +7,8 @@ require 'nodaire/version'
 
 Gem::Specification.new do |s|
   s.name        = 'nodaire'
-  s.version     = Nodaire::VERSION
-  s.date        = Nodaire::DATE
+  s.version     = Nodaire::Version::STRING
+  s.date        = Nodaire::Version::DATE
   s.license     = 'MIT'
 
   s.summary     = 'Text file parsers.'
@@ -25,9 +25,8 @@ Gem::Specification.new do |s|
     'source_code_uri' => 'https://github.com/ljcooke/nodaire',
   }
 
-  s.files = [
+  s.files = Dir['lib/**/*.rb'] + [
     'LICENSE',
     'README.md',
-    Dir['lib/**/*.rb'],
-  ].flatten
+  ]
 end

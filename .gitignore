@@ -1,3 +1,6 @@
-.bundle
-Gemfile.lock
+.bundle/*
 doc/*
+
+*.gem
+
+Gemfile.lock
