@@ -2,6 +2,8 @@
 
 Ruby parsers for text file formats. Work in progress.
 
+[![Gem Version](https://badge.fury.io/rb/nodaire.svg)](https://badge.fury.io/rb/nodaire)
+
 ## File formats
 
 - [Oscean](https://wiki.xxiivv.com/#oscean) by Devine Lu Linvega
