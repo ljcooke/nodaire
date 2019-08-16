@@ -6,7 +6,7 @@
 module Nodaire
 end
 
-require 'nodaire/formats'
+require_relative 'nodaire/formats'
 
-require 'nodaire/errors'
-require 'nodaire/version'
+require_relative 'nodaire/errors'
+require_relative 'nodaire/version'

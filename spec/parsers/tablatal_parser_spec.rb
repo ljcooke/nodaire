@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'nodaire/parsers/tablatal_parser'
+require 'nodaire'
 
 describe Nodaire::Tablatal::Parser do
   let(:preserve_keys) { false }

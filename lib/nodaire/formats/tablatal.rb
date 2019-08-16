@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'nodaire/parsers/tablatal_parser'
+require_relative '../parsers/tablatal_parser'
 
 ##
 # Interface for the Tablatal file format.

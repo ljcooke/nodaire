@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'nodaire/formats/tablatal'
+require 'nodaire'
 
 describe Nodaire::Tablatal do
   let(:instance) { described_class.new(input) }

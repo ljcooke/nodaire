@@ -2,7 +2,7 @@
 
 require 'csv'
 
-require 'nodaire/errors'
+require_relative '../errors'
 
 class Nodaire::Tablatal
   class ParserError < Nodaire::ParserError; end
