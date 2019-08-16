@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'nodaire'
+require 'nodaire/parsers/tablatal_parser'
 
-describe Nodaire::Tablatal do
+describe Nodaire::Tablatal::Parser do
   let(:instance) { described_class.new(input) }
 
   let(:input) do
@@ -15,8 +15,8 @@ describe Nodaire::Tablatal do
     TBTL
   end
 
-  describe '#to_a' do
-    let(:result) { instance.to_a }
+  describe '#rows' do
+    let(:result) { instance.rows }
 
     let(:expected_output) do
       [
@@ -215,7 +215,7 @@ describe Nodaire::Tablatal do
 
     let(:expected_output) do
       <<~CSV
-        NAME,AGE,COLOR
+        name,age,color
         Erica,12,Opal
         Alex,23,"Cyan, Turquoise"
         Nike,34,赤い

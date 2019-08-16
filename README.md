@@ -21,9 +21,7 @@ Ruby parsers for text file formats. Work in progress.
   Ruca    45    Grey
   TBTL
 
-> data = Nodaire::Tablatal.new(input)
-
-> data.to_a
+> Nodaire::Tablatal.parse(input)
 # [
 #   { name: 'Erica', age: '12', color: 'Opal' },
 #   { name: 'Alex',  age: '23', color: 'Cyan' },
@@ -31,8 +29,8 @@ Ruby parsers for text file formats. Work in progress.
 #   { name: 'Ruca',  age: '45', color: 'Grey' },
 # ]
 
-> data.to_csv
-# NAME,AGE,COLOR
+> Nodaire::Tablatal.to_csv(input)
+# name,age,color
 # Erica,12,Opal
 # Alex,23,Cyan
 # Nike,34,Red

@@ -6,5 +6,7 @@
 module Nodaire
 end
 
+require 'nodaire/formats'
+
+require 'nodaire/errors'
 require 'nodaire/version'
-require 'nodaire/tablatal'
