@@ -10,7 +10,8 @@ require_relative '../parsers/tablatal_parser'
 # Tablatal is (c) Devine Lu Linvega (MIT License).
 #
 class Nodaire::Tablatal
-  attr_reader :keys
+  attr_reader :rows, :keys
+  alias_method :to_a, :rows
 
   ##
   # Parse a string in Tablatal format.
@@ -20,14 +21,6 @@ class Nodaire::Tablatal
 
     new(parser.rows, parser.keys)
   end
-
-  ##
-  # Returns an array of hashes.
-  #
-  def rows
-    @rows
-  end
-  alias_method :to_a, :rows
 
   ##
   # Parse a string in Tablatal format and return a string in CSV format.
