@@ -33,7 +33,7 @@ class Nodaire::Tablatal
       return if lines.empty?
 
       @keys = make_keys(lines.shift.scan(/(\S+\s*)/).flatten)
-      @data = lines.map { |line, num| make_line(line, num) }.compact
+      @data = lines.map { |line| make_line(line) }.compact
     end
 
     def make_keys(segs)
@@ -54,7 +54,7 @@ class Nodaire::Tablatal
       end
     end
 
-    def make_line(line, num)
+    def make_line(line)
       @keys.map { |key| [key.name, (line[key.range] || '').strip] }.to_h
     end
 
