@@ -3,6 +3,7 @@
 Ruby parsers for text file formats. Work in progress.
 
 [![Gem Version](https://badge.fury.io/rb/nodaire.svg)](https://rubygems.org/gems/nodaire)
+[![Build Status](https://travis-ci.org/ljcooke/nodaire.svg?branch=master)](https://travis-ci.org/ljcooke/nodaire)
 
 ## File formats
 
