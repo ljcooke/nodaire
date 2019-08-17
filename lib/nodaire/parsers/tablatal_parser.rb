@@ -12,6 +12,8 @@ class Nodaire::Tablatal
       @strict = strict
       @preserve_keys = options.fetch(:preserve_keys, false)
 
+      @keys = []
+      @data = []
       @errors = []
 
       parse! string

@@ -82,16 +82,16 @@ describe Nodaire::Tablatal::Parser do
 
   context 'with no input' do
     let(:input) { nil }
-    let(:expected_data) { nil }
-    let(:expected_keys) { nil }
+    let(:expected_data) { [] }
+    let(:expected_keys) { [] }
 
     include_examples :valid_input
   end
 
   context 'with only whitespace' do
     let(:input) { '    ' }
-    let(:expected_data) { nil }
-    let(:expected_keys) { nil }
+    let(:expected_data) { [] }
+    let(:expected_keys) { [] }
 
     include_examples :valid_input
   end
