@@ -103,5 +103,20 @@ describe Nodaire::Indental do
         end
       end
     end
+
+    describe '#to_json' do
+      let(:possible_outputs) do
+        [
+          '{"name":{"key":"VALUE","list":["ITEM1","ITEM2"]}}',
+          '{"name":{"list":["ITEM1","ITEM2"],"key":"VALUE"}}'
+        ]
+      end
+
+      it 'returns the expected output' do
+        output = instance.to_json
+        expect(output).to be_a String
+        expect(possible_outputs).to include(output)
+      end
+    end
   end
 end

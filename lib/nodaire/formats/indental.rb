@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'csv'
+require 'json'
 
 require_relative '../parsers/indental_parser'
 
@@ -40,6 +40,13 @@ class Nodaire::Indental
   #
   def valid?
     @errors.empty?
+  end
+
+  ##
+  # Return a string in JSON format.
+  #
+  def to_json
+    JSON.generate(data)
   end
 
   private

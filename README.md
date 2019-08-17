@@ -37,6 +37,11 @@ __Note__: The API below differs from the v0.1.0 gem that is currently published.
 
 > indental.valid?
 # true
+
+> indental = Nodaire::Indental.parse(input, preserve_keys: true)
+
+> indental.to_json
+# {"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}
 ```
 
 ### Tablatal
@@ -59,6 +64,9 @@ __Note__: The API below differs from the v0.1.0 gem that is currently published.
 #   { name: 'Nike',  age: '34', color: 'Red' },
 #   { name: 'Ruca',  age: '45', color: 'Grey' },
 # ]
+
+> tablatal.valid?
+# true
 
 > tablatal = Nodaire::Tablatal.parse(input, preserve_keys: true)
 
