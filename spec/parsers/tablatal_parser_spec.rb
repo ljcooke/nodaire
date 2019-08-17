@@ -121,13 +121,14 @@ describe Nodaire::Tablatal::Parser do
   end
 
   context 'with trailing spaces' do
+    let(:space) { ' ' }
     let(:input) do
       <<~TBTL
-        NAME    AGE   COLOR#{' '}
+        NAME    AGE   COLOR#{space}
         Erica   12    Opal
         Alex    23    Cyan, Turquoise\t\t
         Nike    34    赤い
-        Ruca    45    Grey#{' '}
+        Ruca    45    Grey#{space}
       TBTL
     end
 
