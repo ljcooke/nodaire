@@ -74,22 +74,22 @@ class Nodaire::Indental
 
     def parse_key_value!(key, value, num)
       key = symbolize_key(key)
-      if @data[@cat_id].include?(key)
+      if current_category.include?(key)
         @list_id = nil
         oops! 'Duplicate key', num
       else
-        @data[@cat_id][key] = value.strip
+        current_category[key] = value.strip
         @list_id = nil
       end
     end
 
     def parse_list!(key, num)
       key = symbolize_key(key)
-      if @data[@cat_id].include?(key)
+      if current_category.include?(key)
         @list_id = nil
         oops! 'Duplicate key', num
       else
-        @data[@cat_id][key] = []
+        current_category[key] = []
         @list_id = key
       end
     end
@@ -98,8 +98,12 @@ class Nodaire::Indental
       if @list_id.nil?
         oops! 'No list specified', num
       else
-        @data[@cat_id][@list_id] << item
+        current_category[@list_id] << item
       end
+    end
+
+    def current_category
+      @data[@cat_id]
     end
 
     def oops!(message, line_num)
