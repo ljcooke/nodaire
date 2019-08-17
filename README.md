@@ -3,11 +3,12 @@
 Ruby parsers for text file formats. Work in progress.
 
 [![Gem Version](https://badge.fury.io/rb/nodaire.svg)](https://rubygems.org/gems/nodaire)
-[![Build Status](https://travis-ci.org/ljcooke/nodaire.svg?branch=master)](https://travis-ci.org/ljcooke/nodaire)
+[![Build Status](https://travis-ci.org/slisne/nodaire.svg?branch=master)](https://travis-ci.org/slisne/nodaire)
 
 ## File formats
 
 - [Oscean](https://wiki.xxiivv.com/#oscean) file formats by Devine Lu Linvega:
+
   - [__Indental__](https://wiki.xxiivv.com/#indental) (.ndtl)
   - [__Tablatal__](https://wiki.xxiivv.com/#tablatal) (.tbtl)
 
