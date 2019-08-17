@@ -38,6 +38,11 @@ describe Nodaire::Indental::Parser do
           Bread
           Baby spinach
 
+      Allowed duplicates
+        List
+          Duplicate
+          Duplicate
+
       Empty category
 
       Category with empty keys and lists
@@ -73,6 +78,12 @@ describe Nodaire::Indental::Parser do
           'Baby spinach',
         ],
       },
+      allowed_duplicates: {
+        list: [
+          'Duplicate',
+          'Duplicate',
+        ],
+      },
       empty_category: {},
       category_with_empty_keys_and_lists: {
         empty_key: "[This isn't supported yet!]",
@@ -95,8 +106,9 @@ describe Nodaire::Indental::Parser do
     }
   end
 
-  let(:result) { described_class.new(input, false) }
-  let(:strict_result) { described_class.new(input, true) }
+  let(:result) { described_class.new(input, false, options) }
+  let(:strict_result) { described_class.new(input, true, options) }
+  let(:options) { Hash.new }
 
   shared_examples :good_input do
     it 'returns the expected output' do
@@ -131,6 +143,35 @@ describe Nodaire::Indental::Parser do
     let(:expected_output) { complete_example_expected_output }
 
     include_examples :good_input
+  end
+
+  describe 'with options' do
+    describe 'preserve_keys' do
+      let(:options) do
+        { preserve_keys: true }
+      end
+
+      let(:input) do
+        <<~NDTL
+          NAME 1
+            KEY 1 : VALUE
+            LIST 1
+              ITEM 1
+              ITEM 2
+        NDTL
+      end
+
+      let(:expected_output) do
+        {
+          'NAME 1' => {
+            'KEY 1' => 'VALUE',
+            'LIST 1' => ['ITEM 1', 'ITEM 2'],
+          },
+        }
+      end
+
+      include_examples :good_input
+    end
   end
 
   describe 'with odd-numbered indentation' do
