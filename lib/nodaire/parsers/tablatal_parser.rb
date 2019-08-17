@@ -6,15 +6,15 @@ class Nodaire::Tablatal
   class ParserError < Nodaire::ParserError; end
 
   class Parser
-    attr_reader :rows
+    attr_reader :data, :errors
 
-    def initialize(string, preserve_keys: false)
-      lines = (string || '').strip.split("\n")
-                            .reject { |line| line.match(/^\s*(;.*)?$/) }
-      return if lines.empty?
+    def initialize(string, strict, options = {})
+      @strict = strict
+      @preserve_keys = options.fetch(:preserve_keys, false)
 
-      @keys = make_keys(lines.shift.scan(/(\S+\s*)/).flatten, preserve_keys)
-      @rows = lines.map { |line| make_line(line) }.compact
+      @errors = []
+
+      parse! string
     end
 
     def keys
@@ -25,22 +25,45 @@ class Nodaire::Tablatal
 
     Key = Struct.new(:name, :range, keyword_init: true)
 
-    def make_keys(segs, preserve_keys)
-      [].tap do |keys|
-        segs.each_with_index do |seg, idx|
-          key = seg.strip
-          key = key.downcase.to_sym unless preserve_keys
-          raise ParserError, 'Duplicate keys' if keys.any? { |k| key == k.name }
+    def parse!(string)
+      lines = (string || '').strip.split("\n")
+                            .reject { |line| line.match(/^\s*(;.*)?$/) }
+      return if lines.empty?
 
+      @keys = make_keys(lines.shift.scan(/(\S+\s*)/).flatten)
+      @data = lines.map { |line, num| make_line(line, num) }.compact
+    end
+
+    def make_keys(segs)
+      [].tap do |keys|
+        start = 0
+        segs.each_with_index do |seg, idx|
+          key = symbolize_key(seg.strip)
           len = seg.size if idx < segs.size - 1
-          start = keys.empty? ? 0 : keys.last.range.last
-          keys.push Key.new(name: key, range: start...(len && start + len))
+
+          if keys.any? { |k| key == k.name }
+            oops! "Duplicate key #{key}", 1
+          else
+            keys << Key.new(name: key, range: start...(len && start + len))
+          end
+
+          start += len if len
         end
       end
     end
 
-    def make_line(line)
+    def make_line(line, num)
       @keys.map { |key| [key.name, (line[key.range] || '').strip] }.to_h
+    end
+
+    def oops!(message, line_num)
+      message = "#{message} on line #{line_num}"
+      @errors << message
+      raise ParserError, message if @strict
+    end
+
+    def symbolize_key(key)
+      @preserve_keys ? key : key.downcase.to_sym
     end
   end
 end

@@ -14,8 +14,6 @@ class Nodaire::Indental
 
       @data = {}
       @errors = []
-      @cat_id = nil
-      @list_id = nil
 
       parse! string
     end
@@ -39,11 +37,11 @@ class Nodaire::Indental
     end
 
     def parse_category!(cat, num)
-      cat = symbolize_key(cat) unless @preserve_keys
+      cat = symbolize_key(cat)
       if data.include?(cat)
         @cat_id = nil
         @list_id = nil
-        oops!('Duplicate category', num)
+        oops! 'Duplicate category', num
       else
         @data[cat] = {}
         @cat_id = cat
@@ -63,10 +61,10 @@ class Nodaire::Indental
     end
 
     def parse_key_value!(key, value, num)
-      key = symbolize_key(key) unless @preserve_keys
+      key = symbolize_key(key)
       if @data[@cat_id].include?(key)
         @list_id = nil
-        oops!('Duplicate key', num)
+        oops! 'Duplicate key', num
       else
         @data[@cat_id][key] = value.strip
         @list_id = nil
@@ -74,10 +72,10 @@ class Nodaire::Indental
     end
 
     def parse_list!(key, num)
-      key = symbolize_key(key) unless @preserve_keys
+      key = symbolize_key(key)
       if @data[@cat_id].include?(key)
         @list_id = nil
-        oops!('Duplicate key', num)
+        oops! 'Duplicate key', num
       else
         @data[@cat_id][key] = []
         @list_id = key
@@ -86,7 +84,7 @@ class Nodaire::Indental
 
     def parse_list_item!(item, num)
       if @list_id.nil?
-        oops!('No list specified', num)
+        oops! 'No list specified', num
       else
         @data[@cat_id][@list_id] << item
       end
@@ -99,7 +97,7 @@ class Nodaire::Indental
     end
 
     def symbolize_key(key)
-      key.downcase.split.join('_').to_sym
+      @preserve_keys ? key : key.downcase.split.join('_').to_sym
     end
   end
 end

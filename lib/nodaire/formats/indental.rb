@@ -16,7 +16,7 @@ class Nodaire::Indental
   ##
   # Parse a string in Indental format.
   #
-  # Attempts to ignore or work around errors.
+  # Ignores or attempts to work around errors.
   #
   def self.parse(string, preserve_keys: false)
     parser = Parser.new(string, false, preserve_keys: preserve_keys)

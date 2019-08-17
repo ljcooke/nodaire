@@ -30,8 +30,8 @@ describe Nodaire::Indental do
         expect(return_value).to be_a described_class
       end
 
-      describe 'with invalid input' do
-        let(:input) { '\tINVALID' }
+      context 'with invalid input' do
+        let(:input) { "\tINVALID" }
 
         it 'returns an instance of the class' do
           expect(return_value).to be_a described_class
@@ -46,7 +46,7 @@ describe Nodaire::Indental do
         expect(return_value).to be_a described_class
       end
 
-      describe 'with invalid input' do
+      context 'with invalid input' do
         let(:input) { "\tINVALID" }
 
         it 'raises a parser error' do
@@ -76,7 +76,7 @@ describe Nodaire::Indental do
         expect(instance.errors).to eq []
       end
 
-      describe 'with invalid input' do
+      context 'with invalid input' do
         let(:input) { "\tINVALID" }
 
         it 'returns an array of error strings' do
@@ -95,7 +95,7 @@ describe Nodaire::Indental do
         expect(instance.valid?).to be true
       end
 
-      describe 'with invalid input' do
+      context 'with invalid input' do
         let(:input) { "\tINVALID" }
 
         it 'returns false' do

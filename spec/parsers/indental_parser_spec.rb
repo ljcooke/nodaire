@@ -13,7 +13,7 @@ describe Nodaire::Indental::Parser do
     NDTL
   end
 
-  let(:expected_output) do
+  let(:expected_data) do
     {
       name: {
         key: 'VALUE',
@@ -64,7 +64,7 @@ describe Nodaire::Indental::Parser do
     NDTL
   end
 
-  let(:complete_example_expected_output) do
+  let(:complete_example_expected_data) do
     {
       name: {
         key: 'VALUE',
@@ -110,10 +110,10 @@ describe Nodaire::Indental::Parser do
   let(:strict_result) { described_class.new(input, true, options) }
   let(:options) { Hash.new }
 
-  shared_examples :good_input do
-    it 'returns the expected output' do
-      expect(result.data).to eq expected_output
-      expect(strict_result.data).to eq expected_output
+  shared_examples :valid_input do
+    it 'returns the expected result' do
+      expect(result.data).to eq expected_data
+      expect(strict_result.data).to eq expected_data
     end
 
     it 'does not have errors' do
@@ -122,9 +122,9 @@ describe Nodaire::Indental::Parser do
     end
   end
 
-  shared_examples :bad_input do
-    it 'returns the expected output' do
-      expect(result.data).to eq expected_output
+  shared_examples :invalid_input do
+    it 'returns the expected result' do
+      expect(result.data).to eq expected_data
     end
 
     it 'has errors' do
@@ -136,17 +136,17 @@ describe Nodaire::Indental::Parser do
     end
   end
 
-  include_examples :good_input
+  include_examples :valid_input
 
-  describe 'with a fully featured example' do
+  context 'with a fully featured example' do
     let(:input) { complete_example_input }
-    let(:expected_output) { complete_example_expected_output }
+    let(:expected_data) { complete_example_expected_data }
 
-    include_examples :good_input
+    include_examples :valid_input
   end
 
-  describe 'with options' do
-    describe 'preserve_keys' do
+  describe 'preserve_keys' do
+    context 'when true' do
       let(:options) do
         { preserve_keys: true }
       end
@@ -161,7 +161,7 @@ describe Nodaire::Indental::Parser do
         NDTL
       end
 
-      let(:expected_output) do
+      let(:expected_data) do
         {
           'NAME 1' => {
             'KEY 1' => 'VALUE',
@@ -170,11 +170,11 @@ describe Nodaire::Indental::Parser do
         }
       end
 
-      include_examples :good_input
+      include_examples :valid_input
     end
   end
 
-  describe 'with odd-numbered indentation' do
+  context 'with odd-numbered indentation' do
     let(:input) do
       <<~NDTL
         NAME
@@ -186,10 +186,10 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    include_examples :bad_input
+    include_examples :invalid_input
   end
 
-  describe 'with greater than 4 spaces of indentation' do
+  context 'with greater than 4 spaces of indentation' do
     let(:input) do
       <<~NDTL
         NAME
@@ -201,10 +201,10 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    include_examples :bad_input
+    include_examples :invalid_input
   end
 
-  describe 'with indented lines before the first category' do
+  context 'with indented lines before the first category' do
     let(:input) do
       <<~NDTL
           INVALID
@@ -216,10 +216,10 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    include_examples :bad_input
+    include_examples :invalid_input
   end
 
-  describe 'with indented list items before a list line' do
+  context 'with indented list items before a list line' do
     let(:input) do
       <<~NDTL
         NAME
@@ -231,10 +231,10 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    include_examples :bad_input
+    include_examples :invalid_input
   end
 
-  describe 'with duplicate categories' do
+  context 'with duplicate categories' do
     let(:input) do
       <<~NDTL
         NAME
@@ -246,7 +246,7 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    let(:expected_output) do
+    let(:expected_data) do
       {
         name: {
           key: 'VALUE',
@@ -257,10 +257,10 @@ describe Nodaire::Indental::Parser do
       }
     end
 
-    include_examples :bad_input
+    include_examples :invalid_input
   end
 
-  describe 'with duplicate keys' do
+  context 'with duplicate keys' do
     let(:input) do
       <<~NDTL
         NAME
@@ -272,7 +272,7 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    let(:expected_output) do
+    let(:expected_data) do
       {
         name: {
           key: 'VALUE',
@@ -281,10 +281,10 @@ describe Nodaire::Indental::Parser do
       }
     end
 
-    include_examples :bad_input
+    include_examples :invalid_input
   end
 
-  describe 'with duplicate list names' do
+  context 'with duplicate list names' do
     let(:input) do
       <<~NDTL
         NAME
@@ -301,7 +301,7 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    let(:expected_output) do
+    let(:expected_data) do
       {
         name: {
           list: ['ITEM'],
@@ -313,6 +313,6 @@ describe Nodaire::Indental::Parser do
       }
     end
 
-    include_examples :bad_input
+    include_examples :invalid_input
   end
 end

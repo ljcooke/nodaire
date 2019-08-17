@@ -10,16 +10,36 @@ require_relative '../parsers/tablatal_parser'
 # Tablatal is (c) Devine Lu Linvega (MIT License).
 #
 class Nodaire::Tablatal
-  attr_reader :rows, :keys
-  alias_method :to_a, :rows
+  attr_reader :data, :keys, :errors
+  alias_method :to_a, :data
 
   ##
   # Parse a string in Tablatal format.
   #
+  # Ignores or attempts to work around errors.
+  #
   def self.parse(string, preserve_keys: false)
-    parser = Parser.new(string, preserve_keys: preserve_keys)
+    parser = Parser.new(string, false, preserve_keys: preserve_keys)
 
-    new(parser.rows, parser.keys)
+    new(parser)
+  end
+
+  ##
+  # Parse a string in Tablatal format.
+  #
+  # Raises an exception if there are errors.
+  #
+  def self.parse!(string, preserve_keys: false)
+    parser = Parser.new(string, true, preserve_keys: preserve_keys)
+
+    new(parser)
+  end
+
+  ##
+  # Returns whether the input was parsed without errors.
+  #
+  def valid?
+    @errors.empty?
   end
 
   ##
@@ -28,7 +48,7 @@ class Nodaire::Tablatal
   def to_csv
     CSV.generate do |csv|
       csv << keys
-      rows.each do |row|
+      data.each do |row|
         csv << keys.map { |key| row[key] }
       end
     end
@@ -36,8 +56,9 @@ class Nodaire::Tablatal
 
   private
 
-  def initialize(rows, keys)
-    @rows = rows
-    @keys = keys
+  def initialize(parser)
+    @data = parser.data
+    @keys = parser.keys
+    @errors = parser.errors
   end
 end
