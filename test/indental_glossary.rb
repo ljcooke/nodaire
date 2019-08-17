@@ -11,24 +11,24 @@ require 'nodaire'
 FILENAME = 'test/indental_glossary.ndtl'
 URL = 'https://wiki.xxiivv.com/scripts/database/glossary.ndtl'
 
-def get_input
+def read_input!
   if File.exist?(FILENAME)
     puts "Reading from #{FILENAME}"
-    open(FILENAME).read
+    File.open(FILENAME).read
   else
     puts "Downloading #{URL}"
-    open(URL).read.tap do |string|
-      open(FILENAME, 'w').write(string)
+    URI.parse(URL).open.read.tap do |string|
+      File.open(FILENAME, 'w').write(string)
     end
   end
 end
 
-indental = Nodaire::Indental.parse(get_input, preserve_keys: true)
+indental = Nodaire::Indental.parse(read_input!, preserve_keys: true)
 
 if indental.valid?
   indental.categories.each do |key|
     puts "#{key} (#{indental.data[key].size})"
   end
 else
-  indental.errors.each { |error| $stderr.puts error }
+  indental.errors.each { |message| warn message }
 end
