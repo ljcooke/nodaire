@@ -4,10 +4,9 @@ rvm:
   - 2.5
   - 2.6
   - jruby
-  - truffleruby
-matrix:
-  fast_finish: true
-  allow_failures:
-    - rvm: truffleruby
+# matrix:
+#   fast_finish: true
+#   allow_failures:
+#     - rvm: truffleruby
 script:
   - bundle exec rake spec
