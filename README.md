@@ -12,8 +12,6 @@ Ruby parsers for text file formats. Work in progress.
 
 ## Examples
 
-__Note__: The API below differs from the v0.1.0 gem that is currently published.
-
 ### Indental
 
 ```ruby

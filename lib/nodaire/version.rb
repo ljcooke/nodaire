@@ -2,7 +2,7 @@
 
 module Nodaire
   module Version
-    STRING = '0.1.0'
-    DATE = '2019-08-15'
+    STRING = '0.2.0'
+    DATE = '2019-08-17'
   end
 end
