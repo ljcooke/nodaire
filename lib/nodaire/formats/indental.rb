@@ -36,6 +36,13 @@ class Nodaire::Indental
   end
 
   ##
+  # Returns an array of categories.
+  #
+  def categories
+    @data.keys.sort
+  end
+
+  ##
   # Returns whether the input was parsed without errors.
   #
   def valid?

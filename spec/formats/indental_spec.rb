@@ -71,6 +71,24 @@ describe Nodaire::Indental do
       end
     end
 
+    describe '#categories' do
+      let(:input) do
+        <<~NDTL
+          NAME
+            KEY : VALUE
+            LIST
+              ITEM1
+              ITEM2
+          ABC
+          XYZ
+        NDTL
+      end
+
+      it 'returns the expected output' do
+        expect(instance.categories).to eq %i[abc name xyz]
+      end
+    end
+
     describe '#errors' do
       it 'returns an empty array' do
         expect(instance.errors).to eq []
