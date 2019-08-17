@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
     'source_code_uri' => 'https://github.com/ljcooke/nodaire',
   }
 
+  s.required_ruby_version = '>= 2.5.0'
+
   s.files = Dir['lib/**/*.rb'] + [
     'LICENSE',
     'README.md',
