@@ -6,15 +6,40 @@ Ruby parsers for text file formats. Work in progress.
 
 ## File formats
 
-- [Oscean](https://wiki.xxiivv.com/#oscean) by Devine Lu Linvega
-
-  - [Indental](https://wiki.xxiivv.com/#indental) (planned)
-
-  - [__Tablatal__](https://wiki.xxiivv.com/#tablatal)
+- [Oscean](https://wiki.xxiivv.com/#oscean) file formats by Devine Lu Linvega:
+  - [__Indental__](https://wiki.xxiivv.com/#indental) (.ndtl)
+  - [__Tablatal__](https://wiki.xxiivv.com/#tablatal) (.tbtl)
 
 ## Examples
 
 __Note__: The API below differs from the v0.1.0 gem that is currently published.
+
+### Indental
+
+```ruby
+> input = <<~NDTL
+  NAME
+    KEY : VALUE
+    LIST
+      ITEM1
+      ITEM2
+  NDTL
+
+> indental = Nodaire::Indental.parse(input)
+
+> indental.data
+# {
+#   name: {
+#     key: 'VALUE',
+#     list: ['ITEM1', 'ITEM2'],
+#   },
+# }
+
+> indental.valid?
+# true
+```
+
+### Tablatal
 
 ```ruby
 > input = <<~TBTL
@@ -26,7 +51,8 @@ __Note__: The API below differs from the v0.1.0 gem that is currently published.
   TBTL
 
 > tablatal = Nodaire::Tablatal.parse(input)
-> tablatal.rows
+
+> tablatal.data
 # [
 #   { name: 'Erica', age: '12', color: 'Opal' },
 #   { name: 'Alex',  age: '23', color: 'Cyan' },
@@ -35,13 +61,6 @@ __Note__: The API below differs from the v0.1.0 gem that is currently published.
 # ]
 
 > tablatal = Nodaire::Tablatal.parse(input, preserve_keys: true)
-> tablatal.rows
-# [
-#   { 'NAME' => 'Erica', 'AGE' => '12', 'COLOR' => 'Opal' },
-#   { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => 'Cyan' },
-#   { 'NAME' => 'Nike',  'AGE' => '34', 'COLOR' => 'Red' },
-#   { 'NAME' => 'Ruca',  'AGE' => '45', 'COLOR' => 'Grey' },
-# ]
 
 > tablatal.to_csv
 # NAME,AGE,COLOR

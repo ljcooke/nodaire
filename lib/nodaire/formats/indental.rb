@@ -35,6 +35,9 @@ class Nodaire::Indental
     new(parser)
   end
 
+  ##
+  # Returns whether the input was parsed without errors.
+  #
   def valid?
     @errors.empty?
   end
