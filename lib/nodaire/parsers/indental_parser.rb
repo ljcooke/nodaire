@@ -5,7 +5,7 @@ require_relative '../errors'
 class Nodaire::Indental
   class ParserError < Nodaire::ParserError; end
 
-  class Parser
+  class Parser # :nodoc:
     attr_reader :data, :errors
 
     def initialize(string, strict, options = {})

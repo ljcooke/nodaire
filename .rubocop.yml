@@ -3,9 +3,18 @@ inherit_from: .rubocop_todo.yml
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - 'test/**/*'
+
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
 
 Style/SafeNavigation:
   Enabled: false
