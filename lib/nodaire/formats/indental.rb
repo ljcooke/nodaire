@@ -52,7 +52,7 @@ class Nodaire::Indental
   ##
   # Return a string in JSON format.
   #
-  def to_json
+  def to_json(*_args)
     JSON.generate(data)
   end
 
