@@ -23,10 +23,12 @@ def get_input
   end
 end
 
-indental = Nodaire::Indental.parse(get_input)
+indental = Nodaire::Indental.parse(get_input, preserve_keys: true)
 
 if indental.valid?
-  puts 'Valid'
+  indental.categories.each do |key|
+    puts "#{key} (#{indental.data[key].size})"
+  end
 else
   indental.errors.each { |error| $stderr.puts error }
 end

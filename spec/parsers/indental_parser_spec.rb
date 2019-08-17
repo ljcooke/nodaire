@@ -145,6 +145,22 @@ describe Nodaire::Indental::Parser do
     include_examples :valid_input
   end
 
+  context 'with a JavaScript template string wrapper' do
+    let(:input) do
+      <<~NDTL
+        example = `
+        NAME
+          KEY : VALUE
+          LIST
+            ITEM 1
+            ITEM 2
+        `
+      NDTL
+    end
+
+    include_examples :valid_input
+  end
+
   describe 'preserve_keys' do
     context 'when true' do
       let(:options) do

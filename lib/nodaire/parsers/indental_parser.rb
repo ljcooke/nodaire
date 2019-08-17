@@ -21,10 +21,22 @@ class Nodaire::Indental
     private
 
     def parse!(string)
+      lines = lines_to_parse(string)
+      lines = lines[1...-1] if js_wrapper?(lines)
+      lines.each { |line, num| parse_line! line, num }
+    end
+
+    def lines_to_parse(string)
       (string || '')
         .split("\n").each_with_index
         .reject { |line, _| line.match(/^\s*(;.*)?$/) }
-        .each { |line, idx| parse_line! line, idx + 1 }
+        .map { |line, idx| [line, idx + 1] }
+    end
+
+    def js_wrapper?(lines)
+      !lines.empty? &&
+        lines.first[0].match(/=\s*`\s*$/) &&
+        lines.last[0].strip == '`'
     end
 
     def parse_line!(line, num)
