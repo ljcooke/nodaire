@@ -79,6 +79,6 @@ Ruby parsers for text file formats. Work in progress.
 ## Testing
 
 ```
-bundle install --with test
-bundle exec rspec
+bundle install
+bundle exec rake
 ```
