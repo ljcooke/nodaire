@@ -40,11 +40,15 @@ class Nodaire::Indental
 
     def parse_category!(cat, num)
       cat = symbolize_key(cat) unless @preserve_keys
-      return oops!('Duplicate category', num) if data.include?(cat)
-
-      @data[cat] = {}
-      @cat_id = cat
-      @list_id = nil
+      if data.include?(cat)
+        @cat_id = nil
+        @list_id = nil
+        oops!('Duplicate category', num)
+      else
+        @data[cat] = {}
+        @cat_id = cat
+        @list_id = nil
+      end
     end
 
     def parse_key_or_list!(line, num)
@@ -60,24 +64,32 @@ class Nodaire::Indental
 
     def parse_key_value!(key, value, num)
       key = symbolize_key(key) unless @preserve_keys
-      return oops!('Duplicate key', num) if @data[@cat_id].include?(key)
-
-      @data[@cat_id][key] = value.strip
-      @list_id = nil
+      if @data[@cat_id].include?(key)
+        @list_id = nil
+        oops!('Duplicate key', num)
+      else
+        @data[@cat_id][key] = value.strip
+        @list_id = nil
+      end
     end
 
     def parse_list!(key, num)
       key = symbolize_key(key) unless @preserve_keys
-      return oops!('Duplicate key', num) if @data[@cat_id].include?(key)
-
-      @data[@cat_id][key] = []
-      @list_id = key
+      if @data[@cat_id].include?(key)
+        @list_id = nil
+        oops!('Duplicate key', num)
+      else
+        @data[@cat_id][key] = []
+        @list_id = key
+      end
     end
 
     def parse_list_item!(item, num)
-      return oops!('No list specified', num) unless @list_id
-
-      @data[@cat_id][@list_id] << item
+      if @list_id.nil?
+        oops!('No list specified', num)
+      else
+        @data[@cat_id][@list_id] << item
+      end
     end
 
     def oops!(message, line_num)

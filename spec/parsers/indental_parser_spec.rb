@@ -193,48 +193,83 @@ describe Nodaire::Indental::Parser do
     include_examples :bad_input
   end
 
-  xdescribe 'with duplicate categories' do
+  describe 'with duplicate categories' do
     let(:input) do
       <<~NDTL
         NAME
           KEY : VALUE
-          LIST
-            ITEM 1
-            ITEM 2
         NAME
-          INVALID
+          KEY : DUPLICATE
+        OTHER
+          KEY : VALUE
       NDTL
+    end
+
+    let(:expected_output) do
+      {
+        name: {
+          key: 'VALUE',
+        },
+        other: {
+          key: 'VALUE',
+        },
+      }
     end
 
     include_examples :bad_input
   end
 
-  xdescribe 'with duplicate keys' do
+  describe 'with duplicate keys' do
     let(:input) do
       <<~NDTL
         NAME
           KEY : VALUE
-          KEY : INVALID
-          LIST
-            ITEM 1
-            ITEM 2
+          KEY : DUPLICATE
+          KEY
+            DUPLICATE
+          OTHER : VALUE
       NDTL
+    end
+
+    let(:expected_output) do
+      {
+        name: {
+          key: 'VALUE',
+          other: 'VALUE',
+        },
+      }
     end
 
     include_examples :bad_input
   end
 
-  xdescribe 'with duplicate list names' do
+  describe 'with duplicate list names' do
     let(:input) do
       <<~NDTL
         NAME
-          KEY : VALUE
           LIST
-            ITEM 1
-            ITEM 2
+            ITEM
           LIST
-            INVALID
+            DUPLICATE
+          LIST : DUPLICATE
+          OTHER
+            ITEM
+        OTHER
+          LIST
+            OTHER
       NDTL
+    end
+
+    let(:expected_output) do
+      {
+        name: {
+          list: ['ITEM'],
+          other: ['ITEM'],
+        },
+        other: {
+          list: ['OTHER'],
+        }
+      }
     end
 
     include_examples :bad_input
