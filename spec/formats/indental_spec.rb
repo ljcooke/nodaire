@@ -126,7 +126,7 @@ describe Nodaire::Indental do
       let(:possible_outputs) do
         [
           '{"name":{"key":"VALUE","list":["ITEM1","ITEM2"]}}',
-          '{"name":{"list":["ITEM1","ITEM2"],"key":"VALUE"}}'
+          '{"name":{"list":["ITEM1","ITEM2"],"key":"VALUE"}}',
         ]
       end
 

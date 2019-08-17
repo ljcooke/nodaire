@@ -26,7 +26,9 @@ describe Nodaire::Tablatal::Parser do
 
   let(:result) { described_class.new(input, false, options) }
   let(:strict_result) { described_class.new(input, true, options) }
-  let(:options) { Hash.new }
+  let(:options) do
+    {}
+  end
 
   shared_examples :valid_input do
     it 'returns the expected result' do

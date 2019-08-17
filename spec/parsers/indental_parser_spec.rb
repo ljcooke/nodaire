@@ -79,10 +79,7 @@ describe Nodaire::Indental::Parser do
         ],
       },
       allowed_duplicates: {
-        list: [
-          'Duplicate',
-          'Duplicate',
-        ],
+        list: %w[Duplicate Duplicate],
       },
       empty_category: {},
       category_with_empty_keys_and_lists: {
@@ -108,7 +105,9 @@ describe Nodaire::Indental::Parser do
 
   let(:result) { described_class.new(input, false, options) }
   let(:strict_result) { described_class.new(input, true, options) }
-  let(:options) { Hash.new }
+  let(:options) do
+    {}
+  end
 
   shared_examples :valid_input do
     it 'returns the expected result' do
@@ -343,7 +342,7 @@ describe Nodaire::Indental::Parser do
         },
         other: {
           list: ['OTHER'],
-        }
+        },
       }
     end
 
