@@ -10,21 +10,39 @@ require_relative '../parsers/indental_parser'
 # Indental is (c) Devine Lu Linvega (MIT License).
 #
 class Nodaire::Indental
-  attr_reader :data
+  attr_reader :data, :errors
   alias_method :to_h, :data
 
   ##
   # Parse a string in Indental format.
   #
-  def self.parse(string)
-    data = Parser.new(string)
+  # Attempts to ignore or work around errors.
+  #
+  def self.parse(string, preserve_keys: false)
+    parser = Parser.new(string, false, preserve_keys: preserve_keys)
 
-    new(data)
+    new(parser)
+  end
+
+  ##
+  # Parse a string in Indental format.
+  #
+  # Raises an exception if there are errors.
+  #
+  def self.parse!(string, preserve_keys: false)
+    parser = Parser.new(string, true, preserve_keys: preserve_keys)
+
+    new(parser)
+  end
+
+  def valid?
+    @errors.empty?
   end
 
   private
 
-  def initialize(data)
-    @data = data
+  def initialize(parser)
+    @data = parser.data
+    @errors = parser.errors
   end
 end
