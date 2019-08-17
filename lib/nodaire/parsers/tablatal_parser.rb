@@ -46,7 +46,8 @@ class Nodaire::Tablatal
           if keys.any? { |k| key == k.name }
             oops! "Duplicate key #{key}", 1
           else
-            keys << Key.new(name: key, range: start...(len && start + len))
+            range_end = len ? start + len - 1 : -1
+            keys << Key.new(name: key, range: start..range_end)
           end
 
           start += len if len
