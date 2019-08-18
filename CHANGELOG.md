@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+<!-- ## [Unreleased] -->
+
+## [0.3.0] - 2019-08-18
 ### Added
 - `Indental#categories` returns an array of category names.
 - [Documentation!](https://slisne.github.io/nodaire/)
@@ -36,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Parse [Tablatal](https://wiki.xxiivv.com/#tablatal) files,
   returning an array of hashes or a CSV string.
 
-[Unreleased]: https://github.com/ljcooke/nodaire/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/ljcooke/nodaire/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/ljcooke/nodaire/releases/tag/v0.3.0
 [0.2.0]: https://github.com/ljcooke/nodaire/releases/tag/v0.2.0
 [0.1.0]: https://github.com/ljcooke/nodaire/releases/tag/v0.1.0
