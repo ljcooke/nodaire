@@ -31,16 +31,14 @@ Ruby parsers for text file formats. Work in progress.
 
 > indental.data
 # {
-#   name: {
-#     key: 'VALUE',
-#     list: ['ITEM1', 'ITEM2'],
+#   'NAME' => {
+#     'KEY' => 'VALUE',
+#     'LIST' => ['ITEM1', 'ITEM2'],
 #   },
 # }
 
 > indental.valid?
 # true
-
-> indental = Nodaire::Indental.parse(input, preserve_keys: true)
 
 > indental.to_json
 # {"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}
@@ -63,16 +61,14 @@ Ruby parsers for text file formats. Work in progress.
 
 > tablatal.data
 # [
-#   { name: 'Erica', age: '12', color: 'Opal' },
-#   { name: 'Alex',  age: '23', color: 'Cyan' },
-#   { name: 'Nike',  age: '34', color: 'Red' },
-#   { name: 'Ruca',  age: '45', color: 'Grey' },
+#   { 'NAME' => 'Erica', 'AGE' => '12', 'COLOR' => 'Opal' },
+#   { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => 'Cyan' },
+#   { 'NAME' => 'Nike',  'AGE' => '34', 'COLOR' => 'Red' },
+#   { 'NAME' => 'Ruca',  'AGE' => '45', 'COLOR' => 'Grey' },
 # ]
 
 > tablatal.valid?
 # true
-
-> tablatal = Nodaire::Tablatal.parse(input, preserve_keys: true)
 
 > tablatal.to_csv
 # NAME,AGE,COLOR
