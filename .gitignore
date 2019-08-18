@@ -1,5 +1,6 @@
 .bundle/*
 doc/*
+tmp/*
 
 *.gem
 
