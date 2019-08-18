@@ -85,7 +85,7 @@ describe Nodaire::Indental do
       end
 
       it 'returns the expected output' do
-        expect(instance.categories).to eq %w[ABC NAME XYZ]
+        expect(instance.categories).to eq %w[NAME ABC XYZ]
       end
     end
 

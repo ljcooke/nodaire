@@ -23,7 +23,7 @@ def read_input!
   end
 end
 
-indental = Nodaire::Indental.parse(read_input!, preserve_keys: true)
+indental = Nodaire::Indental.parse read_input!
 
 if indental.valid?
   indental.categories.each do |key|

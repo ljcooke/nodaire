@@ -39,7 +39,7 @@ class Nodaire::Indental
   # Returns an array of categories.
   #
   def categories
-    @data.keys.sort
+    @data.keys
   end
 
   ##

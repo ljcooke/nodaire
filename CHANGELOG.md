@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- `Indental#categories` returns a sorted array of category names.
+- `Indental#categories` returns an array of category names.
 
 ### Changed
 - Indental parser detects when the input is wrapped in a JS template string.
