@@ -1,6 +1,7 @@
 # Nodaire
 
-Nodaire is a collection of parsers for text file formats.
+Nodaire is a collection of text file parsers.
+It supports Ruby 2.5.0 or greater.
 
 __Note__: This is a new gem, and the interface is not yet stable.
 Expect breaking API changes before v1.0.0 is released.
@@ -12,12 +13,18 @@ Expect breaking API changes before v1.0.0 is released.
 
 Nodaire currently supports the following text file formats:
 
-| Format | `.parse` | `.generate` |
-|---|---|---|
-| [Indental](https://wiki.xxiivv.com/#indental) (.ndtl) | YES | no |
-| [Tablatal](https://wiki.xxiivv.com/#tablatal) (.tbtl) | YES | no |
+  - __Indental__ — <https://wiki.xxiivv.com/#indental>
+  - __Tablatal__ — <https://wiki.xxiivv.com/#tablatal>
 
-## Examples
+## Install
+
+Install `nodaire` from [RubyGems](https://rubygems.org/gems/nodaire):
+
+```sh
+gem install nodaire
+```
+
+## Usage examples
 
 ### Indental
 
@@ -25,12 +32,11 @@ Nodaire currently supports the following text file formats:
 require 'nodaire/indental'
 
 doc = Nodaire::Indental.parse! <<~NDTL
-  {
-    'NAME' => {
-      'KEY' => 'VALUE',
-      'LIST' => ['ITEM1', 'ITEM2'],
-    },
-  }
+  NAME
+    KEY : VALUE
+    LIST
+      ITEM1
+      ITEM2
 NDTL
 
 doc.valid?     # true
@@ -58,9 +64,25 @@ doc.to_a.last # {"NAME"=>"Ruca", "AGE"=>"45", "COLOR"=>"Grey"}
 doc.to_csv    # "NAME,AGE,COLOR\nErica,12,Opal\nAlex,23,..."
 ```
 
-## Testing
+## Development
 
+To run the latest source code, check out the
+[Git repository](https://github.com/slisne/nodaire):
+
+```sh
+git clone https://github.com/slisne/nodaire.git
 ```
+
+Install the dependencies using Bundler:
+
+```sh
+gem install bundler
 bundle install
-bundle exec rake spec
+```
+
+Analyse the code and run unit tests using Bundler:
+
+```sh
+bundle exec rubocop
+bundle exec rspec
 ```

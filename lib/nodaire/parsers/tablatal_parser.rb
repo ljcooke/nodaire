@@ -3,7 +3,8 @@
 require_relative 'parser'
 
 class Nodaire::Tablatal
-  class Parser < Nodaire::Parser # :nodoc:
+  # @private
+  class Parser < Nodaire::Parser
     attr_reader :data
 
     def initialize(string, strict, options = {})

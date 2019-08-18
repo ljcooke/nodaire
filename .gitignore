@@ -1,5 +1,6 @@
 .bundle/*
-doc/rdoc/*
+.yardoc/*
+doc/*
 tmp/*
 
 *.gem

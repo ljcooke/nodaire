@@ -2,7 +2,8 @@
 
 require_relative '../errors'
 
-class Nodaire::Parser # :nodoc:
+# @private
+class Nodaire::Parser
   attr_reader :errors, :options
 
   def initialize(strict, options = {})

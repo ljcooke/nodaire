@@ -13,12 +13,11 @@ require_relative '../parsers/indental_parser'
 #   require 'nodaire/indental'
 #
 #   doc = Nodaire::Indental.parse! <<~NDTL
-#     {
-#       'NAME' => {
-#         'KEY' => 'VALUE',
-#         'LIST' => ['ITEM1', 'ITEM2'],
-#       },
-#     }
+#     NAME
+#       KEY : VALUE
+#       LIST
+#         ITEM1
+#         ITEM2
 #   NDTL
 #
 #   doc.valid?     # true
@@ -26,22 +25,31 @@ require_relative '../parsers/indental_parser'
 #   doc.to_h       # {"NAME"=>{"KEY"=>"VALUE", "LIST"=>["ITEM1", "ITEM2"]}}
 #   doc.to_json    # '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
 #
+# @since 0.2.0
+#
 class Nodaire::Indental
   # A hash containing the data parsed from the source.
+  # @return [Hash]
   attr_reader :data
   # An array of category names.
+  # @since 0.3.0
+  # @return [Array<String>]
   attr_reader :categories
-  # An array of error message strings.
+  # An array of error messages.
+  # @return [Array<String>]
   attr_reader :errors
 
   alias_method :to_h, :data
 
   ##
-  # Parse the document +source+ and return an +Indental+ instance.
-  # Ignores or attempts to work around errors.
+  # Parse the document +source+.
   #
-  # If +symbolize_names+ is +true+, normalizes category and key names
-  # and converts them to lowercase symbols.
+  # @param [String] source The document source to parse.
+  # @param [Boolean] symbolize_names
+  #   If true, normalize category and key names and convert them to
+  #   lowercase symbols.
+  #
+  # @return [Indental]
   #
   def self.parse(source, symbolize_names: false)
     parser = Parser.new(source, false, symbolize_names: symbolize_names)
@@ -50,11 +58,15 @@ class Nodaire::Indental
   end
 
   ##
-  # Parse the document +source+ and return an +Indental+ instance.
-  # Raises an exception if errors are detected.
+  # Parse the document +source+, raising an exception if a parser error occurs.
   #
-  # If +symbolize_names+ is +true+, normalizes category and key names
-  # and converts them to lowercase symbols.
+  # @param [String] source The document source to parse.
+  # @param [boolean] symbolize_names
+  #   If true, normalize category and key names and convert them to
+  #   lowercase symbols.
+  #
+  # @raise [ParserError]
+  # @return [Indental]
   #
   def self.parse!(source, symbolize_names: false)
     parser = Parser.new(source, true, symbolize_names: symbolize_names)
@@ -65,12 +77,16 @@ class Nodaire::Indental
   ##
   # A boolean indicating whether the source was parsed without errors.
   #
+  # @return [Boolean]
+  #
   def valid?
     @errors.empty?
   end
 
   ##
-  # Convert the document to JSON. Returns a string.
+  # Convert the document to JSON.
+  #
+  # @return [String]
   #
   def to_json(*_args)
     JSON.generate(data)

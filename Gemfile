@@ -5,8 +5,8 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'rdoc'
   gem 'rubocop'
+  gem 'yard'
 end
 
 group :development, :test do

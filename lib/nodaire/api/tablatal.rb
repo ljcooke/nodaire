@@ -25,22 +25,33 @@ require_relative '../parsers/tablatal_parser'
 #   doc.to_a.last # {"NAME"=>"Ruca", "AGE"=>"45", "COLOR"=>"Grey"}
 #   doc.to_csv    # "NAME,AGE,COLOR\nErica,12,Opal\nAlex,23,..."
 #
+# @since 0.1.0
+#
 class Nodaire::Tablatal
   # An array of hashes containing the data parsed from the source.
+  # @return [Array<Hash>]
   attr_reader :data
   # An array of keys parsed from the source header line.
+  # @return [Array]
   attr_reader :keys
   # An array of error message strings.
+  # @since 0.2.0
+  # @return [Array<String>]
   attr_reader :errors
 
   alias_method :to_a, :data
 
   ##
-  # Parse the document +source+ and return a Tablatal instance.
-  # Ignores or attempts to work around errors.
+  # Parse the document +source+.
   #
-  # If +symbolize_names+ is +true+, normalizes keys and converts them
-  # to lowercase symbols.
+  # @param [String] source The document source to parse.
+  # @param [Boolean] symbolize_keys
+  #   If true, normalize key names and convert them to lowercase symbols.
+  #
+  # @todo Rename +symbolize_keys+ to +symbolize_names+.
+  #
+  # @since 0.2.0
+  # @return [Tablatal]
   #
   def self.parse(source, symbolize_keys: false)
     parser = Parser.new(source, false, symbolize_keys: symbolize_keys)
@@ -49,11 +60,17 @@ class Nodaire::Tablatal
   end
 
   ##
-  # Parse the document +source+ and return a Tablatal instance.
-  # Raises an exception if there are errors.
+  # Parse the document +source+, raising an exception if a parser error occurs.
   #
-  # If +symbolize_names+ is +true+, normalizes keys and converts them
-  # to lowercase symbols.
+  # @param [String] source The document source to parse.
+  # @param [Boolean] symbolize_keys
+  #   If true, normalize key names and convert them to lowercase symbols.
+  #
+  # @todo Rename +symbolize_keys+ to +symbolize_names+.
+  #
+  # @since 0.2.0
+  # @raise [ParserError]
+  # @return [Tablatal]
   #
   def self.parse!(source, symbolize_keys: false)
     parser = Parser.new(source, true, symbolize_keys: symbolize_keys)
@@ -64,12 +81,17 @@ class Nodaire::Tablatal
   ##
   # A boolean indicating whether the source was parsed without errors.
   #
+  # @since 0.2.0
+  # @return [Boolean]
+  #
   def valid?
     @errors.empty?
   end
 
   ##
-  # Convert the document to CSV. Returns a string.
+  # Convert the document to CSV.
+  #
+  # @return [String]
   #
   def to_csv
     CSV.generate do |csv|

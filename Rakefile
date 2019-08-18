@@ -4,17 +4,7 @@ def bundle_install_required!(gem_name)
   warn "Failed to load #{gem_name}. Please run `bundle install`."
 end
 
-begin
-  require 'rdoc/task'
-  RDoc::Task.new do |rdoc|
-    rdoc.rdoc_dir = 'doc/rdoc'
-    rdoc.main = 'doc/Home.md'
-    rdoc.rdoc_files.include('doc/Home.md', 'lib/**/*.rb')
-    rdoc.options << '--all'
-  end
-rescue LoadError
-  bundle_install_required! 'rdoc'
-end
+task default: %i[rubocop spec yard]
 
 begin
   require 'rspec/core/rake_task'
@@ -30,4 +20,11 @@ rescue LoadError
   bundle_install_required! 'rubocop'
 end
 
-task default: %i[rubocop spec rerdoc]
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new do |t|
+    t.stats_options = ['--list-undoc']
+  end
+rescue LoadError
+  bundle_install_required! 'yard'
+end
