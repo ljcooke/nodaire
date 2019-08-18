@@ -15,14 +15,14 @@ describe Nodaire::Tablatal::Parser do
 
   let(:expected_data) do
     [
-      { name: 'Erica', age: '12', color: 'Opal' },
-      { name: 'Alex',  age: '23', color: 'Cyan, Turquoise' },
-      { name: 'Nike',  age: '34', color: '赤い' },
-      { name: 'Ruca',  age: '45', color: 'Grey' },
+      { 'NAME' => 'Erica', 'AGE' => '12', 'COLOR' => 'Opal' },
+      { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => 'Cyan, Turquoise' },
+      { 'NAME' => 'Nike',  'AGE' => '34', 'COLOR' => '赤い' },
+      { 'NAME' => 'Ruca',  'AGE' => '45', 'COLOR' => 'Grey' },
     ]
   end
 
-  let(:expected_keys) { %i[name age color] }
+  let(:expected_keys) { %w[NAME AGE COLOR] }
 
   let(:result) { described_class.new(input, false, options) }
   let(:strict_result) { described_class.new(input, true, options) }
@@ -61,22 +61,22 @@ describe Nodaire::Tablatal::Parser do
 
   include_examples :valid_input
 
-  describe 'preserve_keys' do
+  describe 'symbolize_names' do
     context 'when true' do
       let(:options) do
-        { preserve_keys: true }
+        { symbolize_names: true }
       end
 
       let(:expected_data) do
         [
-          { 'NAME' => 'Erica', 'AGE' => '12', 'COLOR' => 'Opal' },
-          { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => 'Cyan, Turquoise' },
-          { 'NAME' => 'Nike',  'AGE' => '34', 'COLOR' => '赤い' },
-          { 'NAME' => 'Ruca',  'AGE' => '45', 'COLOR' => 'Grey' },
+          { name: 'Erica', age: '12', color: 'Opal' },
+          { name: 'Alex',  age: '23', color: 'Cyan, Turquoise' },
+          { name: 'Nike',  age: '34', color: '赤い' },
+          { name: 'Ruca',  age: '45', color: 'Grey' },
         ]
       end
 
-      let(:expected_keys) { %w[NAME AGE COLOR] }
+      let(:expected_keys) { %i[name age color] }
 
       include_examples :valid_input
     end
@@ -101,7 +101,7 @@ describe Nodaire::Tablatal::Parser do
   context 'with one line' do
     let(:input) { 'NAME    AGE   COLOR' }
     let(:expected_data) { [] }
-    let(:expected_keys) { %i[name age color] }
+    let(:expected_keys) { %w[NAME AGE COLOR] }
 
     include_examples :valid_input
   end
@@ -149,10 +149,10 @@ describe Nodaire::Tablatal::Parser do
 
       let(:expected_data) do
         [
-          { name: 'Erica', age: '12   O', color: 'pal' },
-          { name: 'Alex',  age: '23', color: 'Cyan, Turquoise' },
-          { name: 'Nike',  age: '34', color: '赤い' },
-          { name: 'Ruca',  age: '45', color: 'Grey' },
+          { 'NAME' => 'Erica', 'AGE' => '12 O', 'COLOR' => 'pal' },
+          { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => 'Cyan, Turquoise' },
+          { 'NAME' => 'Nike',  'AGE' => '34', 'COLOR' => '赤い' },
+          { 'NAME' => 'Ruca',  'AGE' => '45', 'COLOR' => 'Grey' },
         ]
       end
 
@@ -201,10 +201,10 @@ describe Nodaire::Tablatal::Parser do
 
     let(:expected_data) do
       [
-        { name: 'Erica', age: '12', color: 'Opal' },
-        { name: 'Alex',  age: '23', color: '' },
-        { name: 'Nike',  age: '34', color: '赤い' },
-        { name: 'Ruca',  age: '',   color: '' },
+        { 'NAME' => 'Erica', 'AGE' => '12', 'COLOR' => 'Opal' },
+        { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => '' },
+        { 'NAME' => 'Nike',  'AGE' => '34', 'COLOR' => '赤い' },
+        { 'NAME' => 'Ruca',  'AGE' => '',   'COLOR' => '' },
       ]
     end
 

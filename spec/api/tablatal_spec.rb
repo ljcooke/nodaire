@@ -15,10 +15,10 @@ describe Nodaire::Tablatal do
 
   let(:expected_output) do
     [
-      { name: 'Erica', age: '12', color: 'Opal' },
-      { name: 'Alex',  age: '23', color: 'Cyan' },
-      { name: 'Nike',  age: '34', color: 'Red' },
-      { name: 'Ruca',  age: '45', color: 'Grey' },
+      { 'NAME' => 'Erica', 'AGE' => '12', 'COLOR' => 'Opal' },
+      { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => 'Cyan' },
+      { 'NAME' => 'Nike',  'AGE' => '34', 'COLOR' => 'Red' },
+      { 'NAME' => 'Ruca',  'AGE' => '45', 'COLOR' => 'Grey' },
     ]
   end
 
@@ -73,7 +73,7 @@ describe Nodaire::Tablatal do
 
     describe '#keys' do
       it 'returns the keys in the original order' do
-        expect(instance.keys).to eq %i[name age color]
+        expect(instance.keys).to eq %w[NAME AGE COLOR]
       end
     end
 
@@ -123,7 +123,7 @@ describe Nodaire::Tablatal do
 
       let(:expected_output) do
         <<~CSV
-          name,age,color
+          NAME,AGE,COLOR
           Erica,12,Opal
           Alex,23,"Cyan, Turquoise"
           Nike,34,Red

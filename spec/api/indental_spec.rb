@@ -15,9 +15,9 @@ describe Nodaire::Indental do
 
   let(:expected_output) do
     {
-      name: {
-        key: 'VALUE',
-        list: %w[ITEM1 ITEM2],
+      'NAME' => {
+        'KEY' => 'VALUE',
+        'LIST' => %w[ITEM1 ITEM2],
       },
     }
   end
@@ -85,7 +85,7 @@ describe Nodaire::Indental do
       end
 
       it 'returns the expected output' do
-        expect(instance.categories).to eq %i[abc name xyz]
+        expect(instance.categories).to eq %w[ABC NAME XYZ]
       end
     end
 
@@ -125,8 +125,8 @@ describe Nodaire::Indental do
     describe '#to_json' do
       let(:possible_outputs) do
         [
-          '{"name":{"key":"VALUE","list":["ITEM1","ITEM2"]}}',
-          '{"name":{"list":["ITEM1","ITEM2"],"key":"VALUE"}}',
+          '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}',
+          '{"NAME":{"LIST":["ITEM1","ITEM2"],"KEY":"VALUE"}}',
         ]
       end
 

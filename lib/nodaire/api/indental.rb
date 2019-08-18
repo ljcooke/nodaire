@@ -18,8 +18,8 @@ class Nodaire::Indental
   #
   # Ignores or attempts to work around errors.
   #
-  def self.parse(string, preserve_keys: false)
-    parser = Parser.new(string, false, preserve_keys: preserve_keys)
+  def self.parse(string, symbolize_names: false)
+    parser = Parser.new(string, false, symbolize_names: symbolize_names)
 
     new(parser)
   end
@@ -29,8 +29,8 @@ class Nodaire::Indental
   #
   # Raises an exception if there are errors.
   #
-  def self.parse!(string, preserve_keys: false)
-    parser = Parser.new(string, true, preserve_keys: preserve_keys)
+  def self.parse!(string, symbolize_names: false)
+    parser = Parser.new(string, true, symbolize_names: symbolize_names)
 
     new(parser)
   end

@@ -15,23 +15,17 @@ describe Nodaire::Indental::Parser do
 
   let(:expected_data) do
     {
-      name: {
-        key: 'VALUE',
-        list: ['ITEM 1', 'ITEM 2'],
+      'NAME' => {
+        'KEY' => 'VALUE',
+        'LIST' => ['ITEM 1', 'ITEM 2'],
       },
     }
   end
 
   let(:complete_example_input) do
     <<~NDTL
-      NAME
-        KEY : VALUE
-        LIST
-          ITEM 1
-          ITEM 2
-
-      ; love 2 shop
       Shopping list
+        ; love 2 shop
         Last updated : 2019-08-17 19:00
         Groceries
           Milk
@@ -59,46 +53,42 @@ describe Nodaire::Indental::Parser do
           Item 1                                ; !
           Item 2                                ; !
 
-      Unicode \u{1f60e}
-        \u{1f32f} : \u{1f5a4}
+      Unicode 😎
+        🌯 : 🖤
     NDTL
   end
 
   let(:complete_example_expected_data) do
     {
-      name: {
-        key: 'VALUE',
-        list: ['ITEM 1', 'ITEM 2'],
-      },
-      shopping_list: {
-        last_updated: '2019-08-17 19:00',
-        groceries: [
+      'Shopping list' => {
+        'Last updated' => '2019-08-17 19:00',
+        'Groceries' => [
           'Milk',
           'Bread',
           'Baby spinach',
         ],
       },
-      allowed_duplicates: {
-        list: %w[Duplicate Duplicate],
+      'Allowed duplicates' => {
+        'List' => %w[Duplicate Duplicate],
       },
-      empty_category: {},
-      category_with_empty_keys_and_lists: {
-        empty_key: "[This isn't supported yet!]",
-        empty_list: [],
+      'Empty category' => {},
+      'Category with empty keys and lists' => {
+        'Empty key' => "[This isn't supported yet!]",
+        'Empty list' => [],
       },
-      extra_space: {
-        key_1: "Value  \t  1",
-        key_2: "Value  \t  2",
+      'Extra space' => {
+        'Key 1' => 'Value 1',
+        'Key 2' => 'Value 2',
       },
-      'comments_are_not_recognised_on_data_lines_;_!': {
-        key: 'Value                             ; !',
-        'list_;_!': [
-          'Item 1                                ; !',
-          'Item 2                                ; !',
+      'Comments are not recognised on data lines ; !' => {
+        'Key' => 'Value ; !',
+        'List ; !' => [
+          'Item 1 ; !',
+          'Item 2 ; !',
         ],
       },
-      'unicode_😎': {
-        '🌯': '🖤',
+      'Unicode 😎' => {
+        '🌯' => '🖤',
       },
     }
   end
@@ -144,17 +134,17 @@ describe Nodaire::Indental::Parser do
     include_examples :valid_input
   end
 
-  describe 'preserve_keys' do
+  describe ':symbolize_names' do
     context 'when true' do
       let(:options) do
-        { preserve_keys: true }
+        { symbolize_names: true }
       end
 
       let(:input) do
         <<~NDTL
           NAME 1
-            KEY 1 : VALUE
-            LIST 1
+            KEY_1 : VALUE
+            LIST-1
               ITEM 1
               ITEM 2
         NDTL
@@ -162,9 +152,9 @@ describe Nodaire::Indental::Parser do
 
       let(:expected_data) do
         {
-          'NAME 1' => {
-            'KEY 1' => 'VALUE',
-            'LIST 1' => ['ITEM 1', 'ITEM 2'],
+          name_1: {
+            key_1: 'VALUE',
+            list_1: ['ITEM 1', 'ITEM 2'],
           },
         }
       end
@@ -270,9 +260,11 @@ describe Nodaire::Indental::Parser do
   context 'with duplicate categories' do
     let(:input) do
       <<~NDTL
-        NAME
+        A CATEGORY
           KEY : VALUE
-        NAME
+        A_CATEGORY
+          KEY : DUPLICATE
+        A-CATEGORY
           KEY : DUPLICATE
         OTHER
           KEY : VALUE
@@ -281,11 +273,11 @@ describe Nodaire::Indental::Parser do
 
     let(:expected_data) do
       {
-        name: {
-          key: 'VALUE',
+        'A CATEGORY' => {
+          'KEY' => 'VALUE',
         },
-        other: {
-          key: 'VALUE',
+        'OTHER' => {
+          'KEY' => 'VALUE',
         },
       }
     end
@@ -297,9 +289,9 @@ describe Nodaire::Indental::Parser do
     let(:input) do
       <<~NDTL
         NAME
-          KEY : VALUE
-          KEY : DUPLICATE
-          KEY
+          A KEY : VALUE
+          A_KEY : DUPLICATE
+          A-KEY
             DUPLICATE
           OTHER : VALUE
       NDTL
@@ -307,9 +299,9 @@ describe Nodaire::Indental::Parser do
 
     let(:expected_data) do
       {
-        name: {
-          key: 'VALUE',
-          other: 'VALUE',
+        'NAME' => {
+          'A KEY' => 'VALUE',
+          'OTHER' => 'VALUE',
         },
       }
     end
@@ -321,11 +313,11 @@ describe Nodaire::Indental::Parser do
     let(:input) do
       <<~NDTL
         NAME
-          LIST
+          A LIST
             ITEM
-          LIST
+          A_LIST
             DUPLICATE
-          LIST : DUPLICATE
+          A-LIST : DUPLICATE
           OTHER
             ITEM
         OTHER
@@ -336,12 +328,12 @@ describe Nodaire::Indental::Parser do
 
     let(:expected_data) do
       {
-        name: {
-          list: ['ITEM'],
-          other: ['ITEM'],
+        'NAME' => {
+          'A LIST' => ['ITEM'],
+          'OTHER' => ['ITEM'],
         },
-        other: {
-          list: ['OTHER'],
+        'OTHER' => {
+          'LIST' => ['OTHER'],
         },
       }
     end
