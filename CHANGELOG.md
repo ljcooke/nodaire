@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Indental#categories` returns an array of category names.
 
 ### Changed
+- Strings are used for keys by default. To use symbols, pass the
+  `symbolize_names` argument.
+- Category names and keys are normalised when detecting duplicates, and when
+  converting them to symbols. This involves converting to lowercase and
+  replacing each sequence of whitespace/underscores/dashes with `_`.
 - Indental parser detects when the input is wrapped in a JS template string.
 - Require Ruby >= 2.5.0. (Previously there was no minimum set, but it used
   a feature that required Ruby >= 2.6.0.)
