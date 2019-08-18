@@ -1,13 +1,10 @@
-# Nodaire
+# Nodaire [![Gem Version](https://badge.fury.io/rb/nodaire.svg)](https://rubygems.org/gems/nodaire) [![Build Status](https://travis-ci.org/slisne/nodaire.svg?branch=master)](https://travis-ci.org/slisne/nodaire)
 
 Nodaire is a collection of text file parsers.
 It supports Ruby 2.5.0 or greater.
 
 __Note__: This is a new gem, and the interface is not yet stable.
 Expect breaking API changes before v1.0.0 is released.
-
-[![Gem Version](https://badge.fury.io/rb/nodaire.svg)](https://rubygems.org/gems/nodaire)
-[![Build Status](https://travis-ci.org/slisne/nodaire.svg?branch=master)](https://travis-ci.org/slisne/nodaire)
 
 ## File formats
 
@@ -23,6 +20,12 @@ Install `nodaire` from [RubyGems](https://rubygems.org/gems/nodaire):
 ```sh
 gem install nodaire
 ```
+
+## Documentation
+
+[Code documentation](https://slisne.github.io/nodaire/) is available.
+
+Keep reading below for examples of how to use Nodaire.
 
 ## Usage examples
 

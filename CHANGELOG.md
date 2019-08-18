@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - `Indental#categories` returns an array of category names.
+- [Documentation!](https://slisne.github.io/nodaire/)
 
 ### Changed
 - Strings are used for keys by default. To use symbols, pass the

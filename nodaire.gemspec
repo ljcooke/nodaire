@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.metadata    = {
     'bug_tracker_uri' => 'https://github.com/slisne/nodaire/issues',
     'changelog_uri' => 'https://github.com/slisne/nodaire/blob/master/CHANGELOG.md',
-    'documentation_uri' => 'https://www.rubydoc.info/gems/nodaire',
+    'documentation_uri' => 'https://slisne.github.io/nodaire/',
     'homepage_uri' => 'https://github.com/slisne/nodaire',
     'source_code_uri' => 'https://github.com/slisne/nodaire',
   }
