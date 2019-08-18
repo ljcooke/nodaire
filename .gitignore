@@ -1,5 +1,5 @@
 .bundle/*
-doc/*
+doc/rdoc/*
 tmp/*
 
 *.gem
