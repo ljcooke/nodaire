@@ -50,7 +50,7 @@ describe Nodaire::Tablatal do
         let(:input) { 'INVALID INVALID' }
 
         it 'raises a parser error' do
-          expect { return_value }.to raise_error Nodaire::Tablatal::ParserError
+          expect { return_value }.to raise_error Nodaire::ParserError
         end
       end
     end

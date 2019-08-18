@@ -1,20 +1,17 @@
 # frozen_string_literal: true
 
-require_relative '../errors'
+require_relative 'parser'
 
 class Nodaire::Tablatal
-  class ParserError < Nodaire::ParserError; end
-
-  class Parser # :nodoc:
-    attr_reader :data, :errors
+  class Parser < Nodaire::Parser # :nodoc:
+    attr_reader :data
 
     def initialize(string, strict, options = {})
-      @strict = strict
-      @symbolize_names = options.fetch(:symbolize_names, false)
+      super(strict, options)
+
+      @symbolize_names = option(:symbolize_names, false)
 
       @data = []
-      @errors = []
-
       @keys = []
       @key_ids = {}
 
@@ -27,7 +24,7 @@ class Nodaire::Tablatal
 
     private
 
-    attr_reader :strict, :symbolize_names, :key_ids
+    attr_reader :symbolize_names, :key_ids
 
     Key = Struct.new(:name, :range, keyword_init: true)
 
@@ -63,12 +60,6 @@ class Nodaire::Tablatal
 
     def make_line(line)
       @keys.map { |key| [key.name, normalize_text(line[key.range])] }.to_h
-    end
-
-    def oops!(message, line_num)
-      message = "#{message} on line #{line_num}"
-      errors << message
-      raise ParserError, message if strict
     end
 
     def normalize_text(string)

@@ -50,7 +50,7 @@ describe Nodaire::Indental do
         let(:input) { "\tINVALID" }
 
         it 'raises a parser error' do
-          expect { return_value }.to raise_error Nodaire::Indental::ParserError
+          expect { return_value }.to raise_error Nodaire::ParserError
         end
       end
     end

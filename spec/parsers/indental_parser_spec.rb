@@ -121,7 +121,7 @@ describe Nodaire::Indental::Parser do
     end
 
     it 'raises a parser error in strict mode' do
-      expect { strict_result }.to raise_error Nodaire::Indental::ParserError
+      expect { strict_result }.to raise_error Nodaire::ParserError
     end
   end
 

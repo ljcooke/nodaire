@@ -55,7 +55,7 @@ describe Nodaire::Tablatal::Parser do
     end
 
     it 'raises a parser error in strict mode' do
-      expect { strict_result }.to raise_error Nodaire::Tablatal::ParserError
+      expect { strict_result }.to raise_error Nodaire::ParserError
     end
   end
 

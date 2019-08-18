@@ -1,20 +1,16 @@
 # frozen_string_literal: true
 
-require_relative '../errors'
+require_relative 'parser'
 
 class Nodaire::Indental
-  class ParserError < Nodaire::ParserError; end
-
-  class Parser # :nodoc:
-    attr_reader :data, :errors
+  class Parser < Nodaire::Parser # :nodoc:
+    attr_reader :data
 
     def initialize(string, strict, options = {})
-      @strict = strict
-      @symbolize_names = options.fetch(:symbolize_names, false)
+      super(strict, options)
 
+      @symbolize_names = option(:symbolize_names, false)
       @data = {}
-      @errors = []
-
       @category_ids = {}
       @category = nil
 
@@ -26,7 +22,7 @@ class Nodaire::Indental
     Category = Struct.new(:name, :key_ids, :list_id, keyword_init: true)
 
     attr_accessor :category
-    attr_reader :strict, :symbolize_names, :category_ids
+    attr_reader :symbolize_names, :category_ids
 
     def parse!(string)
       lines = lines_to_parse(string)
@@ -119,12 +115,6 @@ class Nodaire::Indental
         list_name = category.key_ids[category.list_id]
         data[category.name][list_name] << normalize_text(item)
       end
-    end
-
-    def oops!(message, line_num)
-      message = "#{message} on line #{line_num}"
-      errors << message
-      raise ParserError, message if strict
     end
 
     def normalize_text(string)
