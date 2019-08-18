@@ -45,16 +45,14 @@ class Nodaire::Tablatal
   # Parse the document +source+.
   #
   # @param [String] source The document source to parse.
-  # @param [Boolean] symbolize_keys
+  # @param [Boolean] symbolize_names
   #   If true, normalize key names and convert them to lowercase symbols.
-  #
-  # @todo Rename +symbolize_keys+ to +symbolize_names+.
   #
   # @since 0.2.0
   # @return [Tablatal]
   #
-  def self.parse(source, symbolize_keys: false)
-    parser = Parser.new(source, false, symbolize_keys: symbolize_keys)
+  def self.parse(source, symbolize_names: false)
+    parser = Parser.new(source, false, symbolize_names: symbolize_names)
 
     new(parser)
   end
@@ -63,17 +61,15 @@ class Nodaire::Tablatal
   # Parse the document +source+, raising an exception if a parser error occurs.
   #
   # @param [String] source The document source to parse.
-  # @param [Boolean] symbolize_keys
+  # @param [Boolean] symbolize_names
   #   If true, normalize key names and convert them to lowercase symbols.
-  #
-  # @todo Rename +symbolize_keys+ to +symbolize_names+.
   #
   # @since 0.2.0
   # @raise [ParserError]
   # @return [Tablatal]
   #
-  def self.parse!(source, symbolize_keys: false)
-    parser = Parser.new(source, true, symbolize_keys: symbolize_keys)
+  def self.parse!(source, symbolize_names: false)
+    parser = Parser.new(source, true, symbolize_names: symbolize_names)
 
     new(parser)
   end

@@ -57,7 +57,10 @@ describe Nodaire::Indental do
   end
 
   describe 'instance methods' do
-    let(:instance) { described_class.parse(input) }
+    let(:symbolize_names) { false }
+    let(:instance) do
+      described_class.parse(input, symbolize_names: symbolize_names)
+    end
 
     describe '#data' do
       it 'returns the expected output' do
@@ -84,8 +87,16 @@ describe Nodaire::Indental do
         NDTL
       end
 
-      it 'returns the expected output' do
+      it 'returns the category names in the original order' do
         expect(instance.categories).to eq %w[NAME ABC XYZ]
+      end
+
+      context 'with symbolize_names' do
+        let(:symbolize_names) { true }
+
+        it 'converts the category names to lowercase symbols' do
+          expect(instance.categories).to eq %i[name abc xyz]
+        end
       end
     end
 
