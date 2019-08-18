@@ -3,12 +3,12 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'nodaire/version'
+require 'nodaire/base'
 
 Gem::Specification.new do |s|
   s.name        = 'nodaire'
-  s.version     = Nodaire::Version::STRING
-  s.date        = Nodaire::Version::DATE
+  s.version     = Nodaire::VERSION
+  s.date        = Nodaire::DATE
   s.license     = 'MIT'
 
   s.summary     = 'Text file parsers.'

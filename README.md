@@ -17,6 +17,8 @@ Ruby parsers for text file formats. Work in progress.
 ### Indental
 
 ```ruby
+> require 'nodaire/indental'
+
 > input = <<~NDTL
   NAME
     KEY : VALUE
@@ -47,6 +49,8 @@ Ruby parsers for text file formats. Work in progress.
 ### Tablatal
 
 ```ruby
+> require 'nodaire/tablatal'
+
 > input = <<~TBTL
   NAME    AGE   COLOR
   Erica   12    Opal
@@ -82,5 +86,5 @@ Ruby parsers for text file formats. Work in progress.
 
 ```
 bundle install
-bundle exec rake
+bundle exec rake spec
 ```
