@@ -51,7 +51,7 @@ describe Nodaire::Indental::Lexer do
 
       it 'returns a category token' do
         expect(output.type).to eq :category
-        expect(output.values).to eq ['SOME CATEGORY']
+        expect(output.value).to eq 'SOME CATEGORY'
         expect(output.symbol).to eq :some_category
       end
     end
@@ -61,7 +61,7 @@ describe Nodaire::Indental::Lexer do
 
       it 'returns a key-value token' do
         expect(output.type).to eq :key_value
-        expect(output.values).to eq ['SOME KEY', 'SOME VALUE']
+        expect(output.value).to eq ['SOME KEY', 'SOME VALUE']
         expect(output.symbol).to eq :some_key
       end
     end
@@ -71,7 +71,7 @@ describe Nodaire::Indental::Lexer do
 
       it 'returns a list name token' do
         expect(output.type).to eq :list_name
-        expect(output.values).to eq ['LIST NAME']
+        expect(output.value).to eq 'LIST NAME'
         expect(output.symbol).to eq :list_name
       end
     end
@@ -81,7 +81,7 @@ describe Nodaire::Indental::Lexer do
 
       it 'returns a list item token' do
         expect(output.type).to eq :list_item
-        expect(output.values).to eq ['LIST ITEM']
+        expect(output.value).to eq 'LIST ITEM'
         expect(output.symbol).to be_nil
       end
     end
@@ -91,7 +91,7 @@ describe Nodaire::Indental::Lexer do
 
       it 'returns an error token' do
         expect(output.type).to eq :error
-        expect(output.values).not_to be_empty
+        expect(output.value).not_to be_empty
       end
     end
   end

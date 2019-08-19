@@ -55,7 +55,7 @@ class Nodaire::Indental
         self.category = nil
       else
         self.category = Category.new(
-          name: symbolize_names ? id : token.values.first,
+          name: symbolize_names ? id : token.value,
           key_ids: {},
           list_id: nil
         )
@@ -67,7 +67,7 @@ class Nodaire::Indental
     def parse_key_value!(token)
       return oops!('No category specified', token.line_num) if category.nil?
 
-      key, value = token.values
+      key, value = token.value
       id = token.symbol
       key_name = symbolize_names ? id : key
 
@@ -85,7 +85,7 @@ class Nodaire::Indental
       return oops!('No category specified', token.line_num) if category.nil?
 
       id = token.symbol
-      list_name = symbolize_names ? id : token.values.first
+      list_name = symbolize_names ? id : token.value
 
       if category.key_ids.include?(id)
         oops! 'Duplicate key for list', token.line_num
@@ -102,12 +102,12 @@ class Nodaire::Indental
         oops! 'No list specified', token.line_num
       else
         list_name = category.key_ids[category.list_id]
-        data[category.name][list_name] << token.values.first
+        data[category.name][list_name] << token.value
       end
     end
 
     def parse_error!(token)
-      oops! token.values.first, token.line_num
+      oops! token.value, token.line_num
     end
 
     def normalize_sym(string)
