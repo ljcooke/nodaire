@@ -48,34 +48,30 @@ class Nodaire::Indental
     end
 
     def parse_category!(token)
-      id = token.symbol
-
-      if category_ids.include?(id)
+      if category_ids.include?(token.symbol)
         oops! 'Duplicate category', token.line_num
         self.category = nil
       else
         self.category = Category.new(
-          name: symbolize_names ? id : token.value,
+          name: token_name(token),
           key_ids: {},
           list_id: nil
         )
         data[category.name] = {}
-        category_ids[id] = category.name
+        category_ids[token.symbol] = category.name
       end
     end
 
     def parse_key_value!(token)
       return oops!('No category specified', token.line_num) if category.nil?
 
-      key, value = token.value
-      id = token.symbol
-      key_name = symbolize_names ? id : key
+      key_name = token_name(token)
 
-      if category.key_ids.include?(id)
+      if category.key_ids.include?(token.symbol)
         oops! 'Duplicate key', token.line_num
       else
-        data[category.name][key_name] = value
-        category.key_ids[id] = key_name
+        data[category.name][key_name] = token.value.last
+        category.key_ids[token.symbol] = key_name
       end
 
       category.list_id = nil
@@ -84,16 +80,15 @@ class Nodaire::Indental
     def parse_list_name!(token)
       return oops!('No category specified', token.line_num) if category.nil?
 
-      id = token.symbol
-      list_name = symbolize_names ? id : token.value
+      list_name = token_name(token)
 
-      if category.key_ids.include?(id)
+      if category.key_ids.include?(token.symbol)
         oops! 'Duplicate key for list', token.line_num
         category.list_id = nil
       else
         data[category.name][list_name] = []
-        category.key_ids[id] = list_name
-        category.list_id = id
+        category.key_ids[token.symbol] = list_name
+        category.list_id = token.symbol
       end
     end
 
@@ -110,8 +105,13 @@ class Nodaire::Indental
       oops! token.value, token.line_num
     end
 
-    def normalize_sym(string)
-      string.downcase.gsub(/[\s_-]+/, ' ').split.join('_').to_sym
+    def token_name(token)
+      return token.symbol if symbolize_names
+
+      case token.value
+      when Array then token.value.first
+      when String then token.value
+      end
     end
   end
 end
