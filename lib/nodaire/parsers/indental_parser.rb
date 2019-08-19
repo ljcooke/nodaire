@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative '../lexers/indental_lexer'
 require_relative 'parser'
 
 class Nodaire::Indental
@@ -7,7 +8,7 @@ class Nodaire::Indental
   class Parser < Nodaire::Parser
     attr_reader :data
 
-    def initialize(string, strict, options = {})
+    def initialize(source, strict, options = {})
       super(strict, options)
 
       @symbolize_names = option(:symbolize_names, false)
@@ -15,7 +16,7 @@ class Nodaire::Indental
       @category_ids = {}
       @category = nil
 
-      parse! string
+      parse! Nodaire::Indental::Lexer.tokenize(source)
     end
 
     private
@@ -25,43 +26,36 @@ class Nodaire::Indental
     attr_accessor :category
     attr_reader :symbolize_names, :category_ids
 
-    def parse!(string)
-      lines = lines_to_parse(string)
-      lines = lines[1...-1] if js_wrapper?(lines)
-      lines.each { |line, num| parse_line! line, num }
+    def parse!(tokens)
+      tokens.each { |token| parse_token! token }
     end
 
-    def lines_to_parse(string)
-      (string || '')
-        .split("\n").each_with_index
-        .reject { |line, _| line.match(/^\s*(;.*)?$/) }
-        .map { |line, idx| [line, idx + 1] }
+    def parse_token!(token)
+      case token.type
+      when :category then parse_category! token
+      when :key_value then parse_key_value! token
+      when :list_name then parse_list_name! token
+      when :list_item then parse_list_item! token
+      when :error then parse_error! token
+      end
     end
 
+    # @todo
     def js_wrapper?(lines)
       !lines.empty? &&
         lines.first[0].match(/=\s*`\s*$/) &&
         lines.last[0].strip == '`'
     end
 
-    def parse_line!(line, num)
-      case line.match(/^\s*/)[0].size
-      when 0 then parse_category! line.strip, num
-      when 2 then parse_key_or_list! line.strip, num
-      when 4 then parse_list_item! line.strip, num
-      else oops! 'Unexpected indent', num
-      end
-    end
-
-    def parse_category!(cat, num)
-      id = normalize_sym(cat)
+    def parse_category!(token)
+      id = token.symbol
 
       if category_ids.include?(id)
-        oops! 'Duplicate category', num
+        oops! 'Duplicate category', token.line_num
         self.category = nil
       else
         self.category = Category.new(
-          name: symbolize_names ? id : normalize_text(cat),
+          name: symbolize_names ? id : token.values.first,
           key_ids: {},
           list_id: nil
         )
@@ -70,37 +64,31 @@ class Nodaire::Indental
       end
     end
 
-    def parse_key_or_list!(line, num)
-      return oops!('No category specified', num) if category.nil?
+    def parse_key_value!(token)
+      return oops!('No category specified', token.line_num) if category.nil?
 
-      if line.include?(' : ')
-        key, value = line.split(' : ', 2)
-        parse_key_value!(key, value, num)
-      else
-        parse_list!(line, num)
-      end
-    end
-
-    def parse_key_value!(key, value, num)
-      id = normalize_sym(key)
-      key_name = symbolize_names ? id : normalize_text(key)
+      key, value = token.values
+      id = token.symbol
+      key_name = symbolize_names ? id : key
 
       if category.key_ids.include?(id)
-        oops! 'Duplicate key', num
+        oops! 'Duplicate key', token.line_num
       else
-        data[category.name][key_name] = normalize_text(value)
+        data[category.name][key_name] = value
         category.key_ids[id] = key_name
       end
 
       category.list_id = nil
     end
 
-    def parse_list!(key, num)
-      id = normalize_sym(key)
-      list_name = symbolize_names ? id : normalize_text(key)
+    def parse_list_name!(token)
+      return oops!('No category specified', token.line_num) if category.nil?
+
+      id = token.symbol
+      list_name = symbolize_names ? id : token.values.first
 
       if category.key_ids.include?(id)
-        oops! 'Duplicate key for list', num
+        oops! 'Duplicate key for list', token.line_num
         category.list_id = nil
       else
         data[category.name][list_name] = []
@@ -109,21 +97,21 @@ class Nodaire::Indental
       end
     end
 
-    def parse_list_item!(item, num)
+    def parse_list_item!(token)
       if category.nil? || category.list_id.nil?
-        oops! 'No list specified', num
+        oops! 'No list specified', token.line_num
       else
         list_name = category.key_ids[category.list_id]
-        data[category.name][list_name] << normalize_text(item)
+        data[category.name][list_name] << token.values.first
       end
     end
 
-    def normalize_text(string)
-      string.split.join(' ')
+    def parse_error!(token)
+      oops! token.values.first, token.line_num
     end
 
-    def normalize_sym(key)
-      key.downcase.gsub(/[\s_-]+/, ' ').split.join('_').to_sym
+    def normalize_sym(string)
+      string.downcase.gsub(/[\s_-]+/, ' ').split.join('_').to_sym
     end
   end
 end
