@@ -58,30 +58,22 @@ class Nodaire::Indental
     def parse_key_value!(token)
       return oops!('No category specified', token.line_num) if category.nil?
 
-      key_name = token_name(token)
-
       if category.key_ids.include?(token.symbol)
         oops! 'Duplicate key', token.line_num
+        category.list_id = nil
       else
-        data[category.name][key_name] = token.value.last
-        category.key_ids[token.symbol] = key_name
+        add_key_value! token
       end
-
-      category.list_id = nil
     end
 
     def parse_list_name!(token)
       return oops!('No category specified', token.line_num) if category.nil?
 
-      list_name = token_name(token)
-
       if category.key_ids.include?(token.symbol)
         oops! 'Duplicate key for list', token.line_num
         category.list_id = nil
       else
-        data[category.name][list_name] = []
-        category.key_ids[token.symbol] = list_name
-        category.list_id = token.symbol
+        add_list! token
       end
     end
 
@@ -89,9 +81,27 @@ class Nodaire::Indental
       if category.nil? || category.list_id.nil?
         oops! 'No list specified', token.line_num
       else
-        list_name = category.key_ids[category.list_id]
-        data[category.name][list_name] << token.value
+        add_list_item! token
       end
+    end
+
+    def add_key_value!(token)
+      key_name = token_name(token)
+      data[category.name][key_name] = token.value.last
+      category.key_ids[token.symbol] = key_name
+      category.list_id = nil
+    end
+
+    def add_list!(token)
+      list_name = token_name(token)
+      data[category.name][list_name] = []
+      category.key_ids[token.symbol] = list_name
+      category.list_id = token.symbol
+    end
+
+    def add_list_item!(token)
+      list_name = category.key_ids[category.list_id]
+      data[category.name][list_name] << token.value
     end
 
     def parse_error!(token)
