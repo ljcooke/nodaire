@@ -16,6 +16,9 @@ Style/Documentation:
     - 'spec/**/*'
     - 'test/**/*'
 
+Style/RegexpLiteral:
+  EnforcedStyle: mixed
+
 Style/SafeNavigation:
   Enabled: false
 
