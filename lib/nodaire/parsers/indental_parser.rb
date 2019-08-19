@@ -40,13 +40,6 @@ class Nodaire::Indental
       end
     end
 
-    # @todo
-    def js_wrapper?(lines)
-      !lines.empty? &&
-        lines.first[0].match(/=\s*`\s*$/) &&
-        lines.last[0].strip == '`'
-    end
-
     def parse_category!(token)
       if category_ids.include?(token.symbol)
         oops! 'Duplicate category', token.line_num
