@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-<!-- ## [Unreleased] -->
+## [Unreleased]
+### Added
+- Support for Indental keys with blank values.
+
+### Changed
+- By default, category names and keys are normalised now by simply removing
+  extra whitespace characters. Duplicates are detected only based on what is in
+  the final output.
+- `symbolize_names` converts any sequence of non-alphanumeric characters to `_`.
+
+### Fixed
+- Indentation using tabs instead of spaces is treated as an error.
 
 ## [0.3.0] - 2019-08-18
 ### Added
