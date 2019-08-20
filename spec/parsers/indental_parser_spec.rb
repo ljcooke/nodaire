@@ -144,9 +144,9 @@ describe Nodaire::Indental::Parser do
 
       let(:input) do
         <<~NDTL
-          NAME 1
-            KEY_1 : VALUE
-            LIST-1
+          NAME  1
+            KEY___1 : VALUE
+            _LIST
               ITEM 1
               ITEM 2
         NDTL
@@ -156,7 +156,7 @@ describe Nodaire::Indental::Parser do
         {
           name_1: {
             key_1: 'VALUE',
-            list_1: ['ITEM 1', 'ITEM 2'],
+            _list: ['ITEM 1', 'ITEM 2'],
           },
         }
       end

@@ -111,7 +111,7 @@ class Nodaire::Indental
 
     def normalize_key(key)
       if symbolize_names && key
-        key.downcase.gsub(/[\s_-]+/, ' ').split.join('_').to_sym
+        key.downcase.gsub(/[^a-z0-9]+/, '_').to_sym
       else
         key
       end

@@ -43,7 +43,7 @@ class Nodaire::Tablatal
         start = 0
         segs.each_with_index do |seg, idx|
           len = seg.size if idx < segs.size - 1
-          id = normalize_sym(seg)
+          id = normalize_sym(normalize_text(seg))
           key_name = symbolize_names ? id : normalize_text(seg)
 
           if key_ids.include?(id)
@@ -68,7 +68,7 @@ class Nodaire::Tablatal
     end
 
     def normalize_sym(key)
-      key.downcase.gsub(/[_-]+/, ' ').split.join('_').to_sym
+      key.downcase.gsub(/[^a-z0-9]+/, '_').to_sym
     end
   end
 end
