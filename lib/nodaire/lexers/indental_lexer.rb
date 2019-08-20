@@ -3,6 +3,9 @@
 require_relative 'lexer'
 
 class Nodaire::Indental
+  INDENT_CHARS_ERROR = 'Indented with non-space characters'
+  INDENT_LEVEL_ERROR = 'Unexpected indent level'
+
   # @private
   class Lexer < Nodaire::Lexer
     Token = Struct.new(:type, :key, :value, :line_num)
@@ -14,12 +17,19 @@ class Nodaire::Indental
     end
 
     def self.token_for_line(line, num)
+      return error_token(INDENT_CHARS_ERROR, num) unless spaces_indent?(line)
+
       case line.match(/^\s*/)[0].size
       when 0 then category_token(line, num)
       when 2 then key_or_list_token(line, num)
       when 4 then list_item_token(line, num)
-      else error_token('Unexpected indent', num)
+      else error_token(INDENT_LEVEL_ERROR, num)
       end
+    end
+
+    def self.spaces_indent?(line)
+      indent = line.match(/^\s*/)[0]
+      indent.match(/[^ ]/).nil?
     end
 
     def self.category_token(string, line_num)

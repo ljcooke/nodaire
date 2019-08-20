@@ -95,5 +95,15 @@ describe Nodaire::Indental::Lexer do
         expect(output.value).not_to be_empty
       end
     end
+
+    context 'indented with tabs' do
+      let(:input) { "\tKEY : VALUE" }
+
+      it 'returns an error token' do
+        expect(output.type).to eq :error
+        expect(output.key).to be_nil
+        expect(output.value).not_to be_empty
+      end
+    end
   end
 end
