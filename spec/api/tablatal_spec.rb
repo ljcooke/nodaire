@@ -3,54 +3,96 @@
 require 'nodaire/tablatal'
 
 describe Nodaire::Tablatal do
-  let(:input) do
-    <<~TBTL
-      NAME    AGE   COLOR
-      Erica   12    Opal
-      Alex    23    Cyan
-      Nike    34    Red
-      Ruca    45    Grey
-    TBTL
-  end
+  examples = ExampleReader.new
 
-  let(:expected_output) do
-    [
-      { 'NAME' => 'Erica', 'AGE' => '12', 'COLOR' => 'Opal' },
-      { 'NAME' => 'Alex',  'AGE' => '23', 'COLOR' => 'Cyan' },
-      { 'NAME' => 'Nike',  'AGE' => '34', 'COLOR' => 'Red' },
-      { 'NAME' => 'Ruca',  'AGE' => '45', 'COLOR' => 'Grey' },
-    ]
+  let(:input)           { examples['tablatal_valid.tbtl'] }
+  let(:expected_output) { examples['tablatal_valid.json'] }
+
+  let(:instance) { described_class.parse(input) }
+  let(:input_with_spaces) { input.gsub("\n", " \t \n") }
+
+  describe 'example files' do
+    shared_examples 'the input is parsed correctly' do
+      it 'matches the expected output' do
+        expect(instance.to_a).to eq expected_output
+      end
+
+      context 'with trailing spaces' do
+        let(:instance) { described_class.parse(input_with_spaces) }
+
+        it 'matches the expected output' do
+          expect(instance.to_a).to eq expected_output
+        end
+      end
+    end
+
+    shared_examples 'the input is valid' do
+      it 'is valid' do
+        expect(instance).to be_valid
+      end
+
+      context 'with trailing spaces' do
+        let(:instance) { described_class.parse(input_with_spaces) }
+
+        it 'is valid' do
+          expect(instance).to be_valid
+        end
+      end
+    end
+
+    shared_examples 'the input is invalid' do
+      it 'is invalid' do
+        expect(instance).not_to be_valid
+      end
+
+      it 'has errors' do
+        expect(instance.errors).not_to be_empty
+      end
+    end
+
+    describe 'basic example' do
+      it_behaves_like 'the input is parsed correctly'
+      it_behaves_like 'the input is valid'
+    end
+
+    describe 'example with errors' do
+      let(:input)           { examples['tablatal_invalid.tbtl'] }
+      let(:expected_output) { examples['tablatal_invalid.json'] }
+
+      it_behaves_like 'the input is parsed correctly'
+      it_behaves_like 'the input is invalid'
+    end
   end
 
   describe 'class methods' do
     describe '.parse' do
-      let(:return_value) { described_class.parse(input) }
+      let(:output) { described_class.parse(input) }
 
       it 'returns an instance of the class' do
-        expect(return_value).to be_a described_class
+        expect(output).to be_a described_class
       end
 
       context 'with invalid input' do
         let(:input) { 'INVALID INVALID' }
 
         it 'returns an instance of the class' do
-          expect(return_value).to be_a described_class
+          expect(output).to be_a described_class
         end
       end
     end
 
     describe '.parse!' do
-      let(:return_value) { described_class.parse!(input) }
+      let(:output) { described_class.parse!(input) }
 
       it 'returns an instance of the class' do
-        expect(return_value).to be_a described_class
+        expect(output).to be_a described_class
       end
 
       context 'with invalid input' do
         let(:input) { 'INVALID INVALID' }
 
         it 'raises a parser error' do
-          expect { return_value }.to raise_error Nodaire::ParserError
+          expect { output }.to raise_error Nodaire::ParserError
         end
       end
     end
@@ -122,25 +164,7 @@ describe Nodaire::Tablatal do
     end
 
     describe '#to_csv' do
-      let(:input) do
-        <<~TBTL
-          NAME    AGE   COLOR
-          Erica   12    Opal
-          Alex    23    Cyan, Turquoise
-          Nike    34    Red
-          Ruca    45    Grey
-        TBTL
-      end
-
-      let(:expected_output) do
-        <<~CSV
-          NAME,AGE,COLOR
-          Erica,12,Opal
-          Alex,23,"Cyan, Turquoise"
-          Nike,34,Red
-          Ruca,45,Grey
-        CSV
-      end
+      let(:expected_output) { examples['tablatal_valid.csv'] }
 
       it 'returns the expected output' do
         expect(instance.to_csv).to eq expected_output

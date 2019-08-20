@@ -3,54 +3,104 @@
 require 'nodaire/indental'
 
 describe Nodaire::Indental do
-  let(:input) do
-    <<~NDTL
-      NAME
-        KEY : VALUE
-        LIST
-          ITEM1
-          ITEM2
-    NDTL
-  end
+  examples = ExampleReader.new
 
-  let(:expected_output) do
-    {
-      'NAME' => {
-        'KEY' => 'VALUE',
-        'LIST' => %w[ITEM1 ITEM2],
-      },
-    }
+  let(:input)           { examples['indental_valid_basic.ndtl'] }
+  let(:expected_output) { examples['indental_valid_basic.json'] }
+
+  let(:instance) { described_class.parse(input) }
+  let(:input_with_spaces) { input.gsub("\n", " \t \n") }
+
+  describe 'example files' do
+    shared_examples 'the input is parsed correctly' do
+      it 'matches the expected output' do
+        expect(instance.to_h).to eq expected_output
+      end
+
+      context 'with trailing spaces' do
+        let(:instance) { described_class.parse(input_with_spaces) }
+
+        it 'matches the expected output' do
+          expect(instance.to_h).to eq expected_output
+        end
+      end
+    end
+
+    shared_examples 'the input is valid' do
+      it 'is valid' do
+        expect(instance).to be_valid
+      end
+
+      context 'with trailing spaces' do
+        let(:instance) { described_class.parse(input_with_spaces) }
+
+        it 'is valid' do
+          expect(instance).to be_valid
+        end
+      end
+    end
+
+    shared_examples 'the input is invalid' do
+      it 'is invalid' do
+        expect(instance).not_to be_valid
+      end
+
+      it 'has errors' do
+        expect(instance.errors).not_to be_empty
+      end
+    end
+
+    describe 'basic example' do
+      it_behaves_like 'the input is parsed correctly'
+      it_behaves_like 'the input is valid'
+    end
+
+    describe 'more complete valid example' do
+      let(:input)           { examples['indental_valid_full.ndtl'] }
+      let(:expected_output) { examples['indental_valid_full.json'] }
+
+      it_behaves_like 'the input is parsed correctly'
+      it_behaves_like 'the input is valid'
+    end
+
+    describe 'example with errors' do
+      let(:input)           { examples['indental_invalid.ndtl'] }
+      let(:expected_output) { examples['indental_invalid.json'] }
+
+      it_behaves_like 'the input is parsed correctly'
+      it_behaves_like 'the input is invalid'
+    end
   end
 
   describe 'class methods' do
     describe '.parse' do
-      let(:return_value) { described_class.parse(input) }
+      let(:output) { described_class.parse(input) }
 
       it 'returns an instance of the class' do
-        expect(return_value).to be_a described_class
+        expect(output).to be_a described_class
       end
 
       context 'with invalid input' do
         let(:input) { "\tINVALID" }
 
         it 'returns an instance of the class' do
-          expect(return_value).to be_a described_class
+          expect(output).to be_a described_class
         end
       end
     end
 
     describe '.parse!' do
-      let(:return_value) { described_class.parse!(input) }
+      let(:output) { described_class.parse!(input) }
 
       it 'returns an instance of the class' do
-        expect(return_value).to be_a described_class
+        expect(output).to be_a described_class
       end
 
       context 'with invalid input' do
         let(:input) { "\tINVALID" }
 
         it 'raises a parser error' do
-          expect { return_value }.to raise_error Nodaire::ParserError
+          expect { output }.to raise_error Nodaire::ParserError
         end
       end
     end
@@ -136,8 +186,8 @@ describe Nodaire::Indental do
     describe '#to_json' do
       let(:possible_outputs) do
         [
-          '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}',
-          '{"NAME":{"LIST":["ITEM1","ITEM2"],"KEY":"VALUE"}}',
+          '{"NAME":{"KEY":"VALUE","LIST":["ITEM 1","ITEM 2"]}}',
+          '{"NAME":{"LIST":["ITEM 1","ITEM 2"],"KEY":"VALUE"}}',
         ]
       end
 

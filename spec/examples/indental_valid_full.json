@@ -1,0 +1,33 @@
+{
+  "Shopping list": {
+    "Last updated": "2019-08-17 19:00",
+    "Groceries": [
+      "Milk",
+      "Bread",
+      "Baby spinach"
+    ]
+  },
+  "DUPLICATES": {},
+  "Duplicates": {
+    "List": ["Duplicate", "Duplicate"]
+  },
+  "Empty category": {},
+  "Category with empty keys and lists": {
+    "Empty key": "[This isn't supported yet!]",
+    "Empty list": []
+  },
+  "Extra space": {
+    "Key 1": "Value 1",
+    "Key 2": "Value 2"
+  },
+  "Comments are not recognised on data lines ; !": {
+    "Key": "Value ; !",
+    "List ; !": [
+      "Item 1 ; !",
+      "Item 2 ; !"
+    ]
+  },
+  "Unicode 😎": {
+    "🌯": "🖤"
+  }
+}

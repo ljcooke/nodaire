@@ -22,79 +22,6 @@ describe Nodaire::Indental::Parser do
     }
   end
 
-  let(:complete_example_input) do
-    <<~NDTL
-      Shopping list
-        ; love 2 shop
-        Last updated : 2019-08-17 19:00
-        Groceries
-          Milk
-          Bread
-          Baby spinach
-
-      DUPLICATES
-      Duplicates
-        List
-          Duplicate
-          Duplicate
-
-      Empty category
-
-      Category with empty keys and lists
-        Empty key : [This isn't supported yet!]
-        Empty list
-
-      Extra  \t  space  \t
-        Key  \t  1  \t  :  \t  Value  \t  1  \t
-        Key  \t  2  \t  :  \t  Value  \t  2  \t
-
-      Comments are not recognised on data lines ; !
-        Key : Value                             ; !
-        List                                    ; !
-          Item 1                                ; !
-          Item 2                                ; !
-
-      Unicode 😎
-        🌯 : 🖤
-    NDTL
-  end
-
-  let(:complete_example_expected_data) do
-    {
-      'Shopping list' => {
-        'Last updated' => '2019-08-17 19:00',
-        'Groceries' => [
-          'Milk',
-          'Bread',
-          'Baby spinach',
-        ],
-      },
-      'DUPLICATES' => {},
-      'Duplicates' => {
-        'List' => %w[Duplicate Duplicate],
-      },
-      'Empty category' => {},
-      'Category with empty keys and lists' => {
-        'Empty key' => "[This isn't supported yet!]",
-        'Empty list' => [],
-      },
-      'Extra space' => {
-        'Key 1' => 'Value 1',
-        'Key 2' => 'Value 2',
-      },
-      'Comments are not recognised on data lines ; !' => {
-        'Key' => 'Value ; !',
-        'List ; !' => [
-          'Item 1 ; !',
-          'Item 2 ; !',
-        ],
-      },
-      'Unicode 😎' => {
-        '🌯' => '🖤',
-      },
-    }
-  end
-
   let(:result) { described_class.new(input, false, options) }
   let(:strict_result) { described_class.new(input, true, options) }
   let(:options) do
@@ -128,13 +55,6 @@ describe Nodaire::Indental::Parser do
   end
 
   include_examples :valid_input
-
-  context 'with a fully featured example' do
-    let(:input) { complete_example_input }
-    let(:expected_data) { complete_example_expected_data }
-
-    include_examples :valid_input
-  end
 
   describe ':symbolize_names' do
     context 'when true' do

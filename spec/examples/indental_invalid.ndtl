@@ -1,0 +1,24 @@
+; Unexpected indent before a category
+    UNEXPECTED LIST ITEM
+  UNEXPECTED KEY OR LIST NAME
+
+; Duplicate categories, keys and list names
+CATEGORY
+  KEY : VALUE
+  LIST
+    ITEM 1
+    ITEM 2
+  KEY : DUPLICATE
+  LIST
+    DUPLICATE
+    DUPLICATE
+CATEGORY
+  DUPLICATE : DUPLICATE
+
+; More unexpected indents
+INDENTS
+ 1
+  2
+   3
+    4
+     5
