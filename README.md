@@ -86,6 +86,6 @@ bundle install
 Analyse the code and run unit tests using Bundler:
 
 ```sh
-bundle exec rubocop
-bundle exec rspec
+bundle exec rake rubocop
+bundle exec rake spec
 ```
