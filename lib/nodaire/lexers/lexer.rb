@@ -9,7 +9,7 @@ module Nodaire
       [[:blank:]]* ` \s* $
     }mx.freeze
 
-    def self.numbered_lines(source)
+    def self.lines_with_number(source)
       (source || '')
         .split("\n").each_with_index
         .map { |line, idx| [line, idx + 1] }

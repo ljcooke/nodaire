@@ -17,7 +17,7 @@ describe Nodaire::Indental::Lexer do
     context 'with an indental document' do
       let(:input) do
         <<~NDTL
-          CATEGORY
+          category
             ; comment
             KEY : VALUE
 
@@ -47,42 +47,42 @@ describe Nodaire::Indental::Lexer do
     let(:output) { described_class.token_for_line(input, 1) }
 
     context 'with a category line' do
-      let(:input) { "SOME \t CATEGORY\t" }
+      let(:input) { "Some \t category\t" }
 
       it 'returns a category token' do
         expect(output.type).to eq :category
-        expect(output.value).to eq 'SOME CATEGORY'
-        expect(output.symbol).to eq :some_category
+        expect(output.key).to eq 'Some category'
+        expect(output.value).to be_nil
       end
     end
 
     context 'with a key-value line' do
-      let(:input) { "  SOME  KEY : SOME \t VALUE\t" }
+      let(:input) { "  Some  key : Some \t value\t" }
 
       it 'returns a key-value token' do
         expect(output.type).to eq :key_value
-        expect(output.value).to eq ['SOME KEY', 'SOME VALUE']
-        expect(output.symbol).to eq :some_key
+        expect(output.key).to eq 'Some key'
+        expect(output.value).to eq 'Some value'
       end
     end
 
     context 'with a list name line' do
-      let(:input) { "  LIST \t NAME\t" }
+      let(:input) { "  List \t name\t" }
 
       it 'returns a list name token' do
         expect(output.type).to eq :list_name
-        expect(output.value).to eq 'LIST NAME'
-        expect(output.symbol).to eq :list_name
+        expect(output.key).to eq 'List name'
+        expect(output.value).to be_nil
       end
     end
 
     context 'with a list item line' do
-      let(:input) { "    LIST \t  ITEM " }
+      let(:input) { "    List \t  item " }
 
       it 'returns a list item token' do
         expect(output.type).to eq :list_item
-        expect(output.value).to eq 'LIST ITEM'
-        expect(output.symbol).to be_nil
+        expect(output.key).to be_nil
+        expect(output.value).to eq 'List item'
       end
     end
 
@@ -91,6 +91,7 @@ describe Nodaire::Indental::Lexer do
 
       it 'returns an error token' do
         expect(output.type).to eq :error
+        expect(output.key).to be_nil
         expect(output.value).not_to be_empty
       end
     end

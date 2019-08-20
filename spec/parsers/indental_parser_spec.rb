@@ -32,7 +32,8 @@ describe Nodaire::Indental::Parser do
           Bread
           Baby spinach
 
-      Allowed duplicates
+      DUPLICATES
+      Duplicates
         List
           Duplicate
           Duplicate
@@ -68,7 +69,8 @@ describe Nodaire::Indental::Parser do
           'Baby spinach',
         ],
       },
-      'Allowed duplicates' => {
+      'DUPLICATES' => {},
+      'Duplicates' => {
         'List' => %w[Duplicate Duplicate],
       },
       'Empty category' => {},
@@ -262,9 +264,7 @@ describe Nodaire::Indental::Parser do
       <<~NDTL
         A CATEGORY
           KEY : VALUE
-        A_CATEGORY
-          KEY : DUPLICATE
-        A-CATEGORY
+        A CATEGORY
           KEY : DUPLICATE
         OTHER
           KEY : VALUE
@@ -290,8 +290,8 @@ describe Nodaire::Indental::Parser do
       <<~NDTL
         NAME
           A KEY : VALUE
-          A_KEY : DUPLICATE
-          A-KEY
+          A KEY : DUPLICATE
+          A KEY
             DUPLICATE
           OTHER : VALUE
       NDTL
@@ -315,9 +315,9 @@ describe Nodaire::Indental::Parser do
         NAME
           A LIST
             ITEM
-          A_LIST
+          A LIST
             DUPLICATE
-          A-LIST : DUPLICATE
+          A LIST : DUPLICATE
           OTHER
             ITEM
         OTHER

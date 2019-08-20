@@ -3,8 +3,8 @@
 require 'nodaire'
 
 describe Nodaire::Lexer do
-  describe '.numbered_lines' do
-    let(:output) { described_class.numbered_lines(input) }
+  describe '.lines_with_number' do
+    let(:output) { described_class.lines_with_number(input) }
 
     context 'with no input' do
       let(:input) { nil }
