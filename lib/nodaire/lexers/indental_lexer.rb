@@ -37,8 +37,10 @@ class Nodaire::Indental
     end
 
     def self.key_or_list_token(string, line_num)
-      if string.include?(' : ')
-        key, value = string.split(' : ', 2)
+      key_value = string.match(/^(.+?) :( .+)?$/)
+
+      if key_value
+        key, value = key_value.captures
         Token.new :key_value, normalize(key), normalize(value), line_num
       else
         Token.new :list_name, normalize(string), nil, line_num

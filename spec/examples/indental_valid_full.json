@@ -13,7 +13,7 @@
   },
   "Empty category": {},
   "Category with empty keys and lists": {
-    "Empty key": "[This isn't supported yet!]",
+    "Empty key": "",
     "Empty list": []
   },
   "Extra space": {

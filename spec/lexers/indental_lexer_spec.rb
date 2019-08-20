@@ -64,6 +64,36 @@ describe Nodaire::Indental::Lexer do
         expect(token.key).to eq 'Some key'
         expect(token.value).to eq 'Some value'
       end
+
+      context 'with an empty key' do
+        let(:input) { '  key :' }
+
+        it 'returns a key-value token' do
+          expect(token.type).to eq :key_value
+          expect(token.key).to eq 'key'
+          expect(token.value).to eq ''
+        end
+      end
+
+      context 'with multiple separator' do
+        let(:input) { '  key : value : other' }
+
+        it 'treats everything after the first separator as the value' do
+          expect(token.type).to eq :key_value
+          expect(token.key).to eq 'key'
+          expect(token.value).to eq 'value : other'
+        end
+      end
+
+      context 'with a missing space before the separator' do
+        let(:input) { '  key: value' }
+
+        it 'is interpreted as a list name token' do
+          expect(token.type).to eq :list_name
+          expect(token.key).to eq 'key: value'
+          expect(token.value).to be_nil
+        end
+      end
     end
 
     context 'with a list name line' do
