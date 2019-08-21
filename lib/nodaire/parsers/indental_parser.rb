@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'set'
+
 require_relative '../lexers/indental_lexer'
 require_relative 'parser'
 
@@ -13,7 +15,7 @@ class Nodaire::Indental
 
       @symbolize_names = option(:symbolize_names, false)
       @data = {}
-      @category_ids = {}
+      @categories_seen = Set.new
       @category = nil
 
       parse! Nodaire::Indental::Lexer.tokenize(source)
@@ -21,10 +23,10 @@ class Nodaire::Indental
 
     private
 
-    Category = Struct.new(:name, :key_ids, :list_id, keyword_init: true)
+    Category = Struct.new(:name, :keys_seen, :list_id, keyword_init: true)
 
     attr_accessor :category
-    attr_reader :symbolize_names, :category_ids
+    attr_reader :symbolize_names, :categories_seen
 
     def parse!(tokens)
       tokens.each { |token| parse_token!(normalize_token(token)) }
@@ -41,24 +43,24 @@ class Nodaire::Indental
     end
 
     def parse_category!(token)
-      if category_ids.include?(token.key)
+      if categories_seen.include?(token.key)
         oops! 'Duplicate category', token.line_num
         self.category = nil
       else
         self.category = Category.new(
           name: token.key,
-          key_ids: {},
+          keys_seen: Set.new,
           list_id: nil
         )
         data[token.key] = {}
-        category_ids[token.key] = token.key
+        categories_seen << token.key
       end
     end
 
     def parse_key_value!(token)
       return oops!('No category specified', token.line_num) if category.nil?
 
-      if category.key_ids.include?(token.key)
+      if category.keys_seen.include?(token.key)
         oops! 'Duplicate key', token.line_num
         category.list_id = nil
       else
@@ -69,7 +71,7 @@ class Nodaire::Indental
     def parse_list_name!(token)
       return oops!('No category specified', token.line_num) if category.nil?
 
-      if category.key_ids.include?(token.key)
+      if category.keys_seen.include?(token.key)
         oops! 'Duplicate key for list', token.line_num
         category.list_id = nil
       else
@@ -87,13 +89,13 @@ class Nodaire::Indental
 
     def add_key_value!(token)
       data[category.name][token.key] = token.value
-      category.key_ids[token.key] = token.key
+      category.keys_seen << token.key
       category.list_id = nil
     end
 
     def add_list!(token)
       data[category.name][token.key] = []
-      category.key_ids[token.key] = token.key
+      category.keys_seen << token.key
       category.list_id = token.key
     end
 
