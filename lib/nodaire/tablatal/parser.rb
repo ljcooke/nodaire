@@ -2,7 +2,7 @@
 
 require 'set'
 
-require_relative 'parser'
+require_relative '../parser'
 
 class Nodaire::Tablatal
   # @private

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'lexer'
+require_relative '../lexer'
 
 class Nodaire::Indental
   INDENT_CHARS_ERROR = 'Indented with non-space characters'
