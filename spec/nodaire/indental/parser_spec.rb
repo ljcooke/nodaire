@@ -28,7 +28,7 @@ describe Nodaire::Indental::Parser do
     {}
   end
 
-  shared_examples :valid_input do
+  shared_examples 'valid input' do
     it 'returns the expected result' do
       expect(result.data).to eq expected_data
       expect(strict_result.data).to eq expected_data
@@ -40,7 +40,7 @@ describe Nodaire::Indental::Parser do
     end
   end
 
-  shared_examples :invalid_input do
+  shared_examples 'invalid input' do
     it 'returns the expected result' do
       expect(result.data).to eq expected_data
     end
@@ -54,7 +54,7 @@ describe Nodaire::Indental::Parser do
     end
   end
 
-  include_examples :valid_input
+  include_examples 'valid input'
 
   describe ':symbolize_names' do
     context 'when true' do
@@ -81,7 +81,7 @@ describe Nodaire::Indental::Parser do
         }
       end
 
-      include_examples :valid_input
+      include_examples 'valid input'
     end
   end
 
@@ -91,7 +91,7 @@ describe Nodaire::Indental::Parser do
       {}
     end
 
-    include_examples :valid_input
+    include_examples 'valid input'
   end
 
   context 'with only whitespace' do
@@ -100,7 +100,7 @@ describe Nodaire::Indental::Parser do
       {}
     end
 
-    include_examples :valid_input
+    include_examples 'valid input'
   end
 
   context 'with a JavaScript template string wrapper' do
@@ -116,7 +116,7 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    include_examples :valid_input
+    include_examples 'valid input'
   end
 
   context 'with odd-numbered indentation' do
@@ -131,7 +131,7 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    include_examples :invalid_input
+    include_examples 'invalid input'
   end
 
   context 'with greater than 4 spaces of indentation' do
@@ -146,7 +146,7 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    include_examples :invalid_input
+    include_examples 'invalid input'
   end
 
   context 'with indented lines before the first category' do
@@ -161,7 +161,7 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    include_examples :invalid_input
+    include_examples 'invalid input'
   end
 
   context 'with indented list items before a list line' do
@@ -176,7 +176,7 @@ describe Nodaire::Indental::Parser do
       NDTL
     end
 
-    include_examples :invalid_input
+    include_examples 'invalid input'
   end
 
   context 'with duplicate categories' do
@@ -202,7 +202,7 @@ describe Nodaire::Indental::Parser do
       }
     end
 
-    include_examples :invalid_input
+    include_examples 'invalid input'
   end
 
   context 'with duplicate keys' do
@@ -226,7 +226,7 @@ describe Nodaire::Indental::Parser do
       }
     end
 
-    include_examples :invalid_input
+    include_examples 'invalid input'
   end
 
   context 'with duplicate list names' do
@@ -258,6 +258,6 @@ describe Nodaire::Indental::Parser do
       }
     end
 
-    include_examples :invalid_input
+    include_examples 'invalid input'
   end
 end

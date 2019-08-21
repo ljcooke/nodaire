@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../lexers/indental_lexer'
-require_relative 'parser'
+require_relative 'lexer'
+require_relative '../parser'
 
 class Nodaire::Indental
   # @private

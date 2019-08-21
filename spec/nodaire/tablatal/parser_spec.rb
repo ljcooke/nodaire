@@ -30,11 +30,14 @@ describe Nodaire::Tablatal::Parser do
     {}
   end
 
-  shared_examples :valid_input do
-    it 'returns the expected result' do
+  shared_examples 'valid input' do
+    it 'returns the expected data' do
       expect(result.data).to eq expected_data
-      expect(result.keys).to eq expected_keys
       expect(strict_result.data).to eq expected_data
+    end
+
+    it 'returns the expected keys' do
+      expect(result.keys).to eq expected_keys
       expect(strict_result.keys).to eq expected_keys
     end
 
@@ -44,7 +47,7 @@ describe Nodaire::Tablatal::Parser do
     end
   end
 
-  shared_examples :invalid_input do
+  shared_examples 'invalid input' do
     it 'returns the expected result' do
       expect(result.data).to eq expected_data
       expect(result.keys).to eq expected_keys
@@ -59,7 +62,7 @@ describe Nodaire::Tablatal::Parser do
     end
   end
 
-  include_examples :valid_input
+  include_examples 'valid input'
 
   describe 'symbolize_names' do
     context 'when true' do
@@ -78,7 +81,7 @@ describe Nodaire::Tablatal::Parser do
 
       let(:expected_keys) { %i[name age color] }
 
-      include_examples :valid_input
+      include_examples 'valid input'
     end
   end
 
@@ -87,7 +90,7 @@ describe Nodaire::Tablatal::Parser do
     let(:expected_data) { [] }
     let(:expected_keys) { [] }
 
-    include_examples :valid_input
+    include_examples 'valid input'
   end
 
   context 'with only whitespace' do
@@ -95,7 +98,7 @@ describe Nodaire::Tablatal::Parser do
     let(:expected_data) { [] }
     let(:expected_keys) { [] }
 
-    include_examples :valid_input
+    include_examples 'valid input'
   end
 
   context 'with one line' do
@@ -103,7 +106,7 @@ describe Nodaire::Tablatal::Parser do
     let(:expected_data) { [] }
     let(:expected_keys) { %w[NAME AGE COLOR] }
 
-    include_examples :valid_input
+    include_examples 'valid input'
   end
 
   context 'with leading whitespace' do
@@ -117,7 +120,7 @@ describe Nodaire::Tablatal::Parser do
       TBTL
     end
 
-    include_examples :valid_input
+    include_examples 'valid input'
   end
 
   context 'with trailing spaces' do
@@ -132,11 +135,11 @@ describe Nodaire::Tablatal::Parser do
       TBTL
     end
 
-    include_examples :valid_input
+    include_examples 'valid input'
   end
 
   context 'with misaligned entries' do
-    context 'shifted left' do
+    context 'when shifted left' do
       let(:input) do
         <<~TBTL
           NAME    AGE   COLOR
@@ -156,10 +159,10 @@ describe Nodaire::Tablatal::Parser do
         ]
       end
 
-      include_examples :valid_input
+      include_examples 'valid input'
     end
 
-    context 'shifted right (staying within the column width)' do
+    context 'when shifted right (staying within the column width)' do
       let(:input) do
         <<~TBTL
           NAME    AGE   COLOR
@@ -170,7 +173,7 @@ describe Nodaire::Tablatal::Parser do
         TBTL
       end
 
-      include_examples :valid_input
+      include_examples 'valid input'
     end
   end
 
@@ -185,7 +188,7 @@ describe Nodaire::Tablatal::Parser do
       TBTL
     end
 
-    include_examples :valid_input
+    include_examples 'valid input'
   end
 
   context 'with incomplete lines' do
@@ -208,7 +211,7 @@ describe Nodaire::Tablatal::Parser do
       ]
     end
 
-    include_examples :valid_input
+    include_examples 'valid input'
   end
 
   context 'with duplicate keys' do
@@ -222,6 +225,6 @@ describe Nodaire::Tablatal::Parser do
       TBTL
     end
 
-    include_examples :invalid_input
+    include_examples 'invalid input'
   end
 end

@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
 require_relative 'base'
-require_relative 'api/tablatal'
+require_relative 'tablatal/tablatal'

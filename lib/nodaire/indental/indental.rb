@@ -2,7 +2,7 @@
 
 require 'json'
 
-require_relative '../parsers/indental_parser'
+require_relative 'parser'
 
 ##
 # Interface for documents in _Indental_ format.

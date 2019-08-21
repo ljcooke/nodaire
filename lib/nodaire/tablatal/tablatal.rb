@@ -2,7 +2,7 @@
 
 require 'csv'
 
-require_relative '../parsers/tablatal_parser'
+require_relative 'parser'
 
 ##
 # Interface for documents in _Tablatal_ format.
