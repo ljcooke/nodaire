@@ -34,29 +34,32 @@ class Nodaire::Tablatal
                             .reject { |line| line.match(/^\s*(;.*)?$/) }
       return if lines.empty?
 
-      @keys = make_keys(lines.shift.scan(/(\S+\s*)/).flatten)
+      @keys = filter_keys(make_keys(lines.shift.scan(/(\S+\s*)/).flatten))
       @data = lines.map { |line| make_line(line) }.compact
     end
 
     def make_keys(segs)
-      [].tap do |keys|
-        start = 0
-        keys_seen = Set.new
-        segs.each_with_index do |seg, idx|
-          len = seg.size if idx < segs.size - 1
-          key = normalize_key(seg)
+      keys = []
+      start = 0
+      segs.each_with_index do |seg, idx|
+        len = seg.size if idx < segs.size - 1
+        range_end = len ? start + len - 1 : -1
+        keys << Key.new(name: normalize_key(seg), range: start..range_end)
+        start += len if len
+      end
+      keys
+    end
 
-          if keys_seen.include?(key)
-            oops! "Duplicate key #{key}", 1
-          else
-            range_end = len ? start + len - 1 : -1
-            keys_seen << key
-            keys << Key.new(name: key, range: start..range_end)
-          end
-
-          start += len if len
+    def filter_keys(keys)
+      result = []
+      keys.each do |key|
+        if result.any? { |k| k.name == key.name }
+          oops! "Duplicate key #{key.name}", 1
+        else
+          result << key
         end
       end
+      result
     end
 
     def make_line(line)
