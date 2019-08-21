@@ -46,52 +46,65 @@ describe Nodaire::Indental::Lexer do
   describe '.token_for_line' do
     let(:token) { described_class.token_for_line(input, 1) }
 
+    shared_examples 'the type is set correctly' do
+      it 'returns a token with the expected type' do
+        expect(token.type).to eq expected_type
+      end
+    end
+
+    shared_examples 'the key is set correctly' do
+      it 'returns a token with the expected key' do
+        expect(token.key).to eq expected_key
+      end
+    end
+
+    shared_examples 'the value is set correctly' do
+      it 'returns a token with the expected value' do
+        expect(token.value).to eq expected_value
+      end
+    end
+
     context 'with a category line' do
       let(:input) { "Some \t category\t" }
 
-      it 'returns a category token' do
-        expect(token.type).to eq :category
-        expect(token.key).to eq 'Some category'
-        expect(token.value).to be_nil
-      end
+      let(:expected_type) { :category }
+      let(:expected_key) { 'Some category' }
+      let(:expected_value) { nil }
+
+      it_behaves_like 'the type is set correctly'
+      it_behaves_like 'the key is set correctly'
+      it_behaves_like 'the value is set correctly'
     end
 
     context 'with a key-value line' do
       let(:input) { "  Some  key : Some \t value\t" }
 
-      it 'returns a key-value token' do
-        expect(token.type).to eq :key_value
-        expect(token.key).to eq 'Some key'
-        expect(token.value).to eq 'Some value'
-      end
+      let(:expected_type) { :key_value }
+      let(:expected_key) { 'Some key' }
+      let(:expected_value) { 'Some value' }
+
+      it_behaves_like 'the type is set correctly'
+      it_behaves_like 'the key is set correctly'
+      it_behaves_like 'the value is set correctly'
 
       context 'with an empty key' do
-        let(:input) { '  key :' }
+        let(:input) { '  Some key :' }
 
-        it 'returns a key-value token' do
-          expect(token.type).to eq :key_value
-          expect(token.key).to eq 'key'
-          expect(token.value).to eq ''
-        end
+        let(:expected_value) { '' }
+
+        it_behaves_like 'the type is set correctly'
+        it_behaves_like 'the key is set correctly'
+        it_behaves_like 'the value is set correctly'
       end
 
-      context 'with multiple separator' do
-        let(:input) { '  key : value : other' }
+      context 'with the separators appearing more than once' do
+        let(:input) { '  Some key : value : other' }
 
-        it 'treats everything after the first separator as the value' do
-          expect(token.type).to eq :key_value
-          expect(token.key).to eq 'key'
+        it_behaves_like 'the type is set correctly'
+        it_behaves_like 'the key is set correctly'
+
+        it 'sets everything after the first separator as the value' do
           expect(token.value).to eq 'value : other'
-        end
-      end
-
-      context 'with a missing space before the separator' do
-        let(:input) { '  key: value' }
-
-        it 'is interpreted as a list name token' do
-          expect(token.type).to eq :list_name
-          expect(token.key).to eq 'key: value'
-          expect(token.value).to be_nil
         end
       end
     end
@@ -99,30 +112,53 @@ describe Nodaire::Indental::Lexer do
     context 'with a list name line' do
       let(:input) { "  List \t name\t" }
 
-      it 'returns a list name token' do
-        expect(token.type).to eq :list_name
-        expect(token.key).to eq 'List name'
-        expect(token.value).to be_nil
+      let(:expected_type) { :list_name }
+      let(:expected_key) { 'List name' }
+      let(:expected_value) { nil }
+
+      it_behaves_like 'the type is set correctly'
+      it_behaves_like 'the key is set correctly'
+      it_behaves_like 'the value is set correctly'
+
+      context 'when a key-value line is missing a space before the separator' do
+        let(:input) { '  Some key: Some value' }
+
+        it 'returns a list name token' do
+          expect(token.type).to eq :list_name
+        end
+
+        it 'sets the entire line as the list name' do
+          expect(token.key).to eq 'Some key: Some value'
+        end
+
+        it 'does not set a value' do
+          expect(token.value).to be_nil
+        end
       end
     end
 
     context 'with a list item line' do
       let(:input) { "    List \t  item " }
 
-      it 'returns a list item token' do
-        expect(token.type).to eq :list_item
-        expect(token.key).to be_nil
-        expect(token.value).to eq 'List item'
-      end
+      let(:expected_type) { :list_item }
+      let(:expected_key) { nil }
+      let(:expected_value) { 'List item' }
+
+      it_behaves_like 'the type is set correctly'
+      it_behaves_like 'the key is set correctly'
+      it_behaves_like 'the value is set correctly'
     end
 
     context 'with an unexpected indent' do
       let(:input) { ' ' * 6 }
 
-      it 'returns an error token' do
-        expect(token.type).to eq :error
-        expect(token.key).to be_nil
-        expect(token.value).not_to be_nil
+      let(:expected_type) { :error }
+      let(:expected_key) { nil }
+
+      it_behaves_like 'the type is set correctly'
+      it_behaves_like 'the key is set correctly'
+
+      it 'sets an error message about indentation' do
         expect(token.value.downcase).to match(/indent/)
       end
     end
@@ -130,10 +166,13 @@ describe Nodaire::Indental::Lexer do
     context 'when indented with tabs' do
       let(:input) { "\tKEY : VALUE" }
 
-      it 'returns an error token' do
-        expect(token.type).to eq :error
-        expect(token.key).to be_nil
-        expect(token.value).not_to be_nil
+      let(:expected_type) { :error }
+      let(:expected_key) { nil }
+
+      it_behaves_like 'the type is set correctly'
+      it_behaves_like 'the key is set correctly'
+
+      it 'sets an error message about indentation' do
         expect(token.value.downcase).to match(/indent/)
       end
     end

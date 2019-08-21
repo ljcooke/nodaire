@@ -31,10 +31,13 @@ describe Nodaire::Tablatal::Parser do
   end
 
   shared_examples :valid_input do
-    it 'returns the expected result' do
+    it 'returns the expected data' do
       expect(result.data).to eq expected_data
-      expect(result.keys).to eq expected_keys
       expect(strict_result.data).to eq expected_data
+    end
+
+    it 'returns the expected keys' do
+      expect(result.keys).to eq expected_keys
       expect(strict_result.keys).to eq expected_keys
     end
 

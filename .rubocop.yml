@@ -9,6 +9,9 @@ Metrics/BlockLength:
     - 'spec/**/*'
     - 'test/**/*'
 
+RSpec/MultipleExpectations:
+  Max: 2
+
 Style/Alias:
   EnforcedStyle: prefer_alias_method
 

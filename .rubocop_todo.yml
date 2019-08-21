@@ -13,11 +13,6 @@ RSpec/ExampleLength:
     - 'spec/nodaire/indental/lexer_spec.rb'
     - 'spec/nodaire/lexer_spec.rb'
 
-# Offense count: 17
-# Configuration parameters: AggregateFailuresByDefault.
-RSpec/MultipleExpectations:
-  Max: 4
-
 # Offense count: 16
 RSpec/NestedGroups:
   Max: 4
