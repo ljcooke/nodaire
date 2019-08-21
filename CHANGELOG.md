@@ -10,8 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for Indental keys with blank values.
 
 ### Changed
-- Category names and keys are normalised by simply removing extra whitespace
-  characters. Duplicates are detected only based on what is in the final output.
+- Category names and keys are converted to upper case.
+- Any sequence of whitespace is converted into a space character. Punctuation
+  is left intact.
 - `symbolize_names` converts any sequence of non-alphanumeric characters to `_`.
 
 ### Fixed

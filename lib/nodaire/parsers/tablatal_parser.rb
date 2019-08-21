@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'set'
+
 require_relative 'parser'
 
 class Nodaire::Tablatal
@@ -11,10 +13,8 @@ class Nodaire::Tablatal
       super(strict, options)
 
       @symbolize_names = option(:symbolize_names, false)
-
       @data = []
       @keys = []
-      @key_ids = {}
 
       parse! string
     end
@@ -25,7 +25,7 @@ class Nodaire::Tablatal
 
     private
 
-    attr_reader :symbolize_names, :key_ids
+    attr_reader :symbolize_names
 
     Key = Struct.new(:name, :range, keyword_init: true)
 
@@ -41,17 +41,17 @@ class Nodaire::Tablatal
     def make_keys(segs)
       [].tap do |keys|
         start = 0
+        keys_seen = Set.new
         segs.each_with_index do |seg, idx|
           len = seg.size if idx < segs.size - 1
-          id = normalize_sym(normalize_text(seg))
-          key_name = symbolize_names ? id : normalize_text(seg)
+          key = normalize_key(seg)
 
-          if key_ids.include?(id)
-            oops! "Duplicate key #{key_name}", 1
+          if keys_seen.include?(key)
+            oops! "Duplicate key #{key}", 1
           else
             range_end = len ? start + len - 1 : -1
-            key_ids[id] = key_name
-            keys << Key.new(name: key_name, range: start..range_end)
+            keys_seen << key
+            keys << Key.new(name: key, range: start..range_end)
           end
 
           start += len if len
@@ -67,8 +67,12 @@ class Nodaire::Tablatal
       string ? string.split.join(' ') : ''
     end
 
-    def normalize_sym(key)
-      key.downcase.gsub(/[^a-z0-9]+/, '_').to_sym
+    def normalize_key(string)
+      if symbolize_names
+        normalize_text(string).downcase.gsub(/[^a-z0-9]+/, '_').to_sym
+      else
+        normalize_text(string).upcase
+      end
     end
   end
 end

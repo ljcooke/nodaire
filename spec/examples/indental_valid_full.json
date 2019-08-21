@@ -1,33 +1,32 @@
 {
-  "Shopping list": {
-    "Last updated": "2019-08-17 19:00",
-    "Groceries": [
+  "SHOPPING LIST": {
+    "LAST UPDATED": "2019-08-17 19:00",
+    "GROCERIES": [
       "Milk",
       "Bread",
       "Baby spinach"
     ]
   },
-  "DUPLICATES": {},
-  "Duplicates": {
-    "List": ["Duplicate", "Duplicate"]
+  "DUPLICATES": {
+    "LIST": ["Duplicate", "Duplicate"]
   },
-  "Empty category": {},
-  "Category with empty keys and lists": {
-    "Empty key": "",
-    "Empty list": []
+  "EMPTY CATEGORY": {},
+  "CATEGORY WITH EMPTY KEYS AND LISTS": {
+    "EMPTY KEY": "",
+    "EMPTY LIST": []
   },
-  "Extra space": {
-    "Key 1": "Value 1",
-    "Key 2": "Value 2"
+  "EXTRA SPACE": {
+    "KEY 1": "Value 1",
+    "KEY 2": "Value 2"
   },
-  "Comments are not recognised on data lines ; !": {
-    "Key": "Value ; !",
-    "List ; !": [
+  "COMMENTS ARE NOT RECOGNISED ON DATA LINES ; !": {
+    "KEY": "Value ; !",
+    "LIST ; !": [
       "Item 1 ; !",
       "Item 2 ; !"
     ]
   },
-  "Unicode 😎": {
+  "UNICODE 😎": {
     "🌯": "🖤"
   }
 }

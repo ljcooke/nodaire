@@ -3,9 +3,9 @@
   UNEXPECTED KEY OR LIST NAME
 
 ; Duplicate categories, keys and list names
-CATEGORY
-  KEY : VALUE
-  LIST
+category
+  key : VALUE
+  list
     ITEM 1
     ITEM 2
   KEY : DUPLICATE
