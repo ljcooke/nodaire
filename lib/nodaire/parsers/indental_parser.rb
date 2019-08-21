@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'set'
-
 require_relative '../lexers/indental_lexer'
 require_relative 'parser'
 
@@ -15,7 +13,6 @@ class Nodaire::Indental
 
       @symbolize_names = option(:symbolize_names, false)
       @data = {}
-      @categories_seen = Set.new
       @category = nil
 
       parse! Nodaire::Indental::Lexer.tokenize(source)
@@ -23,10 +20,10 @@ class Nodaire::Indental
 
     private
 
-    Category = Struct.new(:name, :keys_seen, :list_id, keyword_init: true)
+    Category = Struct.new(:name, :list_id, keyword_init: true)
 
     attr_accessor :category
-    attr_reader :symbolize_names, :categories_seen
+    attr_reader :symbolize_names
 
     def parse!(tokens)
       tokens.each { |token| parse_token!(normalize_token(token)) }
@@ -43,24 +40,18 @@ class Nodaire::Indental
     end
 
     def parse_category!(token)
-      if categories_seen.include?(token.key)
+      if data.include?(token.key)
         oops! 'Duplicate category', token.line_num
         self.category = nil
       else
-        self.category = Category.new(
-          name: token.key,
-          keys_seen: Set.new,
-          list_id: nil
-        )
-        data[token.key] = {}
-        categories_seen << token.key
+        add_category! token
       end
     end
 
     def parse_key_value!(token)
       return oops!('No category specified', token.line_num) if category.nil?
 
-      if category.keys_seen.include?(token.key)
+      if data[category.name].include?(token.key)
         oops! 'Duplicate key', token.line_num
         category.list_id = nil
       else
@@ -71,7 +62,7 @@ class Nodaire::Indental
     def parse_list_name!(token)
       return oops!('No category specified', token.line_num) if category.nil?
 
-      if category.keys_seen.include?(token.key)
+      if data[category.name].include?(token.key)
         oops! 'Duplicate key for list', token.line_num
         category.list_id = nil
       else
@@ -87,15 +78,21 @@ class Nodaire::Indental
       end
     end
 
+    def add_category!(token)
+      self.category = Category.new(
+        name: token.key,
+        list_id: nil
+      )
+      data[token.key] = {}
+    end
+
     def add_key_value!(token)
       data[category.name][token.key] = token.value
-      category.keys_seen << token.key
       category.list_id = nil
     end
 
     def add_list!(token)
       data[category.name][token.key] = []
-      category.keys_seen << token.key
       category.list_id = token.key
     end
 
