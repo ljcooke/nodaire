@@ -16,10 +16,3 @@ RSpec/ExampleLength:
 # Offense count: 16
 RSpec/NestedGroups:
   Max: 4
-
-# Offense count: 28
-# Cop supports --auto-correct.
-RSpec/SharedExamples:
-  Exclude:
-    - 'spec/nodaire/indental/parser_spec.rb'
-    - 'spec/nodaire/tablatal/parser_spec.rb'
