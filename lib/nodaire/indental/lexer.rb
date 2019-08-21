@@ -3,7 +3,9 @@
 require_relative '../lexer'
 
 class Nodaire::Indental
+  # @private
   INDENT_CHARS_ERROR = 'Indented with non-space characters'
+  # @private
   INDENT_LEVEL_ERROR = 'Unexpected indent level'
 
   # @private
