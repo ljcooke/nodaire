@@ -81,7 +81,7 @@ describe Nodaire::Lexer do
     end
 
     context 'with an incomplete wrapper' do
-      context 'missing an opening delimiter' do
+      context 'without an opening delimiter' do
         let(:input) do
           <<~SOURCE
             app.example =
@@ -96,7 +96,7 @@ describe Nodaire::Lexer do
         end
       end
 
-      context 'missing a closing delimiter' do
+      context 'without a closing delimiter' do
         let(:input) do
           <<~SOURCE
             app.example = `

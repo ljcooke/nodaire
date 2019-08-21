@@ -127,7 +127,7 @@ describe Nodaire::Indental::Lexer do
       end
     end
 
-    context 'indented with tabs' do
+    context 'when indented with tabs' do
       let(:input) { "\tKEY : VALUE" }
 
       it 'returns an error token' do

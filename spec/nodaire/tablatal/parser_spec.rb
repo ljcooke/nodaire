@@ -136,7 +136,7 @@ describe Nodaire::Tablatal::Parser do
   end
 
   context 'with misaligned entries' do
-    context 'shifted left' do
+    context 'when shifted left' do
       let(:input) do
         <<~TBTL
           NAME    AGE   COLOR
@@ -159,7 +159,7 @@ describe Nodaire::Tablatal::Parser do
       include_examples :valid_input
     end
 
-    context 'shifted right (staying within the column width)' do
+    context 'when shifted right (staying within the column width)' do
       let(:input) do
         <<~TBTL
           NAME    AGE   COLOR
