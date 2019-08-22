@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lexer'
+require_relative '../util'
 
 class Nodaire::Indental
   # @private
@@ -58,7 +59,7 @@ class Nodaire::Indental
     end
 
     def self.normalize(input)
-      collapse_spaces(input)
+      Nodaire.squeeze(input)
     end
   end
 end

@@ -20,6 +20,7 @@ Style/ClassAndModuleChildren:
 
 Style/Documentation:
   Exclude:
+    - 'lib/nodaire/util.rb' # module is documented in base.rb
     - 'spec/**/*'
     - 'test/**/*'
 

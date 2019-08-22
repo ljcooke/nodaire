@@ -17,10 +17,6 @@ module Nodaire
         .map { |line, idx| [line, idx + 1] }
     end
 
-    def self.collapse_spaces(source)
-      (source || '').split.join(' ')
-    end
-
     def self.strip_js_wrapper(source)
       (source || '').sub(JS_WRAPPER_REGEXP, '\1')
     end

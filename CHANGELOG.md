@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Support for Indental keys with blank values.
+- Two string normalization methods are now public: `Nodaire.squeeze` and
+  `Nodaire.symbolize`.
 
 ### Changed
 - Category names and keys are converted to upper case.

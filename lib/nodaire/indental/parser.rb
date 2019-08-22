@@ -2,6 +2,7 @@
 
 require_relative 'lexer'
 require_relative '../parser'
+require_relative '../util'
 
 class Nodaire::Indental
   # @private
@@ -112,7 +113,7 @@ class Nodaire::Indental
       return if key.nil?
 
       if symbolize_names
-        key.downcase.gsub(/[^a-z0-9]+/, '_').to_sym
+        Nodaire.symbolize(key)
       else
         key.upcase
       end

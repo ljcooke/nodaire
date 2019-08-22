@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require 'set'
-
 require_relative '../parser'
+require_relative '../util'
 
 class Nodaire::Tablatal
   # @private
@@ -63,18 +62,14 @@ class Nodaire::Tablatal
     end
 
     def make_line(line)
-      @keys.map { |key| [key.name, normalize_text(line[key.range])] }.to_h
-    end
-
-    def normalize_text(string)
-      string ? string.split.join(' ') : ''
+      @keys.map { |key| [key.name, Nodaire.squeeze(line[key.range])] }.to_h
     end
 
     def normalize_key(string)
       if symbolize_names
-        normalize_text(string).downcase.gsub(/[^a-z0-9]+/, '_').to_sym
+        Nodaire.symbolize(string)
       else
-        normalize_text(string).upcase
+        Nodaire.squeeze(string).upcase
       end
     end
   end
