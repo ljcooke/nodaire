@@ -59,110 +59,11 @@
 
       <div id="content"><div id='filecontents'><pre class="code ruby"><span class='comment'># frozen_string_literal: true
 </span>
-<span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>json</span><span class='tstring_end'>&#39;</span></span>
-
-<span class='id identifier rubyid_require_relative'>require_relative</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>../parsers/indental_parser</span><span class='tstring_end'>&#39;</span></span>
-
-<span class='comment'>##
-</span><span class='comment'># Interface for documents in _Indental_ format.
-</span><span class='comment'>#
-</span><span class='comment'># _Indental_ is a &#39;dictionary-type database format&#39; by Devine Lu Linvega.
-</span><span class='comment'># See: https://wiki.xxiivv.com/#indental
-</span><span class='comment'>#
-</span><span class='comment'>#   require &#39;nodaire/indental&#39;
-</span><span class='comment'>#
-</span><span class='comment'>#   doc = Nodaire::Indental.parse! &lt;&lt;~NDTL
-</span><span class='comment'>#     NAME
-</span><span class='comment'>#       KEY : VALUE
-</span><span class='comment'>#       LIST
-</span><span class='comment'>#         ITEM1
-</span><span class='comment'>#         ITEM2
-</span><span class='comment'>#   NDTL
-</span><span class='comment'>#
-</span><span class='comment'>#   doc.valid?     # true
-</span><span class='comment'>#   doc.categories # [&quot;NAME&quot;]
-</span><span class='comment'>#   doc.to_h       # {&quot;NAME&quot;=&gt;{&quot;KEY&quot;=&gt;&quot;VALUE&quot;, &quot;LIST&quot;=&gt;[&quot;ITEM1&quot;, &quot;ITEM2&quot;]}}
-</span><span class='comment'>#   doc.to_json    # &#39;{&quot;NAME&quot;:{&quot;KEY&quot;:&quot;VALUE&quot;,&quot;LIST&quot;:[&quot;ITEM1&quot;,&quot;ITEM2&quot;]}}&#39;
-</span><span class='comment'>#
-</span><span class='comment'># @since 0.2.0
-</span><span class='comment'>#
-</span><span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Nodaire.html" title="Nodaire (module)">Nodaire</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Nodaire/Indental.html" title="Nodaire::Indental (class)">Indental</a></span></span>
-  <span class='comment'># A hash containing the data parsed from the source.
-</span>  <span class='comment'># @return [Hash]
-</span>  <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:data</span>
-  <span class='comment'># An array of category names.
-</span>  <span class='comment'># @since 0.3.0
-</span>  <span class='comment'># @return [Array&lt;String&gt;]
-</span>  <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:categories</span>
-  <span class='comment'># An array of error messages.
-</span>  <span class='comment'># @return [Array&lt;String&gt;]
-</span>  <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:errors</span>
-
-  <span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:to_h</span><span class='comma'>,</span> <span class='symbol'>:data</span>
-
-  <span class='comment'>##
-</span>  <span class='comment'># Parse the document +source+.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param [String] source The document source to parse.
-</span>  <span class='comment'># @param [Boolean] symbolize_names
-</span>  <span class='comment'>#   If true, normalize category and key names and convert them to
-</span>  <span class='comment'>#   lowercase symbols.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @return [Indental]
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_parser'>parser</span> <span class='op'>=</span> <span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='id identifier rubyid_symbolize_names'>symbolize_names</span><span class='rparen'>)</span>
-
-    <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_parser'>parser</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
-  <span class='comment'>##
-</span>  <span class='comment'># Parse the document +source+, raising an exception if a parser error occurs.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param [String] source The document source to parse.
-</span>  <span class='comment'># @param [boolean] symbolize_names
-</span>  <span class='comment'>#   If true, normalize category and key names and convert them to
-</span>  <span class='comment'>#   lowercase symbols.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @raise [ParserError]
-</span>  <span class='comment'># @return [Indental]
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse!'>parse!</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_parser'>parser</span> <span class='op'>=</span> <span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='id identifier rubyid_symbolize_names'>symbolize_names</span><span class='rparen'>)</span>
-
-    <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_parser'>parser</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
-  <span class='comment'>##
-</span>  <span class='comment'># A boolean indicating whether the source was parsed without errors.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @return [Boolean]
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
-    <span class='ivar'>@errors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-  <span class='kw'>end</span>
-
-  <span class='comment'>##
-</span>  <span class='comment'># Convert the document to JSON.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @return [String]
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_to_json'>to_json</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid__args'>_args</span><span class='rparen'>)</span>
-    <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_private'>private</span>
-
-  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_parser'>parser</span><span class='rparen'>)</span>
-    <span class='ivar'>@data</span> <span class='op'>=</span> <span class='id identifier rubyid_parser'>parser</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span>
-    <span class='ivar'>@errors</span> <span class='op'>=</span> <span class='id identifier rubyid_parser'>parser</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span>
-
-    <span class='ivar'>@categories</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre></div></div>
+<span class='id identifier rubyid_require_relative'>require_relative</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>base</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require_relative'>require_relative</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>indental/indental</span><span class='tstring_end'>&#39;</span></span></pre></div></div>
 
       <div id="footer">
-  Generated on Sun Aug 18 20:48:20 2019 by
+  Generated on Thu Aug 22 22:25:00 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.20 (ruby-2.5.0).
 </div>

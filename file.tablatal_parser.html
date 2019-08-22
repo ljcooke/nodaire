@@ -59,6 +59,8 @@
 
       <div id="content"><div id='filecontents'><pre class="code ruby"><span class='comment'># frozen_string_literal: true
 </span>
+<span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>set</span><span class='tstring_end'>&#39;</span></span>
+
 <span class='id identifier rubyid_require_relative'>require_relative</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>parser</span><span class='tstring_end'>&#39;</span></span>
 
 <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Nodaire.html" title="Nodaire (module)">Nodaire</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Nodaire/Tablatal.html" title="Nodaire::Tablatal (class)">Tablatal</a></span></span>
@@ -70,10 +72,8 @@
       <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_strict'>strict</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
       <span class='ivar'>@symbolize_names</span> <span class='op'>=</span> <span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='symbol'>:symbolize_names</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
-
       <span class='ivar'>@data</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
       <span class='ivar'>@keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-      <span class='ivar'>@key_ids</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 
       <span class='id identifier rubyid_parse!'>parse!</span> <span class='id identifier rubyid_string'>string</span>
     <span class='kw'>end</span>
@@ -84,7 +84,7 @@
 
     <span class='id identifier rubyid_private'>private</span>
 
-    <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:symbolize_names</span><span class='comma'>,</span> <span class='symbol'>:key_ids</span>
+    <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:symbolize_names</span>
 
     <span class='const'>Key</span> <span class='op'>=</span> <span class='const'>Struct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:range</span><span class='comma'>,</span> <span class='label'>keyword_init:</span> <span class='kw'>true</span><span class='rparen'>)</span>
 
@@ -93,29 +93,32 @@
                             <span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='op'>|</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\s*(;.*)?$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
       <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-      <span class='ivar'>@keys</span> <span class='op'>=</span> <span class='id identifier rubyid_make_keys'>make_keys</span><span class='lparen'>(</span><span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(\S+\s*)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='rparen'>)</span>
+      <span class='ivar'>@keys</span> <span class='op'>=</span> <span class='id identifier rubyid_filter_keys'>filter_keys</span><span class='lparen'>(</span><span class='id identifier rubyid_make_keys'>make_keys</span><span class='lparen'>(</span><span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(\S+\s*)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='rparen'>)</span><span class='rparen'>)</span>
       <span class='ivar'>@data</span> <span class='op'>=</span> <span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='op'>|</span> <span class='id identifier rubyid_make_line'>make_line</span><span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
     <span class='kw'>end</span>
 
     <span class='kw'>def</span> <span class='id identifier rubyid_make_keys'>make_keys</span><span class='lparen'>(</span><span class='id identifier rubyid_segs'>segs</span><span class='rparen'>)</span>
-      <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_keys'>keys</span><span class='op'>|</span>
-        <span class='id identifier rubyid_start'>start</span> <span class='op'>=</span> <span class='int'>0</span>
-        <span class='id identifier rubyid_segs'>segs</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_seg'>seg</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='op'>|</span>
-          <span class='id identifier rubyid_len'>len</span> <span class='op'>=</span> <span class='id identifier rubyid_seg'>seg</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='kw'>if</span> <span class='id identifier rubyid_idx'>idx</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_segs'>segs</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>-</span> <span class='int'>1</span>
-          <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_normalize_sym'>normalize_sym</span><span class='lparen'>(</span><span class='id identifier rubyid_seg'>seg</span><span class='rparen'>)</span>
-          <span class='id identifier rubyid_key_name'>key_name</span> <span class='op'>=</span> <span class='id identifier rubyid_symbolize_names'>symbolize_names</span> <span class='op'>?</span> <span class='id identifier rubyid_id'>id</span> <span class='op'>:</span> <span class='id identifier rubyid_normalize_text'>normalize_text</span><span class='lparen'>(</span><span class='id identifier rubyid_seg'>seg</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_start'>start</span> <span class='op'>=</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_segs'>segs</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_seg'>seg</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='op'>|</span>
+        <span class='id identifier rubyid_len'>len</span> <span class='op'>=</span> <span class='id identifier rubyid_seg'>seg</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='kw'>if</span> <span class='id identifier rubyid_idx'>idx</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_segs'>segs</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>-</span> <span class='int'>1</span>
+        <span class='id identifier rubyid_range_end'>range_end</span> <span class='op'>=</span> <span class='id identifier rubyid_len'>len</span> <span class='op'>?</span> <span class='id identifier rubyid_start'>start</span> <span class='op'>+</span> <span class='id identifier rubyid_len'>len</span> <span class='op'>-</span> <span class='int'>1</span> <span class='op'>:</span> <span class='op'>-</span><span class='int'>1</span>
+        <span class='id identifier rubyid_keys'>keys</span> <span class='op'>&lt;&lt;</span> <span class='const'>Key</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_normalize_key'>normalize_key</span><span class='lparen'>(</span><span class='id identifier rubyid_seg'>seg</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>range:</span> <span class='id identifier rubyid_start'>start</span><span class='op'>..</span><span class='id identifier rubyid_range_end'>range_end</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_start'>start</span> <span class='op'>+=</span> <span class='id identifier rubyid_len'>len</span> <span class='kw'>if</span> <span class='id identifier rubyid_len'>len</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_keys'>keys</span>
+    <span class='kw'>end</span>
 
-          <span class='kw'>if</span> <span class='id identifier rubyid_key_ids'>key_ids</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
-            <span class='id identifier rubyid_oops!'>oops!</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Duplicate key </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key_name'>key_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>1</span>
-          <span class='kw'>else</span>
-            <span class='id identifier rubyid_range_end'>range_end</span> <span class='op'>=</span> <span class='id identifier rubyid_len'>len</span> <span class='op'>?</span> <span class='id identifier rubyid_start'>start</span> <span class='op'>+</span> <span class='id identifier rubyid_len'>len</span> <span class='op'>-</span> <span class='int'>1</span> <span class='op'>:</span> <span class='op'>-</span><span class='int'>1</span>
-            <span class='id identifier rubyid_key_ids'>key_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_key_name'>key_name</span>
-            <span class='id identifier rubyid_keys'>keys</span> <span class='op'>&lt;&lt;</span> <span class='const'>Key</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_key_name'>key_name</span><span class='comma'>,</span> <span class='label'>range:</span> <span class='id identifier rubyid_start'>start</span><span class='op'>..</span><span class='id identifier rubyid_range_end'>range_end</span><span class='rparen'>)</span>
-          <span class='kw'>end</span>
-
-          <span class='id identifier rubyid_start'>start</span> <span class='op'>+=</span> <span class='id identifier rubyid_len'>len</span> <span class='kw'>if</span> <span class='id identifier rubyid_len'>len</span>
+    <span class='kw'>def</span> <span class='id identifier rubyid_filter_keys'>filter_keys</span><span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span>
+          <span class='id identifier rubyid_oops!'>oops!</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Duplicate key </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>1</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_key'>key</span>
         <span class='kw'>end</span>
       <span class='kw'>end</span>
+      <span class='id identifier rubyid_result'>result</span>
     <span class='kw'>end</span>
 
     <span class='kw'>def</span> <span class='id identifier rubyid_make_line'>make_line</span><span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span><span class='rparen'>)</span>
@@ -126,14 +129,18 @@
       <span class='id identifier rubyid_string'>string</span> <span class='op'>?</span> <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
     <span class='kw'>end</span>
 
-    <span class='kw'>def</span> <span class='id identifier rubyid_normalize_sym'>normalize_sym</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[_-]+</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>_</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+    <span class='kw'>def</span> <span class='id identifier rubyid_normalize_key'>normalize_key</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_symbolize_names'>symbolize_names</span>
+        <span class='id identifier rubyid_normalize_text'>normalize_text</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[^a-z0-9]+</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>_</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_normalize_text'>normalize_text</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sun Aug 18 20:48:20 2019 by
+  Generated on Wed Aug 21 21:13:12 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.20 (ruby-2.5.0).
 </div>

@@ -94,8 +94,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/nodaire/api/tablatal.rb<span class="defines">,<br />
-  lib/nodaire/parsers/tablatal_parser.rb</span>
+    <dd>lib/nodaire/tablatal/tablatal.rb<span class="defines">,<br />
+  lib/nodaire/tablatal/parser.rb</span>
 </dd>
   </dl>
   
@@ -436,7 +436,7 @@ error occurs.</p>
 35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/tablatal.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/tablatal/tablatal.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_data'>data</span>
   <span class='ivar'>@data</span>
@@ -508,7 +508,7 @@ error occurs.</p>
 42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/tablatal.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/tablatal/tablatal.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_errors'>errors</span>
   <span class='ivar'>@errors</span>
@@ -580,7 +580,7 @@ error occurs.</p>
 38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/tablatal.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/tablatal/tablatal.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_keys'>keys</span>
   <span class='ivar'>@keys</span>
@@ -695,7 +695,7 @@ error occurs.</p>
 58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/tablatal.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/tablatal/tablatal.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parser'>parser</span> <span class='op'>=</span> <span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='id identifier rubyid_symbolize_names'>symbolize_names</span><span class='rparen'>)</span>
@@ -819,7 +819,7 @@ error occurs.</p>
 75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/tablatal.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/tablatal/tablatal.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse!'>parse!</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parser'>parser</span> <span class='op'>=</span> <span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='id identifier rubyid_symbolize_names'>symbolize_names</span><span class='rparen'>)</span>
@@ -902,7 +902,7 @@ error occurs.</p>
 99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/tablatal.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/tablatal/tablatal.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_csv'>to_csv</span>
   <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_csv'>csv</span><span class='op'>|</span>
@@ -977,7 +977,7 @@ error occurs.</p>
 85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/tablatal.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/tablatal/tablatal.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
   <span class='ivar'>@errors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -992,7 +992,7 @@ error occurs.</p>
 </div>
 
       <div id="footer">
-  Generated on Sun Aug 18 20:48:20 2019 by
+  Generated on Thu Aug 22 22:25:01 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.20 (ruby-2.5.0).
 </div>

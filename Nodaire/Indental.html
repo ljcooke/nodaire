@@ -94,8 +94,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/nodaire/api/indental.rb<span class="defines">,<br />
-  lib/nodaire/parsers/indental_parser.rb</span>
+    <dd>lib/nodaire/indental/indental.rb<span class="defines">,<br />
+  lib/nodaire/indental/lexer.rb,<br /> lib/nodaire/indental/parser.rb</span>
 </dd>
   </dl>
   
@@ -432,7 +432,7 @@ error occurs.</p>
 39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/indental.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_categories'>categories</span>
   <span class='ivar'>@categories</span>
@@ -508,7 +508,7 @@ error occurs.</p>
 35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/indental.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_data'>data</span>
   <span class='ivar'>@data</span>
@@ -580,7 +580,7 @@ error occurs.</p>
 42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/indental.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_errors'>errors</span>
   <span class='ivar'>@errors</span>
@@ -696,7 +696,7 @@ symbols.</p>
 58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/indental.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parser'>parser</span> <span class='op'>=</span> <span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='id identifier rubyid_symbolize_names'>symbolize_names</span><span class='rparen'>)</span>
@@ -821,7 +821,7 @@ symbols.</p>
 75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/indental.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse!'>parse!</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parser'>parser</span> <span class='op'>=</span> <span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='id identifier rubyid_symbolize_names'>symbolize_names</span><span class='rparen'>)</span>
@@ -899,7 +899,7 @@ symbols.</p>
 93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/indental.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_json'>to_json</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid__args'>_args</span><span class='rparen'>)</span>
   <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
@@ -969,7 +969,7 @@ symbols.</p>
 84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/api/indental.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
   <span class='ivar'>@errors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -984,7 +984,7 @@ symbols.</p>
 </div>
 
       <div id="footer">
-  Generated on Sun Aug 18 20:48:20 2019 by
+  Generated on Thu Aug 22 22:25:01 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.20 (ruby-2.5.0).
 </div>
