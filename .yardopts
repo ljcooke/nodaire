@@ -2,4 +2,4 @@
 --no-private
 -
 CHANGELOG.md
-lib/**/*.rb
+LICENSE
