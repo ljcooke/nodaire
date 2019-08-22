@@ -5,20 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+<!-- ## [Unreleased] -->
+
+## [0.4.0] - 2019-08-22
 ### Added
 - Support for Indental keys with blank values.
 - Two string normalization methods are now public: `Nodaire.squeeze` and
   `Nodaire.symbolize`.
 
 ### Changed
-- Category names and keys are converted to upper case.
+- Category names and keys are converted to upper case, except when
+  `symbolize_names` is specified.
 - Any sequence of whitespace is converted into a space character. Punctuation
   is left intact.
 - `symbolize_names` converts any sequence of non-alphanumeric characters to `_`.
 
 ### Fixed
 - Indentation using tabs is now treated as an error.
+
 
 ## [0.3.0] - 2019-08-18
 ### Added
@@ -35,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Require Ruby >= 2.5.0. (Previously there was no minimum set, but it used
   a feature that required Ruby >= 2.6.0.)
 
+
 ## [0.2.0] - 2019-08-17
 ### Added
 - Parse [Indental](https://wiki.xxiivv.com/#indental) files,
@@ -46,12 +51,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   an exception. This is paired with a new `.parse!` method which _does_ raise
   an exception.
 
+
 ## [0.1.0] - 2019-08-16
 ### Added
 - Parse [Tablatal](https://wiki.xxiivv.com/#tablatal) files,
   returning an array of hashes or a CSV string.
 
-[Unreleased]: https://github.com/ljcooke/nodaire/compare/v0.3.0...HEAD
+
+[Unreleased]: https://github.com/ljcooke/nodaire/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/ljcooke/nodaire/releases/tag/v0.4.0
 [0.3.0]: https://github.com/ljcooke/nodaire/releases/tag/v0.3.0
 [0.2.0]: https://github.com/ljcooke/nodaire/releases/tag/v0.2.0
 [0.1.0]: https://github.com/ljcooke/nodaire/releases/tag/v0.1.0

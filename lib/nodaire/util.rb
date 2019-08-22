@@ -11,7 +11,7 @@ module Nodaire
   #
   # @param [String] string
   #
-  # @since UNRELEASED
+  # @since 0.4.0
   # @return [String]
   #
   def self.squeeze(string)
@@ -26,7 +26,7 @@ module Nodaire
   #
   # @param [String] string
   #
-  # @since UNRELEASED
+  # @since 0.4.0
   # @return [Symbol]
   #
   def self.symbolize(string)
