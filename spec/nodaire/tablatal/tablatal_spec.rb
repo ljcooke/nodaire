@@ -104,12 +104,6 @@ describe Nodaire::Tablatal do
       described_class.parse(input, symbolize_names: symbolize_names)
     end
 
-    describe '#data' do
-      it 'returns the expected output' do
-        expect(instance.data).to eq expected_output
-      end
-    end
-
     describe '#to_a' do
       it 'returns the expected output' do
         expect(instance.to_a).to eq expected_output
@@ -166,9 +160,27 @@ describe Nodaire::Tablatal do
     describe '#to_csv' do
       let(:expected_output) { examples['tablatal_valid.csv'] }
 
-      it 'returns the expected output' do
+      it 'returns a CSV string' do
         expect(instance.to_csv).to eq expected_output
       end
+    end
+
+    describe '#to_json' do
+      let(:parsed_json) { JSON.parse(instance.to_json) }
+
+      it 'returns a JSON array string' do
+        expect(parsed_json).to eq expected_output
+      end
+    end
+  end
+
+  describe 'Enumerable' do
+    it 'implements the Enumerable mixin' do
+      expect(instance).to respond_to :each
+    end
+
+    it 'yields the output rows' do
+      expect(instance.map.to_a).to eq expected_output
     end
   end
 end

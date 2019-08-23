@@ -28,7 +28,10 @@ require_relative 'parser'
 # @since 0.2.0
 #
 class Nodaire::Indental
+  include Enumerable
+
   # A hash containing the data parsed from the source.
+  # @deprecated Use +to_h+.
   # @return [Hash]
   attr_reader :data
   # An array of category names.
@@ -38,8 +41,6 @@ class Nodaire::Indental
   # An array of error messages.
   # @return [Array<String>]
   attr_reader :errors
-
-  alias_method :to_h, :data
 
   ##
   # Parse the document +source+.
@@ -84,12 +85,27 @@ class Nodaire::Indental
   end
 
   ##
+  # Convert the document to a hash.
+  #
+  # @return [Hash]
+  #
+  def to_h(*args)
+    @data.to_h(*args)
+  end
+
+  ##
   # Convert the document to JSON.
   #
   # @return [String]
   #
-  def to_json(*_args)
-    JSON.generate(data)
+  def to_json(*args)
+    @data.to_json(*args)
+  end
+
+  # Enumerable
+  # @private
+  def each(&block)
+    @data.each(&block)
   end
 
   private

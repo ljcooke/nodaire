@@ -28,7 +28,10 @@ require_relative 'parser'
 # @since 0.1.0
 #
 class Nodaire::Tablatal
+  include Enumerable
+
   # An array of hashes containing the data parsed from the source.
+  # @deprecated Use +to_a+.
   # @return [Array<Hash>]
   attr_reader :data
   # An array of keys parsed from the source header line.
@@ -38,8 +41,6 @@ class Nodaire::Tablatal
   # @since 0.2.0
   # @return [Array<String>]
   attr_reader :errors
-
-  alias_method :to_a, :data
 
   ##
   # Parse the document +source+.
@@ -85,6 +86,25 @@ class Nodaire::Tablatal
   end
 
   ##
+  # Convert the document to an array.
+  #
+  # @return [Array<Hash>]
+  #
+  def to_a(*args)
+    @data.to_a(*args)
+  end
+
+  ##
+  # Convert the document to JSON.
+  #
+  # @since UNRELEASED
+  # @return [String]
+  #
+  def to_json(*args)
+    @data.to_json(*args)
+  end
+
+  ##
   # Convert the document to CSV.
   #
   # @return [String]
@@ -96,6 +116,12 @@ class Nodaire::Tablatal
         csv << keys.map { |key| row[key] }
       end
     end
+  end
+
+  # Enumerable
+  # @private
+  def each(&block)
+    @data.each(&block)
   end
 
   private

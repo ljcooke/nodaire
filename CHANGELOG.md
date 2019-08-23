@@ -5,9 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-<!-- ## [Unreleased] -->
+<!-- ====================================================================== -->
+## [Unreleased]
 
+### Added
+- `Nodaire::Indental` and `Nodaire::Tablatal` now implement `Enumerable`, which
+  allows you to iterate over the results with `#each`, `#map` etc.
+- `Nodaire::Tablatal#to_json`.
+
+### Deprecated
+- `#data` will be removed in a future release. Use `#to_h` and `#to_a` instead.
+
+<!-- ====================================================================== -->
 ## [0.4.0] - 2019-08-22
+
 ### Added
 - Support for Indental keys with blank values.
 - Two string normalization methods are now public: `Nodaire.squeeze` and
@@ -23,8 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Indentation using tabs is now treated as an error.
 
-
+<!-- ====================================================================== -->
 ## [0.3.0] - 2019-08-18
+
 ### Added
 - `Indental#categories` returns an array of category names.
 - [Documentation!](https://slisne.github.io/nodaire/)
@@ -39,8 +51,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Require Ruby >= 2.5.0. (Previously there was no minimum set, but it used
   a feature that required Ruby >= 2.6.0.)
 
-
+<!-- ====================================================================== -->
 ## [0.2.0] - 2019-08-17
+
 ### Added
 - Parse [Indental](https://wiki.xxiivv.com/#indental) files,
   returning a hash or a JSON string.
@@ -51,13 +64,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   an exception. This is paired with a new `.parse!` method which _does_ raise
   an exception.
 
-
+<!-- ====================================================================== -->
 ## [0.1.0] - 2019-08-16
+
 ### Added
 - Parse [Tablatal](https://wiki.xxiivv.com/#tablatal) files,
   returning an array of hashes or a CSV string.
 
-
+<!-- ====================================================================== -->
 [Unreleased]: https://github.com/slisne/nodaire/compare/v0.4.0...HEAD
 [0.4.0]: https://github.com/slisne/nodaire/releases/tag/v0.4.0
 [0.3.0]: https://github.com/slisne/nodaire/releases/tag/v0.3.0

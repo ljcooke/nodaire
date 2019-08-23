@@ -112,12 +112,6 @@ describe Nodaire::Indental do
       described_class.parse(input, symbolize_names: symbolize_names)
     end
 
-    describe '#data' do
-      it 'returns the expected output' do
-        expect(instance.data).to eq expected_output
-      end
-    end
-
     describe '#to_h' do
       it 'returns the expected output' do
         expect(instance.to_h).to eq expected_output
@@ -191,11 +185,21 @@ describe Nodaire::Indental do
         ]
       end
 
-      it 'returns the expected output' do
+      it 'returns a JSON string' do
         output = instance.to_json
         expect(output).to be_a String
         expect(possible_outputs).to include(output)
       end
+    end
+  end
+
+  describe 'Enumerable' do
+    it 'implements the Enumerable mixin' do
+      expect(instance).to respond_to :each
+    end
+
+    it 'yields pairs of category name and category data' do
+      expect(instance.map.to_a).to eq expected_output.to_a
     end
   end
 end
