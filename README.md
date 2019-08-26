@@ -34,7 +34,7 @@ Keep reading below for examples of how to use Nodaire.
 ```ruby
 require 'nodaire/indental'
 
-doc = Nodaire::Indental.parse! <<~NDTL
+doc = Nodaire::Indental.parse <<~NDTL
   NAME
     KEY : VALUE
     LIST
@@ -42,10 +42,11 @@ doc = Nodaire::Indental.parse! <<~NDTL
       ITEM2
 NDTL
 
-doc.valid?     # true
-doc.categories # ["NAME"]
-doc.to_h       # {"NAME"=>{"KEY"=>"VALUE", "LIST"=>["ITEM1", "ITEM2"]}}
-doc.to_json    # '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
+doc.valid?     #=> true
+doc.categories #=> ["NAME"]
+
+doc.to_h       #=> {"NAME"=>{"KEY"=>"VALUE", "LIST"=>["ITEM1", "ITEM2"]}}
+doc.to_json    #=> '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
 ```
 
 ### Tablatal

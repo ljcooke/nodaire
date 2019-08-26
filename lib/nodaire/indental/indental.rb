@@ -5,14 +5,16 @@ require 'json'
 require_relative 'parser'
 
 ##
-# Interface for documents in _Indental_ format.
+# Interface for documents in Indental format.
 #
-# _Indental_ is a 'dictionary-type database format' by Devine Lu Linvega.
-# See: https://wiki.xxiivv.com/#indental
+# Indental is a text file format which represents a 'dictionary-type database'.
+# This format was created by Devine Lu Linvega --
+# see https://wiki.xxiivv.com/#indental for more information.
 #
+# @example
 #   require 'nodaire/indental'
 #
-#   doc = Nodaire::Indental.parse! <<~NDTL
+#   doc = Nodaire::Indental.parse <<~NDTL
 #     NAME
 #       KEY : VALUE
 #       LIST
@@ -20,35 +22,47 @@ require_relative 'parser'
 #         ITEM2
 #   NDTL
 #
-#   doc.valid?     # true
-#   doc.categories # ["NAME"]
-#   doc.to_h       # {"NAME"=>{"KEY"=>"VALUE", "LIST"=>["ITEM1", "ITEM2"]}}
-#   doc.to_json    # '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
+#   doc.valid?     #=> true
+#   doc.categories #=> ["NAME"]
+#
+#   doc.to_h       #=> {"NAME"=>{"KEY"=>"VALUE", "LIST"=>["ITEM1", "ITEM2"]}}
+#   doc.to_json    #=> '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
 #
 # @since 0.2.0
 #
 class Nodaire::Indental
   include Enumerable
 
-  # A hash containing the data parsed from the source.
-  # @deprecated Use +to_h+.
+  # @deprecated This will be removed in a future release. Use {#to_h} instead.
   # @return [Hash]
   attr_reader :data
-  # An array of category names.
+  # @return [Array<String>] the category names.
   # @since 0.3.0
-  # @return [Array<String>]
   attr_reader :categories
-  # An array of error messages.
-  # @return [Array<String>]
+  # @return [Array<String>] an array of zero or more error message strings.
+  # @see #valid?
   attr_reader :errors
 
   ##
   # Parse the document +source+.
   #
+  # @example Read an Indental file
+  #   source = File.read('example.ndtl')
+  #
+  #   doc = Nodaire::Indental.parse(source)
+  #   puts doc['MY CATEGORY']
+  #
+  # @example Read an Indental file and symbolize names
+  #   source = File.read('example.ndtl')
+  #
+  #   doc = Nodaire::Indental.parse(source, symbolize_names: true)
+  #   puts doc[:my_category]
+  #
   # @param [String] source The document source to parse.
   # @param [Boolean] symbolize_names
-  #   If true, normalize category and key names and convert them to
+  #   If +true+, normalize category and key names and convert them to
   #   lowercase symbols.
+  #   If +false+, convert category and key names to uppercase strings.
   #
   # @return [Indental]
   #
@@ -61,13 +75,18 @@ class Nodaire::Indental
   ##
   # Parse the document +source+, raising an exception if a parser error occurs.
   #
-  # @param [String] source The document source to parse.
-  # @param [boolean] symbolize_names
-  #   If true, normalize category and key names and convert them to
-  #   lowercase symbols.
+  # @example Error handling
+  #   begin
+  #     doc = Nodaire::Indental.parse(source)
+  #     puts doc['EXAMPLE']
+  #   rescue Nodaire::ParserError => error
+  #     puts error
+  #   end
   #
-  # @raise [ParserError]
+  # @param (see .parse)
+  #
   # @return [Indental]
+  # @raise [ParserError]
   #
   def self.parse!(source, symbolize_names: false)
     parser = Parser.new(source, true, symbolize_names: symbolize_names)
@@ -76,9 +95,8 @@ class Nodaire::Indental
   end
 
   ##
-  # A boolean indicating whether the source was parsed without errors.
-  #
-  # @return [Boolean]
+  # @return [Boolean] whether the source was parsed without errors.
+  # @see #errors
   #
   def valid?
     @errors.empty?

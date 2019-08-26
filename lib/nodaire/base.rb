@@ -3,6 +3,8 @@
 ##
 # Nodaire is a collection of text file parsers.
 #
+# @author Liam Cooke
+#
 module Nodaire
   # The version number.
   VERSION = '0.4.0'
