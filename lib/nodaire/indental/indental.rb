@@ -55,7 +55,7 @@ class Nodaire::Indental
   attr_reader :errors
 
   ##
-  # Parse the document +source+.
+  # Parse the document `source`.
   #
   # @example Read an Indental file
   #   source = File.read('example.ndtl')
@@ -71,9 +71,9 @@ class Nodaire::Indental
   #
   # @param [String] source The document source to parse.
   # @param [Boolean] symbolize_names
-  #   If +true+, normalize category and key names and convert them to
+  #   If `true`, normalize category and key names and convert them to
   #   lowercase symbols.
-  #   If +false+, convert category and key names to uppercase strings.
+  #   If `false`, convert category and key names to uppercase strings.
   #
   # @return [Indental]
   #
@@ -84,7 +84,7 @@ class Nodaire::Indental
   end
 
   ##
-  # Parse the document +source+, raising an exception if a parser error occurs.
+  # Parse the document `source`, raising an exception if a parser error occurs.
   #
   # @example Error handling
   #   begin
@@ -114,13 +114,13 @@ class Nodaire::Indental
   end
 
   ##
-  # Returns the data for a given +category+.
+  # Returns the data for a given `category`.
   #
   # @example
   #   doc = Nodaire::Indental.parse(source)
   #   puts doc['CATEGORY']
   #
-  # @return [Hash] the data for +category+. If not found, returns +nil+.
+  # @return [Hash] the data for `category`. If not found, returns `nil`.
   # @since 0.5.0
   #
   def [](category)

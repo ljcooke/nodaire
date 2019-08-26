@@ -58,7 +58,7 @@ class Nodaire::Tablatal
   attr_reader :errors
 
   ##
-  # Parse the document +source+.
+  # Parse the document `source`.
   #
   # @example Read a Tablatal file
   #   source = File.read('example.tbtl')
@@ -74,8 +74,8 @@ class Nodaire::Tablatal
   #
   # @param [String] source The document source to parse.
   # @param [Boolean] symbolize_names
-  #   If +true+, normalize key names and convert them to lowercase symbols.
-  #   If +false+, convert keys to uppercase strings.
+  #   If `true`, normalize key names and convert them to lowercase symbols.
+  #   If `false`, convert keys to uppercase strings.
   #
   # @return [Tablatal]
   # @since 0.2.0
@@ -87,7 +87,7 @@ class Nodaire::Tablatal
   end
 
   ##
-  # Parse the document +source+, raising an exception if a parser error occurs.
+  # Parse the document `source`, raising an exception if a parser error occurs.
   #
   # @example Error handling
   #   begin
@@ -119,14 +119,14 @@ class Nodaire::Tablatal
   end
 
   ##
-  # Returns the data for a given row +index+.
+  # Returns the data for a given row `index`.
   #
   # @example
   #   doc = Nodaire::Tablatal.parse(source)
   #   puts doc[0]
   #
-  # @return [Hash] the data for the given row +index+.
-  #   If not found, returns +nil+.
+  # @return [Hash] the data for the given row `index`.
+  #   If not found, returns `nil`.
   # @since 0.5.0
   #
   def [](index)
