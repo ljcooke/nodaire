@@ -11,9 +11,10 @@ require_relative 'parser'
 # This format was created by Devine Lu Linvega --
 # see https://wiki.xxiivv.com/#tablatal for more information.
 #
+# @example
 #   require 'nodaire/tablatal'
 #
-#   doc = Nodaire::Tablatal.parse <<~TBTL
+#   source = <<~TBTL
 #     NAME    AGE   COLOR
 #     Erica   12    Opal
 #     Alex    23    Cyan
@@ -21,14 +22,25 @@ require_relative 'parser'
 #     Ruca    45    Grey
 #   TBTL
 #
-#   doc.valid?     #=> true
+#   doc = Nodaire::Tablatal.parse(source)
 #
-#   doc.keys       #=> ["NAME", "AGE", "COLOR"]
-#   doc[0]['NAME'] #=> "Erica"
+#   doc.valid?
+#   #=> true
 #
-#   doc.to_a       #=> [{"NAME"=>"Erica", "AGE"=>"12", "COLOR"=>"Opal"}, ...]
-#   doc.to_json    #=> '[{"NAME":"Erica","AGE":"12","COLOR":"Opal"},...]'
-#   doc.to_csv     #=> "NAME,AGE,COLOR\nErica,12,Opal\nAlex,23,Cyan\n..."
+#   doc.keys
+#   #=> ["NAME", "AGE", "COLOR"]
+#
+#   doc[0]['NAME']
+#   #=> "Erica"
+#
+#   doc.to_a
+#   #=> [{"NAME"=>"Erica", "AGE"=>"12", "COLOR"=>"Opal"}, ...]
+#
+#   doc.to_json
+#   #=> '[{"NAME":"Erica","AGE":"12","COLOR":"Opal"},...]'
+#
+#   doc.to_csv
+#   #=> "NAME,AGE,COLOR\nErica,12,Opal\nAlex,23,Cyan\n..."
 #
 # @since 0.1.0
 #

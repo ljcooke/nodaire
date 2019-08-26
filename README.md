@@ -8,10 +8,12 @@ Expect breaking API changes before v1.0.0 is released.
 
 ## File formats
 
-Nodaire currently supports the following text file formats:
+Nodaire supports the following text file formats:
 
-  - __Indental__ — <https://wiki.xxiivv.com/#indental>
-  - __Tablatal__ — <https://wiki.xxiivv.com/#tablatal>
+| File format | Documentation and examples | Origin |
+|---|---|---|
+| __Indental__ | [`Nodaire::Indental`](https://slisne.github.io/nodaire/Nodaire/Indental.html) | https://wiki.xxiivv.com/#indental |
+| __Tablatal__ | [`Nodaire::Tablatal`](https://slisne.github.io/nodaire/Nodaire/Tablatal.html) | https://wiki.xxiivv.com/#tablatal |
 
 ## Install
 
@@ -27,14 +29,12 @@ gem install nodaire
 
 Keep reading below for examples of how to use Nodaire.
 
-## Usage examples
-
-### Indental
+## Usage example
 
 ```ruby
 require 'nodaire/indental'
 
-doc = Nodaire::Indental.parse <<~NDTL
+source = <<~NDTL
   NAME
     KEY : VALUE
     LIST
@@ -42,32 +42,22 @@ doc = Nodaire::Indental.parse <<~NDTL
       ITEM2
 NDTL
 
-doc.valid?         #=> true
+doc = Nodaire::Indental.parse(source)
 
-doc.categories     #=> ["NAME"]
-doc['NAME']['KEY'] #=> "VALUE"
+doc.valid?
+#=> true
 
-doc.to_h           #=> {"NAME"=>{"KEY"=>"VALUE", "LIST"=>[...]}}
-doc.to_json        #=> '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
-```
+doc.categories
+#=> ["NAME"]
 
-### Tablatal
+doc['NAME']['KEY']
+#=> "VALUE"
 
-```ruby
-require 'nodaire/tablatal'
+doc.to_h
+#=> {"NAME" => {"KEY"=>"VALUE", "LIST"=>["ITEM1", "ITEM2"]}}
 
-doc = Nodaire::Tablatal.parse! <<~TBTL
-  NAME    AGE   COLOR
-  Erica   12    Opal
-  Alex    23    Cyan
-  Nike    34    Red
-  Ruca    45    Grey
-TBTL
-
-doc.valid?    # true
-doc.keys      # ["NAME", "AGE", "COLOR"]
-doc.to_a.last # {"NAME"=>"Ruca", "AGE"=>"45", "COLOR"=>"Grey"}
-doc.to_csv    # "NAME,AGE,COLOR\nErica,12,Opal\nAlex,23,..."
+doc.to_json
+#=> '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
 ```
 
 ## Development

@@ -14,7 +14,7 @@ require_relative 'parser'
 # @example
 #   require 'nodaire/indental'
 #
-#   doc = Nodaire::Indental.parse <<~NDTL
+#   source = <<~NDTL
 #     NAME
 #       KEY : VALUE
 #       LIST
@@ -22,13 +22,22 @@ require_relative 'parser'
 #         ITEM2
 #   NDTL
 #
-#   doc.valid?         #=> true
+#   doc = Nodaire::Indental.parse(source)
 #
-#   doc.categories     #=> ["NAME"]
-#   doc['NAME']['KEY'] #=> "VALUE"
+#   doc.valid?
+#   #=> true
 #
-#   doc.to_h           #=> {"NAME"=>{"KEY"=>"VALUE", "LIST"=>[...]}}
-#   doc.to_json        #=> '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
+#   doc.categories
+#   #=> ["NAME"]
+#
+#   doc['NAME']['KEY']
+#   #=> "VALUE"
+#
+#   doc.to_h
+#   #=> {"NAME" => {"KEY"=>"VALUE", "LIST"=>["ITEM1", "ITEM2"]}}
+#
+#   doc.to_json
+#   #=> '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
 #
 # @since 0.2.0
 #
