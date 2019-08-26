@@ -22,11 +22,13 @@ require_relative 'parser'
 #         ITEM2
 #   NDTL
 #
-#   doc.valid?     #=> true
-#   doc.categories #=> ["NAME"]
+#   doc.valid?         #=> true
 #
-#   doc.to_h       #=> {"NAME"=>{"KEY"=>"VALUE", "LIST"=>["ITEM1", "ITEM2"]}}
-#   doc.to_json    #=> '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
+#   doc.categories     #=> ["NAME"]
+#   doc['NAME']['KEY'] #=> "VALUE"
+#
+#   doc.to_h           #=> {"NAME"=>{"KEY"=>"VALUE", "LIST"=>[...]}}
+#   doc.to_json        #=> '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
 #
 # @since 0.2.0
 #
@@ -100,6 +102,20 @@ class Nodaire::Indental
   #
   def valid?
     @errors.empty?
+  end
+
+  ##
+  # Returns the data for a given +category+.
+  #
+  # @example
+  #   doc = Nodaire::Indental.parse(source)
+  #   puts doc['CATEGORY']
+  #
+  # @return [Hash] the data for +category+. If not found, returns +nil+.
+  # @since UNRELEASED
+  #
+  def [](category)
+    @data[category]
   end
 
   ##

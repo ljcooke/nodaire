@@ -42,11 +42,13 @@ doc = Nodaire::Indental.parse <<~NDTL
       ITEM2
 NDTL
 
-doc.valid?     #=> true
-doc.categories #=> ["NAME"]
+doc.valid?         #=> true
 
-doc.to_h       #=> {"NAME"=>{"KEY"=>"VALUE", "LIST"=>["ITEM1", "ITEM2"]}}
-doc.to_json    #=> '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
+doc.categories     #=> ["NAME"]
+doc['NAME']['KEY'] #=> "VALUE"
+
+doc.to_h           #=> {"NAME"=>{"KEY"=>"VALUE", "LIST"=>[...]}}
+doc.to_json        #=> '{"NAME":{"KEY":"VALUE","LIST":["ITEM1","ITEM2"]}}'
 ```
 
 ### Tablatal

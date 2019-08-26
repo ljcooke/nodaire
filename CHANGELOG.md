@@ -11,7 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `Nodaire::Indental` and `Nodaire::Tablatal` now implement `Enumerable`, which
   allows you to iterate over the results with `#each`, `#map` etc.
-- `Nodaire::Tablatal#to_json`.
+- These classes also implement `[]`, so you can reference Indental data by
+  category name, and Tablatal data by row index.
+- Convert Tablatal to JSON with `Nodaire::Tablatal#to_json`.
 
 ### Deprecated
 - `#data` will be removed in a future release. Use `#to_h` and `#to_a` instead.

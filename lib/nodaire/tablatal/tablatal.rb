@@ -21,12 +21,14 @@ require_relative 'parser'
 #     Ruca    45    Grey
 #   TBTL
 #
-#   doc.valid?  #=> true
-#   doc.keys    #=> ["NAME", "AGE", "COLOR"]
+#   doc.valid?     #=> true
 #
-#   doc.to_a    #=> [{"NAME"=>"Erica", "AGE"=>"12", "COLOR"=>"Opal"}, ...]
-#   doc.to_json #=> '[{"NAME":"Erica","AGE":"12","COLOR":"Opal"},...]'
-#   doc.to_csv  #=> "NAME,AGE,COLOR\nErica,12,Opal\nAlex,23,Cyan\n..."
+#   doc.keys       #=> ["NAME", "AGE", "COLOR"]
+#   doc[0]['NAME'] #=> "Erica"
+#
+#   doc.to_a       #=> [{"NAME"=>"Erica", "AGE"=>"12", "COLOR"=>"Opal"}, ...]
+#   doc.to_json    #=> '[{"NAME":"Erica","AGE":"12","COLOR":"Opal"},...]'
+#   doc.to_csv     #=> "NAME,AGE,COLOR\nErica,12,Opal\nAlex,23,Cyan\n..."
 #
 # @since 0.1.0
 #
@@ -102,6 +104,21 @@ class Nodaire::Tablatal
   #
   def valid?
     @errors.empty?
+  end
+
+  ##
+  # Returns the data for a given row +index+.
+  #
+  # @example
+  #   doc = Nodaire::Tablatal.parse(source)
+  #   puts doc[0]
+  #
+  # @return [Hash] the data for the given row +index+.
+  #   If not found, returns +nil+.
+  # @since UNRELEASED
+  #
+  def [](index)
+    @data[index]
   end
 
   ##

@@ -177,6 +177,30 @@ describe Nodaire::Indental do
       end
     end
 
+    describe '#[]' do
+      let(:category) { 'NAME' }
+
+      context 'with an existing category name' do
+        it 'returns the category data' do
+          expect(instance[category]).to eq expected_output[category]
+        end
+      end
+
+      context 'with a nonexistent category name' do
+        let(:category) { 'NONE' }
+
+        it 'returns nil' do
+          expect(instance[category]).to be_nil
+        end
+      end
+
+      context 'when attempting assignment' do
+        it 'raises an exception' do
+          expect { instance[category] = {} }.to raise_error NoMethodError
+        end
+      end
+    end
+
     describe '#to_json' do
       let(:possible_outputs) do
         [

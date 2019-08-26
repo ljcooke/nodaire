@@ -157,6 +157,30 @@ describe Nodaire::Tablatal do
       end
     end
 
+    describe '#[]' do
+      let(:index) { 0 }
+
+      context 'with an index in range' do
+        it 'returns the data for the given row index' do
+          expect(instance[index]).to eq expected_output[index]
+        end
+      end
+
+      context 'with an index outside the range' do
+        let(:index) { 100 }
+
+        it 'returns nil' do
+          expect(instance[index]).to be_nil
+        end
+      end
+
+      context 'when attempting assignment' do
+        it 'raises an exception' do
+          expect { instance[index] = {} }.to raise_error NoMethodError
+        end
+      end
+    end
+
     describe '#to_csv' do
       let(:expected_output) { examples['tablatal_valid.csv'] }
 
