@@ -127,7 +127,7 @@ class Nodaire::Tablatal
   #
   # @return [Hash] the data for the given row +index+.
   #   If not found, returns +nil+.
-  # @since UNRELEASED
+  # @since 0.5.0
   #
   def [](index)
     @data[index]
@@ -146,7 +146,7 @@ class Nodaire::Tablatal
   # Convert the document to JSON.
   #
   # @return [String]
-  # @since UNRELEASED
+  # @since 0.5.0
   #
   def to_json(*args)
     @data.to_json(*args)

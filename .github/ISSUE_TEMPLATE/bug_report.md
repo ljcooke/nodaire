@@ -17,7 +17,7 @@ Steps to reproduce the behavior.
 A clear and concise description of what you expected to happen.
 
 **Environment**
-- Nodaire gem version: [e.g. 0.4.0]
+- Nodaire gem version: [e.g. 0.5.0]
 - Ruby version: [e.g. 2.6.3]
 - OS: [e.g. macOS Mojave]
 

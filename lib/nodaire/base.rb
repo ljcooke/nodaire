@@ -7,7 +7,7 @@
 #
 module Nodaire
   # The version number.
-  VERSION = '0.4.0'
+  VERSION = '0.5.0'
   # The date when this version was released.
-  DATE = '2019-08-22'
+  DATE = '2019-08-26'
 end

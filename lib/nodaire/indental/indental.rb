@@ -121,7 +121,7 @@ class Nodaire::Indental
   #   puts doc['CATEGORY']
   #
   # @return [Hash] the data for +category+. If not found, returns +nil+.
-  # @since UNRELEASED
+  # @since 0.5.0
   #
   def [](category)
     @data[category]
