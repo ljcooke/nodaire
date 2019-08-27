@@ -110,6 +110,15 @@ class Nodaire::Tablatal
   end
 
   ##
+  # @return [String] a human-readable representation of this class.
+  # @since UNRELEASED
+  #
+  def inspect
+    "\#<#{self.class.name} #{@data}>"
+  end
+  alias_method :to_s, :inspect
+
+  ##
   # @return [Boolean] whether the source was parsed without errors.
   # @see #errors
   # @since 0.2.0
