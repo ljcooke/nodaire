@@ -295,10 +295,10 @@ see <a href="https://wiki.xxiivv.com/#indental">https://wiki.xxiivv.com/#indenta
 </li>
 
       
-        <li class="public ">
+        <li class="public deprecated">
   <span class="summary_signature">
     
-      <a href="#parse!-class_method" title="parse! (class method)">.<strong>parse!</strong>(source, symbolize_names: false)  &#x21d2; Indental </a>
+      <a href="#parse!-class_method" title="parse! (class method)">.<strong>parse!</strong>(source, symbolize_names: false)  &#x21d2; Object </a>
     
 
     
@@ -308,11 +308,12 @@ see <a href="https://wiki.xxiivv.com/#indental">https://wiki.xxiivv.com/#indenta
   
   
   
-  
+  <span class="deprecated note title">deprecated</span>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse the document <code>source</code>, raising an exception if a parser error occurs.</p>
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>This will be removed in a future release. Use <span class='object_link'><a href="#parse-class_method" title="Nodaire::Indental.parse (method)">Indental.parse</a></span> instead,
+and validate the result using <span class='object_link'><a href="#valid%3F-instance_method" title="Nodaire::Indental#valid? (method)">#valid?</a></span> and <span class='object_link'><a href="#errors-instance_method" title="Nodaire::Indental#errors (method)">#errors</a></span>.</p>
 </div></span>
   
 </li>
@@ -345,6 +346,31 @@ see <a href="https://wiki.xxiivv.com/#indental">https://wiki.xxiivv.com/#indenta
 
   
     <span class="summary_desc"><div class='inline'><p>Returns the data for a given <code>category</code>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inspect-instance_method" title="#inspect (instance method)">#<strong>inspect</strong>  &#x21d2; String </a>
+    
+
+    
+      (also: #to_s)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A human-readable representation of this class.</p>
 </div></span>
   
 </li>
@@ -794,7 +820,7 @@ If <code>false</code>, convert category and key names to uppercase strings.</p>
       <div class="method_details ">
   <h3 class="signature " id="parse!-class_method">
   
-    .<strong>parse!</strong>(source, symbolize_names: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Nodaire::Indental (class)">Indental</a></span></tt> 
+    .<strong>parse!</strong>(source, symbolize_names: false)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -802,91 +828,15 @@ If <code>false</code>, convert category and key names to uppercase strings.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse the document <code>source</code>, raising an exception if a parser error occurs.</p>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>This will be removed in a future release. Use <span class='object_link'><a href="#parse-class_method" title="Nodaire::Indental.parse (method)">parse</a></span> instead,
+and validate the result using <span class='object_link'><a href="#valid%3F-instance_method" title="Nodaire::Indental#valid? (method)">#valid?</a></span> and <span class='object_link'><a href="#errors-instance_method" title="Nodaire::Indental#errors (method)">#errors</a></span>.</p>
+</div></div>
 
 
   </div>
 </div>
 <div class="tags">
   
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-        <p class="example_title"><div class='inline'><p>Error handling</p>
-</div></p>
-      
-      <pre class="example code"><code><span class='kw'>begin</span>
-  <span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Nodaire.html" title="Nodaire (module)">Nodaire</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Nodaire::Indental (class)">Indental</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="#parse-class_method" title="Nodaire::Indental.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_doc'>doc</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>EXAMPLE</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
-<span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../Nodaire.html" title="Nodaire (module)">Nodaire</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ParserError.html" title="Nodaire::ParserError (class)">ParserError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_error'>error</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_error'>error</span>
-<span class='kw'>end</span></code></pre>
-    
-  </div>
-<p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>source</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>The document source to parse.</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>symbolize_names</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>If <code>true</code>, normalize category and key names and convert them to
-lowercase symbols.
-If <code>false</code>, convert category and key names to uppercase strings.</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="" title="Nodaire::Indental (class)">Indental</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-<p class="tag_title">Raises:</p>
-<ul class="raise">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="ParserError.html" title="Nodaire::ParserError (class)">ParserError</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -909,14 +859,14 @@ If <code>false</code>, convert category and key names to uppercase strings.</p>
       <pre class="lines">
 
 
-102
-103
-104
-105
-106</pre>
+90
+91
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse!'>parse!</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parser'>parser</span> <span class='op'>=</span> <span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>symbolize_names:</span> <span class='id identifier rubyid_symbolize_names'>symbolize_names</span><span class='rparen'>)</span>
@@ -1000,15 +950,91 @@ If <code>false</code>, convert category and key names to uppercase strings.</p>
       <pre class="lines">
 
 
-126
-127
-128</pre>
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_category'>category</span><span class='rparen'>)</span>
   <span class='ivar'>@data</span><span class='lbracket'>[</span><span class='id identifier rubyid_category'>category</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="inspect-instance_method">
+  
+    #<strong>inspect</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='to_s-instance_method'>to_s</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a human-readable representation of this class.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a human-readable representation of this class.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>UNRELEASED</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+100
+101
+102</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 100</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='ivar'>@data</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1068,12 +1094,12 @@ If <code>false</code>, convert category and key names to uppercase strings.</p>
       <pre class="lines">
 
 
-135
-136
-137</pre>
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_h'>to_h</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@data</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1136,12 +1162,12 @@ If <code>false</code>, convert category and key names to uppercase strings.</p>
       <pre class="lines">
 
 
-144
-145
-146</pre>
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 141</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_json'>to_json</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@data</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1215,12 +1241,12 @@ If <code>false</code>, convert category and key names to uppercase strings.</p>
       <pre class="lines">
 
 
-112
-113
-114</pre>
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/nodaire/indental/indental.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
   <span class='ivar'>@errors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1235,7 +1261,7 @@ If <code>false</code>, convert category and key names to uppercase strings.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 26 21:58:59 2019 by
+  Generated on Wed Aug 28 20:43:03 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.20 (ruby-2.5.0).
 </div>
