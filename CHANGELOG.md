@@ -6,7 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- ====================================================================== -->
-<!-- ## [Unreleased] -->
+## [Unreleased]
+
+### Added
+- `#inspect` and `#to_s` for debugging.
+
+### Deprecated
+- `.parse!` will be removed in a future release. Use `.parse` instead, and
+  validate the result using `#valid?` and `#errors`.
 
 <!-- ====================================================================== -->
 ## [0.5.0] - 2019-08-26

@@ -87,20 +87,8 @@ class Nodaire::Tablatal
   end
 
   ##
-  # Parse the document `source`, raising an exception if a parser error occurs.
-  #
-  # @example Error handling
-  #   begin
-  #     doc = Nodaire::Tablatal.parse(source)
-  #     puts doc.first
-  #   rescue Nodaire::ParserError => error
-  #     puts error
-  #   end
-  #
-  # @param (see .parse)
-  #
-  # @return [Tablatal]
-  # @raise [ParserError]
+  # @deprecated This will be removed in a future release. Use {.parse} instead,
+  #   and validate the result using {#valid?} and {#errors}.
   # @since 0.2.0
   #
   def self.parse!(source, symbolize_names: false)

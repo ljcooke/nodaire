@@ -84,20 +84,8 @@ class Nodaire::Indental
   end
 
   ##
-  # Parse the document `source`, raising an exception if a parser error occurs.
-  #
-  # @example Error handling
-  #   begin
-  #     doc = Nodaire::Indental.parse(source)
-  #     puts doc['EXAMPLE']
-  #   rescue Nodaire::ParserError => error
-  #     puts error
-  #   end
-  #
-  # @param (see .parse)
-  #
-  # @return [Indental]
-  # @raise [ParserError]
+  # @deprecated This will be removed in a future release. Use {.parse} instead,
+  #   and validate the result using {#valid?} and {#errors}.
   #
   def self.parse!(source, symbolize_names: false)
     parser = Parser.new(source, true, symbolize_names: symbolize_names)

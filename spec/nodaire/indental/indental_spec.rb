@@ -88,22 +88,6 @@ describe Nodaire::Indental do
         end
       end
     end
-
-    describe '.parse!' do
-      let(:output) { described_class.parse!(input) }
-
-      it 'returns an instance of the class' do
-        expect(output).to be_a described_class
-      end
-
-      context 'with invalid input' do
-        let(:input) { "\tINVALID" }
-
-        it 'raises a parser error' do
-          expect { output }.to raise_error Nodaire::ParserError
-        end
-      end
-    end
   end
 
   describe 'instance methods' do
