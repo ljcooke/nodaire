@@ -165,6 +165,22 @@ describe Nodaire::Tablatal do
       end
     end
 
+    describe '#pluck' do
+      context 'with an existing key' do
+        let(:expected_output) { %w[12 23 34 45] }
+
+        it 'returns the values for the given key' do
+          expect(instance.pluck('AGE')).to eq expected_output
+        end
+      end
+
+      context 'with a nonexistent key' do
+        it 'returns an empty array' do
+          expect(instance.pluck('NOTFOUND')).to be_empty
+        end
+      end
+    end
+
     describe '#to_csv' do
       let(:expected_output) { examples['tablatal_valid.csv'] }
 

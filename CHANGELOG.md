@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Tablatal: `#pluck` returns the values for the given key.
 - `#inspect` and `#to_s` for debugging.
 
 ### Deprecated

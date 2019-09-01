@@ -131,6 +131,22 @@ class Nodaire::Tablatal
   end
 
   ##
+  # Returns the value for a given `key` in each row.
+  #
+  # If the `key` is not found, returns an empty array.
+  #
+  # @example
+  #   doc.pluck('NAME')
+  #   #=> ["Erica", "Alex", "Nike", "Ruca"]
+  #
+  # @return [Array<String>] the values for a given `key`.
+  # @since UNRELEASED
+  #
+  def pluck(key)
+    keys.include?(key) ? @data.map { |row| row[key] } : []
+  end
+
+  ##
   # Convert the document to an array of hashes.
   #
   # @return [Array<Hash>]
