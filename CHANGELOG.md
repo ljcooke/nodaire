@@ -52,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - `Indental#categories` returns an array of category names.
-- [Documentation!](https://slisne.github.io/nodaire/)
+- [Documentation!](https://www.rubydoc.info/gems/nodaire)
 
 ### Changed
 - Strings are used for keys by default. To use symbols, pass the
@@ -85,9 +85,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   returning an array of hashes or a CSV string.
 
 <!-- ====================================================================== -->
-[Unreleased]: https://github.com/slisne/nodaire/compare/v0.5.0...HEAD
-[0.5.0]: https://github.com/slisne/nodaire/releases/tag/v0.5.0
-[0.4.0]: https://github.com/slisne/nodaire/releases/tag/v0.4.0
-[0.3.0]: https://github.com/slisne/nodaire/releases/tag/v0.3.0
-[0.2.0]: https://github.com/slisne/nodaire/releases/tag/v0.2.0
-[0.1.0]: https://github.com/slisne/nodaire/releases/tag/v0.1.0
+[Unreleased]: https://git.sr.ht/~ljc/nodaire/log
+[0.5.0]: https://git.sr.ht/~ljc/nodaire/log/v0.5.0
+[0.4.0]: https://git.sr.ht/~ljc/nodaire/log/v0.4.0
+[0.3.0]: https://git.sr.ht/~ljc/nodaire/log/v0.3.0
+[0.2.0]: https://git.sr.ht/~ljc/nodaire/log/v0.2.0
+[0.1.0]: https://git.sr.ht/~ljc/nodaire/log/v0.1.0

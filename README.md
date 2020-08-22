@@ -1,4 +1,6 @@
-# Nodaire [![Gem Version](https://badge.fury.io/rb/nodaire.svg)](https://rubygems.org/gems/nodaire) [![Build Status](https://travis-ci.org/slisne/nodaire.svg?branch=master)](https://travis-ci.org/slisne/nodaire)
+# Nodaire
+
+[![Gem Version](https://badge.fury.io/rb/nodaire.svg)](https://rubygems.org/gems/nodaire)
 
 Nodaire is a collection of text file parsers.
 It supports Ruby 2.5.0 or greater.
@@ -12,8 +14,8 @@ Nodaire supports the following text file formats:
 
 | File format | Documentation and examples | Origin |
 |---|---|---|
-| __Indental__ | [`Nodaire::Indental`](https://slisne.github.io/nodaire/Nodaire/Indental.html) | https://wiki.xxiivv.com/#indental |
-| __Tablatal__ | [`Nodaire::Tablatal`](https://slisne.github.io/nodaire/Nodaire/Tablatal.html) | https://wiki.xxiivv.com/#tablatal |
+| __Indental__ | [`Nodaire::Indental`](https://www.rubydoc.info/gems/nodaire/Nodaire/Indental) | https://wiki.xxiivv.com/#indental |
+| __Tablatal__ | [`Nodaire::Tablatal`](https://www.rubydoc.info/gems/nodaire/Nodaire/Tablatal) | https://wiki.xxiivv.com/#tablatal |
 
 ## Install
 
@@ -25,7 +27,7 @@ gem install nodaire
 
 ## Documentation
 
-[Code documentation](https://slisne.github.io/nodaire/) is available.
+[Code documentation](https://www.rubydoc.info/gems/nodaire) is available.
 
 Keep reading below for examples of how to use Nodaire.
 
@@ -62,11 +64,10 @@ doc.to_json
 
 ## Development
 
-To run the latest source code, check out the
-[Git repository](https://github.com/slisne/nodaire):
+To run the latest source code, check out the Git repository:
 
 ```sh
-git clone https://github.com/slisne/nodaire.git
+git clone https://git.sr.ht/~ljc/nodaire
 ```
 
 Install the dependencies using Bundler:

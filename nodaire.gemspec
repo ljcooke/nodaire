@@ -16,13 +16,13 @@ Gem::Specification.new do |s|
 
   s.authors     = ['Liam Cooke']
   s.email       = 'nodaire@liamcooke.com'
-  s.homepage    = 'https://github.com/slisne/nodaire'
+  s.homepage    = 'https://liamcooke.com/code/nodaire/'
   s.metadata    = {
-    'bug_tracker_uri' => 'https://github.com/slisne/nodaire/issues',
-    'changelog_uri' => 'https://github.com/slisne/nodaire/blob/master/CHANGELOG.md',
-    'documentation_uri' => 'https://slisne.github.io/nodaire/',
-    'homepage_uri' => 'https://github.com/slisne/nodaire',
-    'source_code_uri' => 'https://github.com/slisne/nodaire',
+    # 'bug_tracker_uri' => '',
+    'changelog_uri' => 'https://git.sr.ht/~ljc/nodaire/tree/main/CHANGELOG.md',
+    'documentation_uri' => 'https://www.rubydoc.info/gems/nodaire',
+    'homepage_uri' => 'https://liamcooke.com/code/nodaire/',
+    'source_code_uri' => 'https://git.sr.ht/~ljc/nodaire',
   }
 
   s.required_ruby_version = '>= 2.5.0'
