@@ -67,7 +67,7 @@ doc.to_json
 To run the latest source code, check out the Git repository:
 
 ```sh
-git clone https://git.sr.ht/~ljc/nodaire
+git clone https://github.com/ljcooke/nodaire.git
 ```
 
 Install the dependencies using Bundler:
